@@ -102,8 +102,10 @@ class Board():
     def highlight(tile):    
         # if not highlighted
         if tile not in Board._highlighted:
+            last = None
+            if Board._highlighted:
             # get the last element added to highlighted
-            last = next(reversed(Board._highlighted))
+                last = next(reversed(Board._highlighted))
             
             # if last exists, get neighbors
             if last:
