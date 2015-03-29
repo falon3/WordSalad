@@ -44,6 +44,7 @@ class Dictograph():
         with open(filename, newline='') as dictionary:
             # skip the opening credits of the file
             reading = False
+            count = 0
             for line in dictionary:
                 # trying to get the first character group
                 word = line.split(' ')[0].rstrip('\n')
@@ -54,10 +55,9 @@ class Dictograph():
                         and len(word) > 3:
                         words.append(word)
                 else:
-                    # TODO: fix this (not correctly recognizing end of credits)
-                    if word == "---":
+                    # check for end of credits
+                    if word[0:3] == "---":
                         reading = True
-                    
         
         # TODO: temporary test attribute, remove when class is functional
         self.words = words
