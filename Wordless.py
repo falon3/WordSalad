@@ -25,8 +25,8 @@ import string
 
 from graph_v2 import Graph
 
-TILE_COLUMNS = 20   # number of columns in the game board
-TILE_ROWS = 15      # number of rows in the game board
+TILE_COLUMNS = 12   # number of columns in the game board
+TILE_ROWS = 9       # number of rows in the game board
 
 class Dictograph():
     """A word list used for checking words and populating the board.
@@ -58,15 +58,28 @@ class Dictograph():
                     # check for end of credits
                     if word[0:3] == "---":
                         reading = True
-        
-        # TODO: temporary test attribute, remove when class is functional
-        self.words = words
-        print("words: ", len(words))
-        
+        """
+        letter = None
+        position = 0
+        line = 0
+        start = 0
+        same = []
+        edges = []
+        while line < len(words): # probably needs a better end condition
+            # if the current letter doesn't match the previous letter
+            if words[line][position] != letter:
+                # process list of words that are the same to this point
+                # having the current letter/position point to all next adjacent letter/positions
+                letter
+                for word in same:
+                    # if letter
+                    edges.append(
+        """
+                
         # build a list of all words that share the same letter at the same position
+        
             # add an edge from that letter/position to all next adjacent letters/positions
             # repeat
-            
 class Letters():
     """A quick class for selecting letters to populate the board with.
     
@@ -78,11 +91,15 @@ class Letters():
     # complicated way of getting around typing out the capitalized consonants
     _trans = Vowels.maketrans('','', Vowels)
     Consonants = string.ascii_uppercase.translate(_trans)
+    # TODO: these were taken directly from scrabble - replace with own values
+    Value = {'A':1,'B':3,'C':3,'D':2,'E':1,'F':4,'G':2,'H':4,'I':1,'J':8,'K':5,\
+        'L':1,'M':3,'N':1,'O':1,'P':3,'Q':10,'R':1,'S':1,'T':1,'U':1,'V':4,    \
+        'W':4,'X':8,'Y':4,'Z':10}
     
 class Board():   
     """Represents the game board.
     
-    Currently this class encompasses both the data for the board and the 
+    Currently this class encompasses both the data for the board and the  
     display for the same. 
     
     TODO: We may want to break this functionality up into
@@ -172,6 +189,9 @@ class Tile(Button):
         # initialize base class
         super().__init__(**kwargs)
         
+        self.font_size = 50
+        
+        
         # populate board with random letters
         # TODO: populate board with words and partial words instead
         letters = None
@@ -190,7 +210,9 @@ class Tile(Button):
                 letters = Letters.Consonants
         
         # set the text of this tile
-        self.text = letters[randint(0, len(letters)-1)] #str(tilenumber)
+        letter = letters[randint(0, len(letters)-1)]
+        self.text =  letter
+        self.lscore.text = str(Letters.Value[letter])
                 
     def on_touch_down(self, touch):  
         """Base kivy method inherited from Button.
