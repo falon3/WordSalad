@@ -1,2 +1,2 @@
-# WordSalad
+# Wordless
 README
