@@ -18,6 +18,7 @@ from kivy.app import App
 from kivy.uix.button import Button
 from kivy.graphics import Color, Rectangle
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 
 from collections import OrderedDict
 from random import randint
@@ -25,8 +26,8 @@ import string
 
 from graph_v2 import Graph
 
-TILE_COLUMNS = 12   # number of columns in the game board
-TILE_ROWS = 9       # number of rows in the game board
+TILE_COLUMNS = 4   # number of columns in the game board
+TILE_ROWS = 4      # number of rows in the game board
 
 class Dictograph():
     """A word list used for checking words and populating the board.
@@ -75,7 +76,8 @@ class Dictograph():
                     # if letter
                     edges.append(
         """
-                
+        self.words = set(words) # make it a set
+        
         # build a list of all words that share the same letter at the same position
         
             # add an edge from that letter/position to all next adjacent letters/positions
@@ -142,14 +144,21 @@ class Board():
     
     def build_board():
         # declare the widget for the app to display
-        layout = GridLayout(cols=TILE_COLUMNS)
+        layout = BoxLayout(orientation = 'vertical')
         tiles = []
+        Header = BoxLayout(orientation = 'horizontal')
+        layout.add_widget(Header)
+        
         
         # add all the tiles to the board
         for i in range(TILE_COLUMNS * TILE_ROWS):
+            if i % TILE_ROWS == 0:
+                row = BoxLayout(orientation = 'horizontal')
+                layout.add_widget(row)
+
             tile = Tile(i)
             tiles.append(tile)
-            layout.add_widget(tile)
+            row.add_widget(tile)
             
         
         # fill out edges of graph
@@ -198,7 +207,7 @@ class Tile(Button):
         
         # choose type of letter based on tilenumber
         if tilenumber != -1:
-            # approximately 60 percent of tiles will be vowels
+            # approximately 40 percent of tiles will be vowels
             if tilenumber % 5 > 2:
                 letters = Letters.Vowels
             else: # the rest will be consonants
