@@ -114,7 +114,7 @@ class Board():
     """    
     
     _highlighted = OrderedDict()
-    _dictionary = Dictograph("us_dict.txt")
+    _dictionary = Dictograph("us_cad_dict.txt")
     
     def highlight(tile):    
         # if not highlighted
@@ -189,7 +189,7 @@ class Tile(Button):
         # initialize base class
         super().__init__(**kwargs)
         
-        self.font_size = 50
+        
         
         
         # populate board with random letters
@@ -199,7 +199,7 @@ class Tile(Button):
         # choose type of letter based on tilenumber
         if tilenumber != -1:
             # approximately 60 percent of tiles will be vowels
-            if tilenumber % 5 > 1:
+            if tilenumber % 5 > 2:
                 letters = Letters.Vowels
             else: # the rest will be consonants
                 letters = Letters.Consonants
@@ -213,6 +213,7 @@ class Tile(Button):
         letter = letters[randint(0, len(letters)-1)]
         self.text =  letter
         self.lscore.text = str(Letters.Value[letter])
+        self.font_size = 50
                 
     def on_touch_down(self, touch):  
         """Base kivy method inherited from Button.
