@@ -1,0 +1,13 @@
+Falon     word length bonus         
+Falon     dict include 3 letter words 
+Craig     Put in search word  		
+Falon     removing words           
+????      animations?
+????      Clock of some sort
+Falon     word completion or arrows or both (box positioning using pos_hint)
+????      changing theme/design colors and whatnot
+Craig     new game/new level
+????      what happens when lose/win how??
+Craig     ability to shuffle the board, reset  
+Craig     randomization of letters and amount of vowels?(4:3, cons:vowel) (list of combines letters in ratio to randomly choose from)
+Craig (together?)word hint            
