@@ -16,6 +16,7 @@ from kivy.properties import StringProperty, ObjectProperty, NumericProperty
 # from kivy.animation import Animation
 from kivy.app import App
 from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.graphics import Color, Rectangle
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
@@ -26,8 +27,8 @@ import string
 
 from graph_v2 import Graph
 
-TILE_COLUMNS = 4   # number of columns in the game board
-TILE_ROWS = 4      # number of rows in the game board
+TILE_COLUMNS = 12   # number of columns in the game board
+TILE_ROWS = 9      # number of rows in the game board
 
 class Dictograph():
     """A word list used for checking words and populating the board.
@@ -114,7 +115,7 @@ class Board():
     
     
     """    
-    
+    score = '0'
     _highlighted = OrderedDict()
     _dictionary = Dictograph("us_cad_dict.txt")
     
@@ -148,11 +149,15 @@ class Board():
         tiles = []
         Header = BoxLayout(orientation = 'horizontal')
         layout.add_widget(Header)
+        Score = Label()   
+        Board.Score = Score 
+        Score.text = "SCORE: " + Board.score   
+        Header.add_widget(Score)
         
         
         # add all the tiles to the board
         for i in range(TILE_COLUMNS * TILE_ROWS):
-            if i % TILE_ROWS == 0:
+            if i % TILE_COLUMNS == 0:
                 row = BoxLayout(orientation = 'horizontal')
                 layout.add_widget(row)
 
@@ -292,6 +297,26 @@ class Tile(Button):
         # TODO: add code to check word and unhighlight or remove selection
         if touch.is_touch or touch.button == 'left':
             if self.collide_point(touch.x, touch.y):
+                score = 0
+                word = ''
+                for tile in Board._highlighted:
+                    letter = tile.text
+                    score = score + Letters.Value[letter]
+                    word = word + letter
+                if word.lower() in Board._dictionary.words:
+                    print("SUCCESS!")
+                    Board.score = str(int(Board.score) + score)
+                    Score = Board.Score 
+                    Score.text = "SCORE: " + Board.score
+                    #save score somewhere
+                    #remove tiles 
+                else:
+                    for tile in Board._highlighted:
+                        tile.background_color = [1,1,1,1]
+                        
+                #xclear highlighted list
+                Board._highlighted.clear()
+                    
                 return True
         return False
         
