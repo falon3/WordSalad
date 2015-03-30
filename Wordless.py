@@ -85,15 +85,10 @@ class Dictograph():
             # repeat
 class Letters():
     """A quick class for selecting letters to populate the board with.
-    
-    TODO: Remove this once we can populate the board with partial words.
     """
     
-    # not including 'Y' for our purposes here
-    Vowels = "AEIOU"
-    # complicated way of getting around typing out the capitalized consonants
-    _trans = Vowels.maketrans('','', Vowels)
-    Consonants = string.ascii_uppercase.translate(_trans)
+    letters = "AEIOUAEIOUAEIOUBCDFGHJKLMNPQRSTVWXYYZ"
+    
     # TODO: these were taken directly from scrabble - replace with own values
     Value = {'A':1,'B':3,'C':3,'D':2,'E':1,'F':4,'G':2,'H':4,'I':1,'J':8,'K':5,\
         'L':1,'M':3,'N':1,'O':1,'P':3,'Q':10,'R':1,'S':1,'T':1,'U':1,'V':4,    \
@@ -115,6 +110,7 @@ class Board():
     
     
     """    
+    Score = None
     score = '0'
     _highlighted = OrderedDict()
     _dictionary = Dictograph("us_cad_dict.txt")
@@ -245,30 +241,16 @@ class Tile(Button):
         
         """
         # initialize base class
-        super().__init__(**kwargs)
-        
-        
+        super().__init__(**kwargs)     
         
         
         # populate board with random letters
-        # TODO: populate board with words and partial words instead
-        letters = None
-        
-        # choose type of letter based on tilenumber
-        if tilenumber != -1:
-            # approximately 40 percent of tiles will be vowels
-            if tilenumber % 5 > 2:
-                letters = Letters.Vowels
-            else: # the rest will be consonants
-                letters = Letters.Consonants
-        else: # otherwise, just choose randomly
-            if randint(0,1) == 0:
-                letters = Letters.Vowels
-            else:
-                letters = Letters.Consonants
+        # TODO: consider populating board with words and partial words
         
         # set the text of this tile
-        letter = letters[randint(0, len(letters)-1)]
+        rand = randint(0, len(Letters.letters)-1)
+    
+        letter = Letters.letters[rand]
         self.text = letter
         self.lscore.text = str(Letters.Value[letter])
         self.font_size = 50
@@ -357,6 +339,7 @@ class Tile(Button):
                     Board.score = str(int(Board.score) + score)
                     Score = Board.Score 
                     Score.text = "SCORE: " + Board.score
+                    
                     #save score somewhere
                     #remove tiles 
                 else:
