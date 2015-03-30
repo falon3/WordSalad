@@ -9,5 +9,5 @@ Falon     word completion or arrows or both (box positioning using pos_hint)
 Craig     new game/new level
 ????      what happens when lose/win how??
 Craig     ability to shuffle the board, reset  
-Craig     randomization of letters and amount of vowels?(4:3, cons:vowel) (list of combines letters in ratio to randomly choose from)
+DONE      randomization of letters and amount of vowels?(4:3, cons:vowel) (list of 	  combines letters in ratio to randomly choose from)
 Craig (together?)word hint            
