@@ -234,7 +234,7 @@ class Tile(Button):
     """    
     
     def __repr__(self):
-        return self.text, self.lscore.text
+        return self.text
     
     def __init__(self, tilenumber=-1, **kwargs):
         """
