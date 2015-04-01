@@ -161,7 +161,7 @@ class Board():
                 if i % (2 * TILE_COLUMNS) == 0:                    
                     row.pos_hint = {'right': .975}       
                 else:                              
-                    row.pos_hint = {'right': .925}       
+                    row.pos_hint = {'right': .92}       
                     
                 row.size_hint_x = 0.9                    
                 layout.add_widget(row)
