@@ -60,23 +60,28 @@ class Dictograph():
                     # check for end of credits
                     if word[0:3] == "---":
                         reading = True
-        """
-        letter = None
-        position = 0
+        
+        c_letter = None
+        c_pos = 0
         line = 0
         start = 0
         same = []
-        edges = []
+        edges = set()
+        
         while line < len(words): # probably needs a better end condition
+            changes = [] # marks position in same where letters change
             # if the current letter doesn't match the previous letter
-            if words[line][position] != letter:
+            if words[line][c_pos] != c_letter:
                 # process list of words that are the same to this point
                 # having the current letter/position point to all next adjacent letter/positions
-                letter
+                n_pos = c_pos + 1
+                
                 for word in same:
-                    # if letter
-                    edges.append(
-        """
+                    # if letter/pos combination not marked, mark it
+                    if ((c_pos, c_letter), (n_pos, n_letter)) not in edges:
+                        edges.append((c_pos, c_letter), (n_pos, n_letter))
+                        
+        
         self.words = set(words) # make it a set
         
         # build a list of all words that share the same letter at the same position
