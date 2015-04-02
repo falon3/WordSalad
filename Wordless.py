@@ -54,7 +54,7 @@ class Dictograph():
                 # read once we are past the credits
                 if reading:
                     if word.find("'") == -1 and word[0] != word[0].upper() \
-                        and len(word) > 3:
+                        and len(word) > 2:
                         words.append(word)
                 else:
                     # check for end of credits
@@ -113,7 +113,7 @@ class Board():
     Score = None
     score = '0'
     _highlighted = OrderedDict()
-    _dictionary = Dictograph("us_cad_dict.txt")
+    _dictionary = Dictograph("cad_us_dict.txt")
     
     def highlight(tile, highlight=[0,1,1,1]):    
         # if not highlighted
