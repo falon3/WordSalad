@@ -1,7 +1,7 @@
 DONE     word length bonus         
 DONE     dict include 3 letter words 
 Craig     Put in search word  		
-Falon     removing words ....NEED TO FIGURE OUT REPLACEMENT           
+Falon     removing words; Craig - works for now, but adding item for later
 ????      animations?
 ????      Clock of some sort
 DONE     word completion or arrows or both (box positioning using pos_hint) NO ARROWS THOUGH... NOT NECESSARY(?)
@@ -11,3 +11,4 @@ Craig     new game/new level
 Craig     ability to shuffle the board, reset  
 DONE      randomization of letters and amount of vowels?(4:3, cons:vowel) (list of 	  combines letters in ratio to randomly choose from)
 Craig (together?)word hint            
+Craig?    revisit update_board to be more efficient, if possible
