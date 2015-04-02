@@ -4,7 +4,7 @@ Craig     Put in search word
 Falon     removing words ....NEED TO FIGURE OUT REPLACEMENT           
 ????      animations?
 ????      Clock of some sort
-Falon     word completion or arrows or both (box positioning using pos_hint)
+DONE     word completion or arrows or both (box positioning using pos_hint) NO ARROWS THOUGH... NOT NECESSARY(?)
 ????      changing theme/design colors and whatnot
 Craig     new game/new level
 ????      what happens when lose/win how??
