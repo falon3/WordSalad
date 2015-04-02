@@ -113,7 +113,7 @@ class Board():
     Score = None
     score = '0'
     _highlighted = OrderedDict()
-    _dictionary = Dictograph("cad_us_dict.txt")
+    _dictionary = Dictograph("us_cad_dict.txt")
     
     def highlight(tile, highlight=[0,1,1,1]):    
         # if not highlighted
