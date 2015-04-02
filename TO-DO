@@ -1,7 +1,7 @@
-Falon     word length bonus         
-Falon     dict include 3 letter words 
+DONE     word length bonus         
+DONE     dict include 3 letter words 
 Craig     Put in search word  		
-Falon     removing words           
+Falon     removing words ....NEED TO FIGURE OUT REPLACEMENT           
 ????      animations?
 ????      Clock of some sort
 Falon     word completion or arrows or both (box positioning using pos_hint)

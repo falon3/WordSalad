@@ -115,6 +115,7 @@ class Board():
     _highlighted = OrderedDict()
     _dictionary = Dictograph("us_cad_dict.txt")
     
+
     def highlight(tile, highlight=[0,1,1,1]):    
         # if not highlighted
         if tile not in Board._highlighted:
@@ -142,6 +143,7 @@ class Board():
         # declare the widget for the app to display
         layout = BoxLayout(orientation = 'vertical')
         tiles = []
+        Board.tiles = tiles
         Header = BoxLayout(orientation = 'horizontal')
         layout.add_widget(Header)
         Score = Label()   
@@ -165,6 +167,7 @@ class Board():
             tile = Tile(i)
             tiles.append(tile)
             row.add_widget(tile)
+
             
         
         # fill out edges of graph
@@ -335,18 +338,33 @@ class Tile(Button):
                     word = word + letter
                     
                 if word.lower() in Board._dictionary.words:
-                    print("SUCCESS!")
+                    # word length bonus of (addtional letter)/2 times the score
+                    # for each letter over 3
+                    if len(word) > 3: 
+                        score = int(score + score*((len(word)-3)/2))
                     Board.score = str(int(Board.score) + score)
                     Score = Board.Score 
                     Score.text = "SCORE: " + Board.score
-                    
-                    #save score somewhere
-                    #remove tiles 
+
+                    # remove and replace tiles 
+
+
+                    # right now we remove and replace but nothing fancy happens
+                    # with jumbling up an entire area of the board when they are being replaced
+                    # and the graph class properties are not carried onto the new tiles
+                    # or the moved tiles
+                    for tile in Board._highlighted:
+                        new = Board.tiles.index(tile)
+                        root = tile.parent
+                        root.remove_widget(tile)
+                        new_tile = Tile(new)
+                        root.add_widget(new_tile)
+                
                 else:
                     for tile in Board._highlighted:
                         tile.background_color = [1,1,1,1]
                         
-                #xclear highlighted list
+                # clear highlighted list
                 Board._highlighted.clear()
                     
                 return True
