@@ -114,6 +114,7 @@ class Board():
     score = '0'
     _highlighted = OrderedDict()
     _dictionary = Dictograph("us_cad_dict.txt")
+    _rows = []
     
     def highlight(tile, highlight=[0,1,1,1]):    
         # if not highlighted
@@ -166,13 +167,21 @@ class Board():
                     
                 row.size_hint_x = 0.9                    
                 layout.add_widget(row)
+                Board._rows.append(row)
 
             tile = Tile(i)
             tiles.append(tile)
             row.add_widget(tile)
 
-            
+        # build graph from board
+        Board.update_board()
         
+        # return the widget for the app to display   
+        return layout
+
+    def update_board():
+        # rebuild tile list from rows
+        tiles = [tile for row in Board._rows for tile in reversed(row.children)]
         # fill out edges of graph
         edges = []
         
@@ -227,13 +236,8 @@ class Board():
                     edges.append((tiles[i], tiles[i+TILE_COLUMNS]))    
         
             # create graph representing the board
-            Board._board = Graph(set(tiles), edges)
-        
-        # return the widget for the app to display
-        
-        
-        return layout
-
+        Board._board = Graph(set(tiles), edges)
+        print("updating")
     
 class Tile(Button):
     """ Represents a tile in the game board.
@@ -367,11 +371,16 @@ class Tile(Button):
                     # and the graph class properties are not carried onto the new tiles
                     # or the moved tiles
                     for tile in Board._highlighted:
-                        new = Board.tiles.index(tile)
+                        new = Board._highlighted[tile]
                         root = tile.parent
                         root.remove_widget(tile)
                         new_tile = Tile(new)
                         root.add_widget(new_tile)
+                        print(tile)
+					
+					# rebuild graph
+                    Board.update_board()
+                        
                 
                 else:
                     for tile in Board._highlighted:
