@@ -16,8 +16,10 @@ from kivy.properties import StringProperty, ObjectProperty, NumericProperty
 # from kivy.animation import Animation
 from kivy.app import App
 from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.graphics import Color, Rectangle
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 
 from collections import OrderedDict
 from random import randint
@@ -25,8 +27,8 @@ import string
 
 from graph_v2 import Graph
 
-TILE_COLUMNS = 12   # number of columns in the game board
-TILE_ROWS = 9       # number of rows in the game board
+TILE_COLUMNS = 8   # number of columns in the game board
+TILE_ROWS = 6       # number of rows in the game board
 
 class Dictograph():
     """A word list used for checking words and populating the board.
@@ -47,12 +49,12 @@ class Dictograph():
             count = 0
             for line in dictionary:
                 # trying to get the first character group
-                word = line.split(' ')[0].rstrip('\n')
+                word = line.split(' ')[0].rstrip('\r\n')
                 
                 # read once we are past the credits
                 if reading:
                     if word.find("'") == -1 and word[0] != word[0].upper() \
-                        and len(word) > 3:
+                        and len(word) > 2:
                         words.append(word)
                 else:
                     # check for end of credits
@@ -75,22 +77,18 @@ class Dictograph():
                     # if letter
                     edges.append(
         """
-                
+        self.words = set(words) # make it a set
+        
         # build a list of all words that share the same letter at the same position
         
             # add an edge from that letter/position to all next adjacent letters/positions
             # repeat
 class Letters():
     """A quick class for selecting letters to populate the board with.
-    
-    TODO: Remove this once we can populate the board with partial words.
     """
     
-    # not including 'Y' for our purposes here
-    Vowels = "AEIOU"
-    # complicated way of getting around typing out the capitalized consonants
-    _trans = Vowels.maketrans('','', Vowels)
-    Consonants = string.ascii_uppercase.translate(_trans)
+    letters = "AEIOUAEIOUAEIOUBCDFGHJKLMNPQRSTVWXYYZ"
+    
     # TODO: these were taken directly from scrabble - replace with own values
     Value = {'A':1,'B':3,'C':3,'D':2,'E':1,'F':4,'G':2,'H':4,'I':1,'J':8,'K':5,\
         'L':1,'M':3,'N':1,'O':1,'P':3,'Q':10,'R':1,'S':1,'T':1,'U':1,'V':4,    \
@@ -112,11 +110,13 @@ class Board():
     
     
     """    
-    
+    Score = None
+    score = '0'
     _highlighted = OrderedDict()
-    _dictionary = Dictograph("us_dict.txt")
+    _dictionary = Dictograph("us_cad_dict.txt")
+    _rows = []
     
-    def highlight(tile):    
+    def highlight(tile, highlight=[0,1,1,1]):    
         # if not highlighted
         if tile not in Board._highlighted:
             last = None
@@ -127,11 +127,10 @@ class Board():
             # if last exists, get neighbors
             if last:
                 neighbours = Board._board.neighbours(last)
-            
-            # allow highlighting if
-            if not last or tile in neighbours:
+            # allow highlighting if first tile or adjacent tile
+            if not last or tile in neighbours:                
                 Board._highlighted[tile] = len(Board._highlighted)
-                tile.background_color = [0,1,1,1]
+                tile.background_color = highlight
         
         # if already highlighted
         elif Board._highlighted[tile] == len(Board._highlighted) - 2:
@@ -142,77 +141,129 @@ class Board():
     
     def build_board():
         # declare the widget for the app to display
-        layout = GridLayout(cols=TILE_COLUMNS)
+        layout = BoxLayout(orientation = 'vertical')
         tiles = []
+        Board.tiles = tiles
+        Header = BoxLayout(orientation = 'horizontal')
+        layout.add_widget(Header)
+        Score = Label()   
+        Board.Score = Score 
+        Score.text = "SCORE: " + Board.score   
+        Header.add_widget(Score)
+
+        Board.Word_complete = Label()
+        Board.Word_complete.text = ''
+        Header.add_widget(Board.Word_complete)
+        
         
         # add all the tiles to the board
         for i in range(TILE_COLUMNS * TILE_ROWS):
+            if i % TILE_COLUMNS == 0:
+                row = BoxLayout(orientation = 'horizontal')
+                if i % (2 * TILE_COLUMNS) == 0:                    
+                    row.pos_hint = {'right': .975}       
+                else:                              
+                    row.pos_hint = {'right': .92}       
+                    
+                row.size_hint_x = 0.9                    
+                layout.add_widget(row)
+                Board._rows.append(row)
+
             tile = Tile(i)
             tiles.append(tile)
-            layout.add_widget(tile)
-            
+            row.add_widget(tile)
+
+        # build graph from board
+        Board.update_board()
         
+        # return the widget for the app to display   
+        return layout
+
+    def update_board():
+        # rebuild tile list from rows
+        tiles = [tile for row in Board._rows for tile in reversed(row.children)]
         # fill out edges of graph
         edges = []
-        for i in range(len(tiles)):
+        
+        # check if at board boundaries
+        
+        for i in range(len(tiles)):           
+            
+            left = i % TILE_COLUMNS == 0
+            right = i % TILE_COLUMNS == TILE_COLUMNS - 1 
+            top = i // TILE_COLUMNS == 0
+            bottom = i // TILE_COLUMNS == TILE_ROWS - 1
+            
+            
+            # offset == 1 for odd rows, 0 for even
+            offset = (i // TILE_COLUMNS) % 2
+            # even == True if offset == 0
+            even = offset == 0
+                        
+            # NOTE: effectively the two values above are identical, but 
+            #       I've given them different names because they are
+            #       used for different purposes
+            
             # not left of the board
-            if i % TILE_COLUMNS > 0:
+            if not left:
                 edges.append((tiles[i], tiles[i-1]))
                 
             # not right of the board
-            if i % TILE_COLUMNS < TILE_COLUMNS - 1:
+            if not right:
                 edges.append((tiles[i], tiles[i+1]))
             
             # not top of the board
-            if i // TILE_COLUMNS > 0:
-                edges.append((tiles[i], tiles[i-TILE_COLUMNS]))
+            if not top:      
+                if not right:
+                    edges.append((tiles[i], tiles[i-TILE_COLUMNS + 1 - offset]))  
+                elif not even:  # right and odd
+                    edges.append((tiles[i], tiles[i-TILE_COLUMNS]))            
+                if not left: 
+                    edges.append((tiles[i], tiles[i-TILE_COLUMNS - offset]))  
+                elif even:  # left and even
+                    edges.append((tiles[i], tiles[i-TILE_COLUMNS]))         
+            
                 
             # not bottom of the board
-            if i // TILE_COLUMNS < TILE_ROWS - 1:
-                edges.append((tiles[i], tiles[i+TILE_COLUMNS]))    
+            if not bottom:
+                if not right:
+                    edges.append((tiles[i], tiles[i+TILE_COLUMNS + 1 - offset]))
+                elif not even:  # right and odd
+                    edges.append((tiles[i], tiles[i+TILE_COLUMNS]))                      
+                if not left:
+                    edges.append((tiles[i], tiles[i+TILE_COLUMNS - offset]))   
+                elif even:  # left and even
+                    edges.append((tiles[i], tiles[i+TILE_COLUMNS]))    
         
             # create graph representing the board
-            Board._board = Graph(set(tiles), edges)
-        
-        # return the widget for the app to display
-        return layout
-
+        Board._board = Graph(set(tiles), edges)
+        print("updating")
     
 class Tile(Button):
     """ Represents a tile in the game board.
     """    
+    
+    def __repr__(self):
+        return self.text
     
     def __init__(self, tilenumber=-1, **kwargs):
         """
         
         """
         # initialize base class
-        super().__init__(**kwargs)
-        
-        self.font_size = 50
+        super().__init__(**kwargs)     
         
         
         # populate board with random letters
-        # TODO: populate board with words and partial words instead
-        letters = None
-        
-        # choose type of letter based on tilenumber
-        if tilenumber != -1:
-            # approximately 60 percent of tiles will be vowels
-            if tilenumber % 5 > 1:
-                letters = Letters.Vowels
-            else: # the rest will be consonants
-                letters = Letters.Consonants
-        else: # otherwise, just choose randomly
-            if randint(0,1) == 0:
-                letters = Letters.Vowels
-            else:
-                letters = Letters.Consonants
+        # TODO: consider populating board with words and partial words
         
         # set the text of this tile
-        letter = letters[randint(0, len(letters)-1)]
-        self.text =  letter
+        rand = randint(0, len(Letters.letters)-1)
+    
+        letter = Letters.letters[rand]
+        self.text = letter
         self.lscore.text = str(Letters.Value[letter])
+        self.font_size = 50
                 
     def on_touch_down(self, touch):  
         """Base kivy method inherited from Button.
@@ -235,6 +286,9 @@ class Tile(Button):
         if touch.is_touch or touch.button == 'left':
             if self.collide_point(touch.x, touch.y):
                 Board.highlight(self)
+                
+                # set grab to catch release off of tiles
+                touch.grab(self)
                 return True
         return False
             
@@ -255,6 +309,13 @@ class Tile(Button):
           True if for currently touched button, False otherwise.
 
         """
+
+        # display current letters selected in sequence selected
+        word = ''
+        for tile in Board._highlighted:
+            letter = tile.text
+            word = word + letter
+            Board.Word_complete.text = word
         
         if touch.is_touch or touch.button == 'left':
             if self.collide_point(touch.x, touch.y):
@@ -279,9 +340,55 @@ class Tile(Button):
           True if for currently touched button, False otherwise.
 
         """
-        # TODO: add code to check word and unhighlight or remove selection
+        # clear word complete text
+        Board.Word_complete.text = ''
+
         if touch.is_touch or touch.button == 'left':
-            if self.collide_point(touch.x, touch.y):
+            if touch.grab_current is self:
+                # release grab
+                touch.ungrab(self)
+                score = 0
+                word = ''
+                for tile in Board._highlighted:
+                    letter = tile.text
+                    score = score + Letters.Value[letter]
+                    word = word + letter
+                    
+                if word.lower() in Board._dictionary.words:
+                    # word length bonus of (addtional letter)/2 times the score
+                    # for each letter over 3
+                    if len(word) > 3: 
+                        score = int(score + score*((len(word)-3)/2))
+                    Board.score = str(int(Board.score) + score)
+                    Score = Board.Score 
+                    Score.text = "SCORE: " + Board.score
+
+                    # remove and replace tiles 
+
+
+                    # right now we remove and replace but nothing fancy happens
+                    # with jumbling up an entire area of the board when they are being replaced
+                    # and the graph class properties are not carried onto the new tiles
+                    # or the moved tiles
+                    for tile in Board._highlighted:
+                        new = Board._highlighted[tile]
+                        root = tile.parent
+                        root.remove_widget(tile)
+                        new_tile = Tile(new)
+                        root.add_widget(new_tile)
+                        print(tile)
+					
+					# rebuild graph
+                    Board.update_board()
+                        
+                
+                else:
+                    for tile in Board._highlighted:
+                        tile.background_color = [1,1,1,1]
+                        
+                # clear highlighted list
+                Board._highlighted.clear()
+                    
                 return True
         return False
         
