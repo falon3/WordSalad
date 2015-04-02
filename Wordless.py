@@ -115,7 +115,6 @@ class Board():
     _highlighted = OrderedDict()
     _dictionary = Dictograph("us_cad_dict.txt")
     
-
     def highlight(tile, highlight=[0,1,1,1]):    
         # if not highlighted
         if tile not in Board._highlighted:
@@ -150,6 +149,10 @@ class Board():
         Board.Score = Score 
         Score.text = "SCORE: " + Board.score   
         Header.add_widget(Score)
+
+        Board.Word_complete = Label()
+        Board.Word_complete.text = ''
+        Header.add_widget(Board.Word_complete)
         
         
         # add all the tiles to the board
@@ -302,6 +305,13 @@ class Tile(Button):
           True if for currently touched button, False otherwise.
 
         """
+
+        # display current letters selected in sequence selected
+        word = ''
+        for tile in Board._highlighted:
+            letter = tile.text
+            word = word + letter
+            Board.Word_complete.text = word
         
         if touch.is_touch or touch.button == 'left':
             if self.collide_point(touch.x, touch.y):
@@ -326,6 +336,9 @@ class Tile(Button):
           True if for currently touched button, False otherwise.
 
         """
+        # clear word complete text
+        Board.Word_complete.text = ''
+
         if touch.is_touch or touch.button == 'left':
             if touch.grab_current is self:
                 # release grab
