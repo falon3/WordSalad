@@ -1,14 +1,20 @@
 DONE     word length bonus         
 DONE     dict include 3 letter words 
-Craig     Put in search word  		
-Falon     removing words; Craig - works for now, but adding item for later
-????      animations?
-????      Clock of some sort
 DONE     word completion or arrows or both (box positioning using pos_hint) NO ARROWS THOUGH... NOT NECESSARY(?)
-????      changing theme/design colors and whatnot
-Craig     new game/new level
+DONE     randomization of letters and amount of vowels?(4:3, cons:vowel) (list of 	  combines letters in ratio to randomly choose from)
+????      animations?
+????      Clock of some sort 
+Craig     new game/new level (score threshhold for making it to next level or failing)
 ????      what happens when lose/win how??
 Craig     ability to shuffle the board, reset  
-DONE      randomization of letters and amount of vowels?(4:3, cons:vowel) (list of 	  combines letters in ratio to randomly choose from)
-Craig (together?)word hint            
-Craig?    revisit update_board to be more efficient, if possible
+Craig     Put in search word
+????      something that keeps track of the high score (writes/reads from a separate file)
+
+Unsure about this one... seems done? what else would be edited?
+Falon     removing words; Craig - works for now, but adding item for later
+
+Optional:
+????      changing theme/design colors and whatnot
+Craig (together?) word hint   
+Craig?    revisit update_board to be more efficient, if possible (MEMOIZATION MAYBE??)
+????      maybe some cheesy prize/reward for each time they level up or something
