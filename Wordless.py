@@ -54,7 +54,7 @@ class Dictograph():
                 # read once we are past the credits
                 if reading:
                     if word.find("'") == -1 and word[0] != word[0].upper() \
-                        and len(word) > 3:
+                        and len(word) > 2:
                         words.append(word)
                 else:
                     # check for end of credits
