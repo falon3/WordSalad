@@ -9,9 +9,7 @@ Craig     new game/new level (score threshhold for making it to next level or fa
 Craig     ability to shuffle the board, reset  
 Craig     Put in search word
 ????      something that keeps track of the high score (writes/reads from a separate file)
-
-Unsure about this one... seems done? what else would be edited?
-Falon     removing words; Craig - works for now, but adding item for later
+DONE      removing words
 
 Optional:
 ????      changing theme/design colors and whatnot

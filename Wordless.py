@@ -20,6 +20,7 @@ from kivy.uix.label import Label
 from kivy.graphics import Color, Rectangle
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
+from kivy.input.provider import MotionEventProvider
 
 from collections import OrderedDict
 from random import randint
@@ -60,39 +61,30 @@ class Dictograph():
                     # check for end of credits
                     if word[0:3] == "---":
                         reading = True
-        
-        c_letter = None
-        c_pos = 0
-        line = 0
-        start = 0
-        same = []
-        edges = set()
-        
-        while line < len(words): # probably needs a better end condition
-            changes = [] # marks position in same where letters change
-            # if the current letter doesn't match the previous letter
-            if words[line][c_pos] != c_letter:
-                # process list of words that are the same to this point
-                # having the current letter/position point to all next adjacent letter/positions
-                n_pos = c_pos + 1
-                
-                for word in same:
-                    # if letter/pos combination not marked, mark it
-                    if ((c_pos, c_letter), (n_pos, n_letter)) not in edges:
-                        edges.append((c_pos, c_letter), (n_pos, n_letter))
-                        
+        root = dict()
+        _end = '_end_'
+        current_dict = root
+        for word in words:
+            for letter in word:
+                current_dict.setdefault(letter, {})
+            current_dict = current_dict.setdefault(_end, _end)
+        print(root)
         
         self.words = set(words) # make it a set
         
-        # build a list of all words that share the same letter at the same position
         
-            # add an edge from that letter/position to all next adjacent letters/positions
-            # repeat
 class Letters():
     """A quick class for selecting letters to populate the board with.
     """
     
-    letters = "AEIOUAEIOUAEIOUBCDFGHJKLMNPQRSTVWXYYZ"
+    letters = "EEEEEEEEEEEETTTTTTTTTAAAAAAAAOOOOOOOOIIIIIIINNNNNNNSSSSSSRRRRRR" \
+            + "HHHHHHDDDDLLLLUUUCCCMMMFFYYWWGGPPBBVKXQJZ" \
+            + "EEEEEEEEEEEETTTTTTTTTAAAAAAAAOOOOOOOOIIIIIIINNNNNNNSSSSSSRRRRRR" \
+            + "HHHHHHDDDDLLLLUUUCCCMMMFFYYWWGGPPBBVK" \
+            + "EEEEEEEEEEEETTTTTTTTTAAAAAAAAOOOOOOOOIIIIIIINNNNNNNSSSSSSRRRRRR" \
+            + "HHHHHHDDDDLLLLUUUCCCMMMFFYYWWGGPPBBVK" \
+            + "EEEEEEEEEEEETTTTTTTTTAAAAAAAAOOOOOOOOIIIIIIINNNNNNNSSSSSSRRRRRR" \
+            + "HHHHHHDDDDLLLLUUUCCCMMMFFYYWWGGPPBBVK"
     
     # TODO: these were taken directly from scrabble - replace with own values
     Value = {'A':1,'B':3,'C':3,'D':2,'E':1,'F':4,'G':2,'H':4,'I':1,'J':8,'K':5,\
@@ -121,21 +113,26 @@ class Board():
     _dictionary = Dictograph("us_cad_dict.txt")
     _rows = []
     
-    def highlight(tile, highlight=[0,1,1,1]):    
+    def highlight(tile, touch):    
         # if not highlighted
-        if tile not in Board._highlighted:
-            last = None
-            if Board._highlighted:
-            # get the last element added to highlighted
-                last = next(reversed(Board._highlighted))
-            
-            # if last exists, get neighbors
-            if last:
-                neighbours = Board._board.neighbours(last)
-            # allow highlighting if first tile or adjacent tile
-            if not last or tile in neighbours:                
-                Board._highlighted[tile] = len(Board._highlighted)
-                tile.background_color = highlight
+        if tile not in Board._highlighted:            
+            # only highlight letter if moving over center.
+            border_x = tile.width / 5
+            border_y = tile.height / 5
+            if tile.x + border_x <= touch.x <= tile.right - border_x \
+                and tile.y + border_y <= touch.y <= tile.top - border_y:
+                last = None
+                if Board._highlighted:
+                # get the last element added to highlighted
+                    last = next(reversed(Board._highlighted))
+                
+                # if last exists, get neighbors
+                if last:
+                    neighbours = Board._board.neighbours(last)
+                # allow highlighting if first tile or adjacent tile
+                if not last or tile in neighbours:                
+                    Board._highlighted[tile] = len(Board._highlighted)
+                    tile.background_color = [0,1,1,1]
         
         # if already highlighted
         elif Board._highlighted[tile] == len(Board._highlighted) - 2:
@@ -153,12 +150,16 @@ class Board():
         layout.add_widget(Header)
         Score = Label()   
         Board.Score = Score 
+        Score.font_size = 35
         Score.text = "SCORE: " + Board.score   
         Header.add_widget(Score)
 
-        Board.Word_complete = Label()
-        Board.Word_complete.text = ''
-        Header.add_widget(Board.Word_complete)
+        
+        Board.word_complete = Label()
+        Board.word_complete.text = ''
+        Board.word_complete.font_size = 30
+        Board.word_complete.color = [0, .7, .7, 1]
+        Header.add_widget(Board.word_complete)
         
         
         # add all the tiles to the board
@@ -240,7 +241,7 @@ class Board():
                 elif even:  # left and even
                     edges.append((tiles[i], tiles[i+TILE_COLUMNS]))    
         
-            # create graph representing the board
+        # create graph representing the board
         Board._board = Graph(set(tiles), edges)
         print("updating")
     
@@ -290,7 +291,7 @@ class Tile(Button):
         
         if touch.is_touch or touch.button == 'left':
             if self.collide_point(touch.x, touch.y):
-                Board.highlight(self)
+                Board.highlight(self, touch)
                 
                 # set grab to catch release off of tiles
                 touch.grab(self)
@@ -320,11 +321,11 @@ class Tile(Button):
         for tile in Board._highlighted:
             letter = tile.text
             word = word + letter
-            Board.Word_complete.text = word
+            Board.word_complete.text = word
         
         if touch.is_touch or touch.button == 'left':
-            if self.collide_point(touch.x, touch.y):
-                Board.highlight(self)
+            if self.collide_point(touch.x, touch.y):                
+                Board.highlight(self, touch)
                 return True
         return False
             
@@ -346,7 +347,7 @@ class Tile(Button):
 
         """
         # clear word complete text
-        Board.Word_complete.text = ''
+        Board.word_complete.text = ''
 
         if touch.is_touch or touch.button == 'left':
             if touch.grab_current is self:
@@ -381,7 +382,6 @@ class Tile(Button):
                         root.remove_widget(tile)
                         new_tile = Tile(new)
                         root.add_widget(new_tile)
-                        print(tile)
 					
 					# rebuild graph
                     Board.update_board()
