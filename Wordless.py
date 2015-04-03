@@ -376,7 +376,6 @@ class Tile(Button):
                         root.remove_widget(tile)
                         new_tile = Tile(new)
                         root.add_widget(new_tile)
-                        print(tile)
 					
 					# rebuild graph
                     Board.update_board()
