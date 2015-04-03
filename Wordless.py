@@ -31,6 +31,17 @@ from graph_v2 import Graph
 TILE_COLUMNS = 8   # number of columns in the game board
 TILE_ROWS = 6       # number of rows in the game board
 
+
+def word_complete():        
+    # display current letters selected in sequence selected
+    print("TEST")
+    word = ''
+    for tile in Board._highlighted:
+        letter = tile.text
+        word = word + letter
+        Board.word_complete.text = word   
+ 
+
 class Dictograph():
     """A word list used for checking words and populating the board.
     
@@ -61,18 +72,34 @@ class Dictograph():
                     # check for end of credits
                     if word[0:3] == "---":
                         reading = True
+        self.words = set(words) # make it a set
+"""
+        print(in_trie(make_trie('foo', 'bar', 'baz', 'barz'), 'baz'))
+
+    def make_trie(*words):
         root = dict()
         _end = '_end_'
-        current_dict = root
         for word in words:
+            current_dict = root
             for letter in word:
                 current_dict.setdefault(letter, {})
             current_dict = current_dict.setdefault(_end, _end)
         print(root)
-        
-        self.words = set(words) # make it a set
-        
-        
+        return root
+    
+    def in_trie(trie, word):
+        current_dict = trie
+        for letter in word:
+            if letter in current_dict:
+                current_dict = current_dict[letter]
+            else:
+                return False
+        else:
+            if _end in current_dict:
+                return True
+            else:
+                return False    
+    """
 class Letters():
     """A quick class for selecting letters to populate the board with.
     """
@@ -90,7 +117,7 @@ class Letters():
     Value = {'A':1,'B':3,'C':3,'D':2,'E':1,'F':4,'G':2,'H':4,'I':1,'J':8,'K':5,\
         'L':1,'M':3,'N':1,'O':1,'P':3,'Q':10,'R':1,'S':1,'T':1,'U':1,'V':4,    \
         'W':4,'X':8,'Y':4,'Z':10}
-    
+
 class Board():   
     """Represents the game board.
     
@@ -112,6 +139,16 @@ class Board():
     _highlighted = OrderedDict()
     _dictionary = Dictograph("us_cad_dict.txt")
     _rows = []
+    
+    
+    def word_complete():        
+        # display current letters selected in sequence selected
+        print("TEST")
+        word = ''
+        for tile in Board._highlighted:
+            letter = tile.text
+            word = word + letter
+            Board.word_complete.text = word   
     
     def highlight(tile, touch):    
         # if not highlighted
@@ -139,7 +176,10 @@ class Board():
             # unhighlight last tile if going backward
             last = Board._highlighted.popitem(last=True)
             last[0].background_color = [1,1,1,1]
+        print("reached")
+        word_complete()
                 
+    
     
     def build_board():
         # declare the widget for the app to display
@@ -293,6 +333,7 @@ class Tile(Button):
             if self.collide_point(touch.x, touch.y):
                 Board.highlight(self, touch)
                 
+                
                 # set grab to catch release off of tiles
                 touch.grab(self)
                 return True
@@ -315,13 +356,6 @@ class Tile(Button):
           True if for currently touched button, False otherwise.
 
         """
-
-        # display current letters selected in sequence selected
-        word = ''
-        for tile in Board._highlighted:
-            letter = tile.text
-            word = word + letter
-            Board.word_complete.text = word
         
         if touch.is_touch or touch.button == 'left':
             if self.collide_point(touch.x, touch.y):                
@@ -396,7 +430,6 @@ class Tile(Button):
                     
                 return True
         return False
-        
         
         
     """ just keeping this around as an example animation for when we add them
