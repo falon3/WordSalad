@@ -2,14 +2,16 @@ DONE     word length bonus
 DONE     dict include 3 letter words 
 DONE     word completion or arrows or both (box positioning using pos_hint) NO ARROWS THOUGH... NOT NECESSARY(?)
 DONE     randomization of letters and amount of vowels?(4:3, cons:vowel) (list of 	  combines letters in ratio to randomly choose from)
-????      animations?
-Falon      Clock of some sort 
-Craig     new game/new level (score threshhold for making it to next level or failing)
-????      what happens when lose/win how??
-Craig     ability to shuffle the board, reset  
-Craig     Put in search word
-????      something that keeps track of the high score (writes/reads from a separate file)
 DONE      removing words
+Falon     REMOVE RED THINGS!!!
+????      animations? Possible delay for word slide
+Falon      Clock of some sort DOING THIS NEXT
+Craig     new game/new level (score threshhold for making it to next level or failing)
+Falon     what happens when lose/win how?? ---> do the timer countdown with +seconds for words done
+Craig     ability to shuffle the board, reset  
+Craig     Put in search word (just the longest word possible on the board at the time)
+????      something that keeps track of the high score (writes/reads from a separate file)
+
 
 Optional:
 ????      changing theme/design colors and whatnot
