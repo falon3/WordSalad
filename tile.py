@@ -120,7 +120,9 @@ class Tile(Button):
                     _Board.play_area.collide_point(touch.x, touch.y):
                     score = _Board.value
                     _Board.score += score
-                    _Board.progress.value += score
+                    # reset score progress bar every 100 points because reached next level
+                    # maybe display a bubble animation when this happens like (level 1, level 2....)
+                    _Board.progress.value = (_Board.progress.value + score)%_Board.progress.max
                     
                     # remove and replace tiles 
                     # right now we remove and replace but nothing fancy happens
