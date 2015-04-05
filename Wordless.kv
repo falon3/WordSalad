@@ -1,9 +1,11 @@
 #:kivy 1.0.7
 <Board>
     play_area: playArea
-    complete: header.word_complete
+    complete: '_ _ _'
     progress: header.lheader.progress
+    color: [0, .7, .7, 1]
     score: 0
+    value: 0
     orientation: 'vertical'
     Header:
         id: header
@@ -17,9 +19,9 @@
     pos_hint: {'x': .05}
     LeftHeader:
         id: leftHeader
+    BoxLayout:
     WordComplete:
         id: wordComplete
-    PlayArea:
 
 <LeftHeader>
     orientation: 'vertical'
@@ -31,11 +33,20 @@
         id: progressBar  
         value: 0
         max: 50
+        
 <WordComplete>
-    text: '_ _ _'
+    pos_hint: {'right': .75}
+    text: root.parent.parent.complete
     font_size: 30
-    color: [0, .7, .7, 1]
-    
+    color: root.parent.parent.color   
+    Bonus:
+        id: button
+        text: '+' + str(root.parent.parent.value)
+        pos: root.center_x + len(root.text) * 9 - 30, root.y
+        background_color: root.parent.parent.color
+        color: root.parent.parent.color        
+<Bonus>
+        
 <Score>
     Label:
         text: 'SCORE:'

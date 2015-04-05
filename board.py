@@ -1,5 +1,6 @@
 
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.bubble import BubbleButton
 from kivy.uix.label import Label
 from kivy.properties import StringProperty, ObjectProperty, NumericProperty, \
     ListProperty
@@ -9,8 +10,8 @@ from collections import OrderedDict
 from tile import Tile
 from graph_v2 import Graph
 
-TILE_COLUMNS = 6   # number of columns in the game board
-TILE_ROWS = 8       # number of rows in the game board
+TILE_COLUMNS = 6    # number of columns in the game board
+TILE_ROWS = 9       # number of rows in the game board
 
 class Board(BoxLayout):   
     """Represents the game board.
@@ -26,9 +27,9 @@ class Board(BoxLayout):
       _dictionary (Dictograph): A word list used for checking words 
         and populating the board.
       play_area (ObjectProperty): the box layout of the play area
-      complete (ObjectProperty): the word completion label
       progress (ObjectProperty): the progress bar object
       score (NumericProperty): the score
+      complete (StringProperty): the word completion text
     
     
     """    
@@ -36,7 +37,8 @@ class Board(BoxLayout):
     _dictionary = Dictograph("us_cad_dict.txt")
     _columns = []
     play_area = ObjectProperty()
-    complete = ObjectProperty()
+    complete = StringProperty()
+    color = ListProperty()
     progress = ObjectProperty()
     score = NumericProperty()
     
@@ -48,24 +50,34 @@ class Board(BoxLayout):
         return False
     
     def complete_word(self, tile):        
-        # display current letters selected in sequence selected
+        # display current letters selected in sequence selected        
+        
+        score = 0
         word = ''
         for tile in self._highlighted:
             letter = tile.text
+            score += Letters.Value[letter]
             word += letter
-            self.complete.text = word 
+            
+        # word length bonus of (addtional letter)*2 times the score
+        # for each letter over 3
+        if len(word) > 2:
+            score += int(score*((len(word)-3)/2))
+        
+        self.value = score
+        self.complete = word 
         # word is green if found
         word_found = self._dictionary.lookup(word)
         if word_found:
-            self.complete.color = [0, .7, .7, 1]
+            self.color = [0, .7, .7, 1]
         # yellow if possible
         elif word_found != None:            
             #if _Board.check_neighbors(tile, word):
-            self.complete.color = [.7, .7, 0, 1]
+            self.color = [.7, .7, 0, 1]
             #else:
             #    _Board.word_complete.color = [.7, 0, 0, 1]    
         else:
-            self.complete.color = [.7, 0, 0, 1]
+            self.color = [.7, 0, 0, 1]
     
     def highlight(self, tile, touch):    
         # if not highlighted
@@ -205,3 +217,12 @@ class Score(BoxLayout):
 
 class WordComplete(Label):
     pass    
+
+class Bonus(BubbleButton):    
+    def on_touch_down(self, touch): 
+        pass
+    def on_touch_up(self, touch): 
+        pass
+    def on_touch_move(self, touch): 
+        pass
+    
