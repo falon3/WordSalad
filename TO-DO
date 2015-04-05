@@ -1,20 +1,31 @@
-DONE     word length bonus         
-DONE     dict include 3 letter words 
-DONE     word completion or arrows or both (box positioning using pos_hint) NO ARROWS THOUGH... NOT NECESSARY(?)
-DONE     randomization of letters and amount of vowels?(4:3, cons:vowel) (list of 	  combines letters in ratio to randomly choose from)
-DONE      removing words
-Falon     REMOVE RED THINGS!!!
-????      animations? Possible delay for word slide
-Falon      Clock of some sort DOING THIS NEXT
-Craig     new game/new level (score threshhold for making it to next level or failing)
-Falon     what happens when lose/win how?? ---> do the timer countdown with +seconds for words done
-Craig     ability to shuffle the board, reset  
-Craig     Put in search word (just the longest word possible on the board at the time)
-????      something that keeps track of the high score (writes/reads from a separate file)
+DONE    word length bonus         
+DONE    dict include 3 letter words 
+DONE    word completion or arrows or both (box positioning using pos_hint) NO ARROWS THOUGH... NOT NECESSARY(?)
+DONE    randomization of letters and amount of vowels?(4:3, cons:vowel) (list of 	  combines letters in ratio to randomly choose from)
+DONE    removing words
+DONE    REMOVE RED THINGS!!!
+DONE    changed rows to columns
+DONE    added color to word hint, yellow is a partial word, green is a whole word
+DONE    moved layout to .kv file for better control
+DONE    made a number of "control" class attributes in Board class      
+DONE    added a progress bar below Score, doesn't do anything yet
+Craig   animations? Possible delay for word slide - STARTED, needs a bit of work
+Craig   ability to shuffle the board, reset  
+Craig   Put in search word (just the longest word possible on the board at the time)
+Craig?  Add bubble to word complete to indicate how many points the word will give
+Falon   Clock of some sort DOING THIS NEXT
+Falon?  make progress bar work (you'd mentioned wanting to do this)
+Falon?  new game/new level (score threshhold for making it to next level or failing) - GOES WITH PREVIOUS
+Falon   what happens when lose/win how?? ---> do the timer countdown with +seconds for words done
+????    something that keeps track of the high score (writes/reads from a separate file)
 
 
 Optional:
 ????      changing theme/design colors and whatnot
-Craig (together?) word hint   
+Craig   (together?) word hint   
 Craig?    revisit update_board to be more efficient, if possible (MEMOIZATION MAYBE??)
 ????      maybe some cheesy prize/reward for each time they level up or something
+
+Changes:
+    I played with the score assignment slightly (4 times more bonus for length). I figure we will be changing this
+    more anyway once we have the levels and timer working.
