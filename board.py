@@ -113,7 +113,7 @@ class Board(BoxLayout):
                 column = Column()
                 # swap these conditions if going horizontal
                 if i % (2 * TILE_COLUMNS) == 0:      
-                    column.pos_hint = {'top': .92}   
+                    column.pos_hint = {'top': .9}   
                 else:       
                     column.pos_hint = {'top': .975}       
                           
