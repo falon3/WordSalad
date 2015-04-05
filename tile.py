@@ -124,9 +124,9 @@ class Tile(Button):
                     _Board.play_area.collide_point(touch.x, touch.y):
                     # word length bonus of (addtional letter)*2 times the score
                     # for each letter over 3
-                    score += score*((len(word)-3)*2)
+                    score += int(score*((len(word)-3)/2))
                     _Board.score += score
-
+                    _Board.progress.value += score
                     # remove and replace tiles 
 
 
