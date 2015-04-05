@@ -1,4 +1,56 @@
 #:kivy 1.0.7
+<Board>
+    play_area: playArea
+    complete: header.word_complete
+    progress: header.lheader.progress
+    score: 0
+    orientation: 'vertical'
+    Header:
+        id: header
+    PlayArea:
+        id: playArea
+<Header>
+    word_complete: wordComplete
+    lheader: leftHeader
+    orientation: 'horizontal'
+    size_hint: .85, .1
+    pos_hint: {'x': .05}
+    LeftHeader:
+        id: leftHeader
+    WordComplete:
+        id: wordComplete
+    PlayArea:
+
+<LeftHeader>
+    orientation: 'vertical'
+    progress: progressBar
+    score: scoreboard
+    Score:
+        id: scoreboard
+    ProgressBar:
+        id: progressBar  
+        value: 50
+<WordComplete>
+    text: '_ _ _'
+    font_size: 30
+    color: [0, .7, .7, 1]
+    
+<Score>
+    Label:
+        text: 'SCORE:'
+        font_size: 35
+    Label:
+        font_size: 35
+        text: str(root.parent.parent.parent.score)
+<PlayArea>
+    orientation: 'horizontal'
+    size_hint: .9, .8
+    pos_hint: {'x': .05}
+    
+<Column>
+    orientation: 'vertical'
+    size_hint_y: .9
+    
 <Tile>:
     lscore: letter_score
     Label:
