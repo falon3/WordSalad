@@ -223,4 +223,3 @@ class Tile(Button):
         if not Tile.anims_to_complete:
             # rebuild graph
             _Board.update_board()
-            pass       
