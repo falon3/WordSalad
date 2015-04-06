@@ -9,6 +9,9 @@ from words import Letters, Dictograph
 from collections import OrderedDict
 from tile import Tile
 from graph_v2 import Graph
+import time
+from kivy.clock import Clock
+from random import randint
 
 TILE_COLUMNS = 6    # number of columns in the game board
 TILE_ROWS = 9       # number of rows in the game board
@@ -200,6 +203,8 @@ class Board(BoxLayout):
         # create graph representing the board
         self._board = Graph(set(tiles), edges)
 
+
+
 class Column(BoxLayout):
     missing_tiles = 0
     pass
@@ -217,7 +222,24 @@ class Score(BoxLayout):
     pass
 
 class WordComplete(Label):
-    pass    
+    pass 
+
+class GameTimer(BoxLayout):
+    seconds = NumericProperty()
+    
+    def __init__(self, **kwargs):
+        
+        # call parent class init
+        super(GameTimer, self).__init__(**kwargs)
+        
+        Clock.schedule_interval(self.update, 1.0)
+
+    def update(self, time_passed):
+        if self.seconds > 0:
+            self.seconds = self.seconds - time_passed
+        else:
+            GameOver(Board.score)
+    
 
 class Bonus(BubbleButton):    
     def on_touch_down(self, touch): 
@@ -227,3 +249,6 @@ class Bonus(BubbleButton):
     def on_touch_move(self, touch): 
         pass
     
+def GameOver(end_score):
+    print(end_score)
+    exit()
