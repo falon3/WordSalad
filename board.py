@@ -11,6 +11,7 @@ from tile import Tile
 from graph_v2 import Graph
 import time
 from kivy.clock import Clock
+from random import randint
 
 TILE_COLUMNS = 6    # number of columns in the game board
 TILE_ROWS = 9       # number of rows in the game board
@@ -222,11 +223,21 @@ class Score(BoxLayout):
 class WordComplete(Label):
     pass 
 
-class Game_Timer(BoxLayout):
-    seconds = StringProperty()
+class GameTimer(BoxLayout):
+    seconds = NumericProperty()
+    #counter = Game_Timer()
+    #Clock.schedule_interval(counter.update, 1.0)
+    
+    def __init__(self, **kwargs):
+        
+        # call parent class init
+        super(GameTimer, self).__init__(**kwargs)
+        
+        Clock.schedule_interval(self.update, 1.0)
 
-    def update(self):
-        self.seconds = datetime.time(0,0,60) - datetime.timedelta(0,1)
+    def update(self, time_passed):
+        print(time_passed)
+        self.seconds = self.seconds - time_passed
     
 
 class Bonus(BubbleButton):    
