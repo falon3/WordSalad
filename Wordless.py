@@ -23,6 +23,8 @@ class Wordless(App):
     """
     def build(self):                    
         layout = Board()
+        counter = Game_Timer()
+        Clock.schedule_interval(counter.update, 1.0)
         return layout
 
     
