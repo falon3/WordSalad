@@ -3,6 +3,7 @@ from random import randint
 from kivy.uix.button import Button
 from words import Letters
 from kivy.animation import Animation
+from kivy.properties import ObjectProperty
 
 _Board = None
 
@@ -10,6 +11,8 @@ class Tile(Button):
     """ Represents a tile in the game board.
     """    
     anims_to_complete = 0
+    animating = False
+    lscore = ObjectProperty()
     
     def __repr__(self):
         return self.text
@@ -23,7 +26,7 @@ class Tile(Button):
             _Board = board
             
         # initialize base class
-        super().__init__(**kwargs)     
+        super(Tile, self).__init__(**kwargs)     
         
         
         # populate board with random letters
@@ -56,7 +59,8 @@ class Tile(Button):
         """      
         touch.multitouch_sim = False
         if touch.is_touch or touch.button == 'left':
-            if self.collide_point(touch.x, touch.y):
+            if self.collide_point(touch.x, touch.y) \
+                and not Tile.anims_to_complete:
                 _Board.highlight(self, touch)            
                 
                 # set grab to catch release off of tiles
@@ -82,9 +86,9 @@ class Tile(Button):
           True if for currently touched button, False otherwise.
 
         """
-        
         if touch.is_touch or touch.button == 'left':
-            if self.collide_point(touch.x, touch.y):                
+            if self.collide_point(touch.x, touch.y) \
+                and not Tile.anims_to_complete: 
                 _Board.highlight(self, touch)
                 return True
         return False
@@ -122,20 +126,32 @@ class Tile(Button):
                     _Board.score += score
                     _Board.progress.value += score
                     
-                    # remove and replace tiles 
-                    # right now we remove and replace but nothing fancy happens
-                    # with jumbling up an entire area of the board when they are being replaced
-                    # and the graph class properties are not carried onto the new tiles
-                    # or the moved tiles
+                    affected_columns = set()
+                    # find columns with tiles to remove
                     for tile in _Board._highlighted:
-                        root = tile.parent
-                        new_tile = Tile()
-                        root.add_widget(new_tile)
-                        tile.remove()
-					
-                    #_Board.update_board()
+                        affected_columns.add(tile.parent)
                         
-                
+                    # remove and replace tiles 
+                    for column in affected_columns:
+                        found = False
+                        i = 0
+                        remove = []
+                        # count tiles removed
+                        for tile in column.children:
+                            if tile in _Board._highlighted:
+                                found = True
+                                remove.append(tile)
+                                column.missing_tiles += 1
+                            elif found:                                    
+                                Tile.fall(column.children, i)
+                            i += 1
+                        add = []
+                        # build animations
+                        for tile in remove:        
+                            add.append(tile.remove())
+                        # apply animations
+                        for new in add:                
+                            Tile.add(new[0], new[1], new[2], new[3])
                 else:
                     for tile in _Board._highlighted:
                         tile.background_color = [1,1,1,1]
@@ -148,52 +164,62 @@ class Tile(Button):
                                     
                 return True
         return False
+    
+    def add(remove, old, add, new):
+        column = old.parent
+        column.add_widget(new, index=len(column.children))
+        column.remove_widget(old)
+        _Board.progress.add_widget(old)
+        remove.start(old)
+        add.start(new)
+    
+    def add_complete(self, instance):     
+        instance.fall_complete(instance)
+        
+    def remove(self):        
+        self.animating = True
+        column = self.parent
+        window = column.parent.get_parent_window()
+        fall_out = Animation(size=self.size,pos=(self.x, -100), \
+            t='out_bounce', d = 2)
+        
+        dest_tile = column.children[len(column.children)-column.missing_tiles]
+        fall_in =  Animation(pos=(self.x, dest_tile.y), \
+            t='out_bounce', d = 1)
+        Tile.anims_to_complete += 1
+        new_tile = Tile()
+        new_tile.x = self.x
+        new_tile.y = window.height + 100
+        new_tile.animating = True
+        
+        fall_out.on_complete = self.remove_complete
+        fall_in.on_complete = new_tile.add_complete
+        
+        column.missing_tiles -= 1 
+        
+        return fall_out, self, fall_in, new_tile
         
     def remove_complete(self, instance):
-        #_Board.progress.remove_widget(instance)
-        instance.parent.remove_widget(instance)
-        instance.update_tiles_complete(instance)
+        _Board.progress.remove_widget(instance)
     
-    def remove(self):
-        # create an animation object.
-        animation = Animation(pos=(self.x, -100), t='out_bounce', d = .3)
-        Tile.anims_to_complete += 1
-        animation.on_complete = self.remove_complete
-        """
-        fall_out = Animation(size=self.size,pos=(self.x, -100), \
-            t='out_bounce', d = 3)
-        window = self.parent.parent.get_parent_window()
-        print("Window: ", window)
-        fall_in =  Animation(size=self.size,pos=(self.x, window.height - 200), \
-            t='out_bounce', d = .5)
-        Tile.anims_to_complete += 1
-        column = self.parent
-        new_tile = Tile()
-        column.add_widget(new_tile)
-        #column.remove_widget(self)
-        #_Board.progress.add_widget(self)
-        fall_out.on_complete = self.remove_complete
-        fall_in.on_complete = new_tile.update_tiles_complete
-        """
-        # apply the animation on the tile
-        animation.start(self) 
-        #fall_out.start(self) 
-        #fall_in.start(new_tile)
+    def fall(tiles, i):
+        tile = tiles[i]
+        tile.animating = True
         
-    def update_tiles_complete(self, instance):
-        Tile.anims_to_complete -= 1
+        prev_tile = tiles[i-tile.parent.missing_tiles]
+        Tile.anims_to_complete += 1
+        animation = Animation(pos=(prev_tile.x, prev_tile.y), \
+                        t='out_bounce', d = 1)
+        animation.on_complete = tile.fall_complete
+        animation.start(tile)
+        
+    def fall_complete(self, instance):
+        Tile.anims_to_complete -= 1 
+        
+        instance.animating = False
         if not Tile.anims_to_complete:
             # rebuild graph
             _Board.update_board()
             pass
             
-    def update_tiles(tiles, i):
-        tile = tiles[i]
-        prev_tile = tiles[i-1]
-        Tile.anims_to_complete += 1
-        animation = Animation(pos=(tile.x, tile.y), t='out_bounce', d = .3)
-        #animation = Animation(size=tile.size, pos=(prev_tile.x, prev_tile.y), \
-        #                t='out_bounce', d = .3)
-        animation.on_complete = tile.update_tiles_complete
-        animation.start(tile)
         

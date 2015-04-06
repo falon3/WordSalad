@@ -201,6 +201,7 @@ class Board(BoxLayout):
         self._board = Graph(set(tiles), edges)
 
 class Column(BoxLayout):
+    missing_tiles = 0
     pass
 
 class LeftHeader(BoxLayout):
