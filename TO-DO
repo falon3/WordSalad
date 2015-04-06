@@ -11,14 +11,14 @@ DONE    made a number of "control" class attributes in Board class
 DONE    added a progress bar below Score, works with the score, may alter the max amount with preference later
 DONE    make progress bar work (you'd mentioned wanting to do this)
 DONE    Add bubble to word complete to indicate how many points the word will give 
+DONE   Clock of some sort 
 Craig   animations? Possible delay for word slide - STARTED, needs a bit of work << FALON LIKES THE CHANGES AND THINK IT'S FINE
 Craig   ability to shuffle the board, start new game(prompt for this.... but needs to be added later)  
 Craig   Put in search word (just the longest word possible on the board at the time)
 Craig   Add animation to bubble
 Craig   Add animation to score
-Falon   Clock of some sort DOING THIS NEXT
 Falon?  new game/new level score threshhold for making it to next level - GOES WITH NEXT
-Falon   what happens when lose/win how?? ---> do the timer countdown with +seconds for words done
+????    finish GAMEOVER function also with next
 ????    something that keeps track of the high score (writes/reads from a separate file)
 
 
