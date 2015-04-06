@@ -4,6 +4,7 @@
     complete: '_ _ _'
     progress: header.lheader.progress
     game_timer: header.game_timer
+    footer: footer
     color: [0, .7, .7, 1]
     score: 0
     value: 0
@@ -12,19 +13,29 @@
         id: header
     PlayArea:
         id: playArea
+    Label:
+        id: footer
+        size_hint: 1, 0.05
 <Header>
     word_complete: wordComplete
     game_timer: gameTime
     lheader: leftHeader
     orientation: 'horizontal'
-    size_hint: .85, .1
-    pos_hint: {'x': .05}
+    size_hint: .9, .1
+    pos_hint: {'x': .075}
     LeftHeader:
         id: leftHeader
     GameTimer:
         id: gameTime
     WordComplete:
         id: wordComplete
+    Button:
+        text: 'Reset'
+        background_color: .5,.5,.5,.5
+        size_hint: 0.5, 0.5
+        on_press: root.parent.reset_tiles()
+        pos_hint: {'right': 1}
+        
 
 <LeftHeader>
     orientation: 'vertical'
@@ -48,14 +59,13 @@
         font_size: 40
         
 <WordComplete>
-    pos_hint: {'right': .75}
     text: root.parent.parent.complete
-    font_size: 30
+    font_size: 30 - (len(root.text) / 2)
     color: root.parent.parent.color   
     Bonus:
         id: button
         text: '+' + str(root.parent.parent.value)
-        pos: root.center_x + len(root.text) * 9 - 30, root.y
+        pos: root.center_x + len(root.text) * 7 - 30, root.y
         background_color: root.parent.parent.color
         color: root.parent.parent.color        
 <Bonus>

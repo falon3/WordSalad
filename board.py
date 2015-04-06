@@ -11,10 +11,11 @@ from tile import Tile
 from graph_v2 import Graph
 import time
 from kivy.clock import Clock
-from random import randint
 
 TILE_COLUMNS = 6    # number of columns in the game board
 TILE_ROWS = 9       # number of rows in the game board
+
+_Board = None
 
 class Board(BoxLayout):   
     """Represents the game board.
@@ -44,6 +45,7 @@ class Board(BoxLayout):
     color = ListProperty()
     progress = ObjectProperty()
     score = NumericProperty()
+    tiles = []
     
     def check_neighbors(self, tile, word):
         neighbors = self._board.neighbours(tile)
@@ -118,9 +120,10 @@ class Board(BoxLayout):
         # call parent class init
         super(Board, self).__init__(**kwargs)
         # set global instance
-        tiles = []
-        self.tiles = tiles    
-        playArea = self.play_area        
+        tiles = []  
+        playArea = self.play_area      
+        global _Board
+        _Board = self  
         
         # add all the tiles to the board
         for i in range(TILE_COLUMNS * TILE_ROWS):
@@ -147,6 +150,7 @@ class Board(BoxLayout):
         # rebuild tile list from rows
         tiles = [tile for column in self._columns for tile in \
                 reversed(column.children)]
+        self.tiles = tiles
         # fill out edges of graph
         edges = []
         
@@ -203,6 +207,15 @@ class Board(BoxLayout):
         # create graph representing the board
         self._board = Graph(set(tiles), edges)
 
+    def reset_tiles(self):
+        add = []
+        for tile in self.tiles:
+            # add tiles to _highlighted for Tile.replaceTiles
+            self._highlighted[tile] = len(Board._highlighted)
+            tile.background_color = [1,.5,.5,1]
+        Tile.replace_tiles(self._columns)
+        
+        
 
 
 class Column(BoxLayout):
@@ -226,19 +239,20 @@ class WordComplete(Label):
 
 class GameTimer(BoxLayout):
     seconds = NumericProperty()
+    game_over = False
     
-    def __init__(self, **kwargs):
-        
+    def __init__(self, **kwargs):        
         # call parent class init
         super(GameTimer, self).__init__(**kwargs)
         
-        Clock.schedule_interval(self.update, 1.0)
+        Clock.schedule_interval(self.update, .05)
 
     def update(self, time_passed):
         if self.seconds > 0:
             self.seconds = self.seconds - time_passed
-        else:
-            GameOver(Board.score)
+        elif not self.game_over:
+            self.game_over = True
+            GameOver(_Board.score)
     
 
 class Bonus(BubbleButton):    
@@ -251,4 +265,5 @@ class Bonus(BubbleButton):
     
 def GameOver(end_score):
     print(end_score)
-    exit()
+    #_Board.reset_tiles()
+    #exit()

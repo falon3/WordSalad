@@ -1,5 +1,5 @@
 
-from random import randint
+from random import randint, random
 from kivy.uix.button import Button
 from words import Letters
 from kivy.animation import Animation
@@ -112,7 +112,8 @@ class Tile(Button):
         """
 
         if touch.is_touch or touch.button == 'left':
-            if touch.grab_current is self:
+            if touch.grab_current is self\
+                and not Tile.anims_to_complete: 
                 word = _Board.complete
                 # clear word complete text
                 _Board.complete = '_ _ _'
@@ -128,33 +129,14 @@ class Tile(Button):
                     # maybe display a bubble animation when this happens like (level 1, level 2....)
                     _Board.progress.value = (_Board.progress.value + score)%_Board.progress.max
                     _Board.game_timer.seconds += score
-                    
+                                
                     affected_columns = set()
                     # find columns with tiles to remove
                     for tile in _Board._highlighted:
                         affected_columns.add(tile.parent)
-                        
-                    # remove and replace tiles 
-                    for column in affected_columns:
-                        found = False
-                        i = 0
-                        remove = []
-                        # count tiles removed
-                        for tile in column.children:
-                            if tile in _Board._highlighted:
-                                found = True
-                                remove.append(tile)
-                                column.missing_tiles += 1
-                            elif found:                                    
-                                Tile.fall(column.children, i)
-                            i += 1
-                        add = []
-                        # build animations
-                        for tile in remove:        
-                            add.append(tile.remove())
-                        # apply animations
-                        for new in add:                
-                            Tile.add(new[0], new[1], new[2], new[3])
+            
+                    Tile.replace_tiles(affected_columns)
+
                 else:
                     for tile in _Board._highlighted:
                         tile.background_color = [1,1,1,1]
@@ -168,11 +150,39 @@ class Tile(Button):
                 return True
         return False
     
+    def replace_tiles(affected_columns):
+        # remove and replace tiles 
+        for column in affected_columns:
+            found = False
+            i = 0
+            remove = []
+            # count tiles removed
+            for tile in column.children:
+                if tile in _Board._highlighted:
+                    found = True
+                    remove.append(tile)
+                    column.missing_tiles += 1
+                elif found:                                    
+                    Tile.fall(column.children, i)
+                i += 1
+            add = []
+            # build animations
+            for tile in remove:        
+                add.append(tile.remove())
+            # apply animations
+            for new in add:                
+                Tile.add(new[0], new[1], new[2], new[3])
+        
+        _Board._highlighted.clear()
+    
     def add(remove, old, add, new):
+        # change the parent of the removed tiles
         column = old.parent
         column.add_widget(new, index=len(column.children))
         column.remove_widget(old)
-        _Board.progress.add_widget(old)
+        _Board.footer.add_widget(old)
+        
+        # play animations
         remove.start(old)
         add.start(new)
     
@@ -184,7 +194,7 @@ class Tile(Button):
         column = self.parent
         window = column.parent.get_parent_window()
         fall_out = Animation(size=self.size,pos=(self.x, -100), \
-            t='out_bounce', d = 2)
+            t='out_bounce', d = 1.5)
         
         dest_tile = column.children[len(column.children)-column.missing_tiles]
         fall_in =  Animation(pos=(self.x, dest_tile.y), \
