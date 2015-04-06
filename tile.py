@@ -129,17 +129,8 @@ class Tile(Button):
                     _Board.progress.value = (_Board.progress.value + score)%_Board.progress.max
                     _Board.game_timer.seconds += score
                     
-<<<<<<< HEAD
                     affected_columns = set()
                     # find columns with tiles to remove
-=======
-
-                    # remove and replace tiles 
-                    # right now we remove and replace but nothing fancy happens
-                    # with jumbling up an entire area of the board when they are being replaced
-                    # and the graph class properties are not carried onto the new tiles
-                    # or the moved tiles
->>>>>>> origin/master
                     for tile in _Board._highlighted:
                         affected_columns.add(tile.parent)
                         
@@ -232,6 +223,4 @@ class Tile(Button):
         if not Tile.anims_to_complete:
             # rebuild graph
             _Board.update_board()
-            pass
-            
-        
+            pass       
