@@ -225,8 +225,6 @@ class WordComplete(Label):
 
 class GameTimer(BoxLayout):
     seconds = NumericProperty()
-    #counter = Game_Timer()
-    #Clock.schedule_interval(counter.update, 1.0)
     
     def __init__(self, **kwargs):
         
@@ -236,8 +234,10 @@ class GameTimer(BoxLayout):
         Clock.schedule_interval(self.update, 1.0)
 
     def update(self, time_passed):
-        print(time_passed)
-        self.seconds = self.seconds - time_passed
+        if self.seconds > 0:
+            self.seconds = self.seconds - time_passed
+        else:
+            GameOver(Board.score)
     
 
 class Bonus(BubbleButton):    
@@ -248,3 +248,6 @@ class Bonus(BubbleButton):
     def on_touch_move(self, touch): 
         pass
     
+def GameOver(end_score):
+    print(end_score)
+    exit()

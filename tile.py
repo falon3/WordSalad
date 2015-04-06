@@ -123,7 +123,9 @@ class Tile(Button):
                     # reset score progress bar every 100 points because reached next level
                     # maybe display a bubble animation when this happens like (level 1, level 2....)
                     _Board.progress.value = (_Board.progress.value + score)%_Board.progress.max
+                    _Board.game_timer.seconds += score
                     
+
                     # remove and replace tiles 
                     # right now we remove and replace but nothing fancy happens
                     # with jumbling up an entire area of the board when they are being replaced
