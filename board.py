@@ -335,15 +335,17 @@ def GameOver(end_score):
     with open('high_scores.txt', 'r+') as file:
         highest = int(file.readline())
         for line in file:
+            if line == '':
+                line = 0
             if int(line) > highest:
                 highest = int(line)
 
         if end_score > highest:
             #new high score!!!
             print("NEW HIGH SCORE!!!", end_score)
-            end_score = str(end_score)
-            file.write(end_score)
+            file.write(str(end_score))
             file.write("\n")
+            
             
     _Board.manager.transition = RiseInTransition(duration=.5)
     _Board.manager.current = 'menu'
