@@ -1,28 +1,40 @@
 #:kivy 1.0.7
 <Board>
+    # general properties
     play_area: playArea
     complete: '_ _ _'
     progress: header.lheader.progress
     game_timer: header.game_timer
     footer: footer
     color: [0, .7, .7, 1]
+    tile_color: [1,1,1,1]
     score: 0
     value: 0
+    
     orientation: 'vertical'
+    
     Header:
         id: header
     PlayArea:
         id: playArea
-    Label:
+    Footer:
         id: footer
         size_hint: 1, 0.05
+        
+<Footer>
+    Bonus:      
+        pos: -5000, -5000
+        id: button
+        text: '+' + str(root.parent.value)
 <Header>
     word_complete: wordComplete
     game_timer: gameTime
     lheader: leftHeader
     orientation: 'horizontal'
-    size_hint: .9, .1
-    pos_hint: {'x': .075}
+    size_hint: .9, .2
+    pos_hint: {'x': .05}
+    BoxLayout:
+        size_hint: 0.25, 1
     LeftHeader:
         id: leftHeader
     GameTimer:
@@ -44,39 +56,42 @@
     Score: 
         id: scoreboard
     ProgressBar:
+        pos_hint: {'x': -.05}
         id: progressBar  
         value: 0
         max: 100
 
 <GameTimer>:
-    seconds: 30
+    seconds: 60
+    displayed_seconds: 0
     orientation: 'vertical'
     Label:
         text: 'TIME:'
         font_size: 25
     Label:
-        text: str(int(root.seconds))
-        font_size: 40
+        text: str(root.displayed_seconds)
+        font_size: 50
         
 <WordComplete>
     text: root.parent.parent.complete
-    font_size: 30 - (len(root.text) / 2)
+    font_size: max(30 - (len(root.text) / 2), 10)
     color: root.parent.parent.color   
-    Bonus:
+    Bonus:      
         id: button
         text: '+' + str(root.parent.parent.value)
-        pos: root.center_x + len(root.text) * 7 - 30, root.y
-        background_color: root.parent.parent.color
-        color: root.parent.parent.color        
+        pos: root.center_x + len(root.text) * 8 - 30, root.center_y - 20
+        color: root.parent.parent.color  
 <Bonus>
-        
+    font_size: 30
+    background_color: .5,.5,.5,.5
 <Score>
+    displayed_score: 0
     Label:
         text: 'SCORE:'
         font_size: 35
     Label:
-        font_size: 35
-        text: str(root.parent.parent.parent.score)
+        font_size: 40
+        text: str(root.displayed_score)
 <PlayArea>
     orientation: 'horizontal'
     size_hint: .9, .8
@@ -88,6 +103,7 @@
     
 <Tile>:
     lscore: letter_score
+    font_size: 50
     Label:
         id: letter_score
         text: "4"

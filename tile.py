@@ -26,7 +26,10 @@ class Tile(Button):
             _Board = board
             
         # initialize base class
-        super(Tile, self).__init__(**kwargs)     
+        super(Tile, self).__init__(**kwargs)    
+        
+        # keep tile color updated
+        _Board.bind(tile_color=self.update_color) 
         
         
         # populate board with random letters
@@ -38,7 +41,10 @@ class Tile(Button):
         letter = Letters.letters[rand]
         self.text = letter
         self.lscore.text = str(Letters.Value[letter])
-        self.font_size = 50
+    
+    def update_color(self, instance, value):
+        if self in _Board._highlighted or value == [1,1,1,1]:
+            self.background_color = value
                 
     def on_touch_down(self, touch):  
         """Base kivy method inherited from Button.
@@ -193,7 +199,7 @@ class Tile(Button):
         self.animating = True
         column = self.parent
         window = column.parent.get_parent_window()
-        fall_out = Animation(size=self.size,pos=(self.x, -100), \
+        fall_out = Animation(size=self.size,pos=(self.x, -125), \
             t='out_bounce', d = 1.5)
         
         dest_tile = column.children[len(column.children)-column.missing_tiles]
@@ -213,7 +219,8 @@ class Tile(Button):
         return fall_out, self, fall_in, new_tile
         
     def remove_complete(self, instance):
-        _Board.progress.remove_widget(instance)
+        _Board.footer.remove_widget(instance)
+        
     
     def fall(tiles, i):
         tile = tiles[i]

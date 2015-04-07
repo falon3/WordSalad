@@ -12,8 +12,8 @@ from graph_v2 import Graph
 import time
 from kivy.clock import Clock
 
-TILE_COLUMNS = 6    # number of columns in the game board
-TILE_ROWS = 9       # number of rows in the game board
+TILE_ROWS = 7       # number of rows in the game board
+TILE_COLUMNS = 11   # number of columns  in the game board
 
 _Board = None
 
@@ -43,6 +43,7 @@ class Board(BoxLayout):
     play_area = ObjectProperty()
     complete = StringProperty()
     color = ListProperty()
+    tile_color = ListProperty([1,1,1,1])
     progress = ObjectProperty()
     score = NumericProperty()
     tiles = []
@@ -75,45 +76,47 @@ class Board(BoxLayout):
         word_found = self._dictionary.lookup(word)
         if word_found:
             self.color = [0, .7, .7, 1]
+            self.tile_color = [0,1,1,1]
         # yellow if possible
         elif word_found != None:            
-            #if _Board.check_neighbors(tile, word):
             self.color = [.7, .7, 0, 1]
-            #else:
-            #    _Board.word_complete.color = [.7, 0, 0, 1]    
+            self.tile_color = [1,1,0,1]
+        # red if not possible
         else:
             self.color = [.7, 0, 0, 1]
+            self.tile_color = [1,0,0,1]
     
-    def highlight(self, tile, touch):    
-        # if not highlighted
-        if tile not in self._highlighted:            
-            # only highlight letter if moving over center.
-            border_x = tile.width / 10
-            border_y = tile.height / 10
-            if tile.x + border_x <= touch.x <= tile.right - border_x \
-                and tile.y + border_y <= touch.y <= tile.top - border_y \
-                or not touch.px:
-                last = None
-                if self._highlighted:
-                # get the last element added to highlighted
-                    last = next(reversed(self._highlighted))
-                
-                # if last exists, get neighbors
-                if last:
-                    neighbours = self._board.neighbours(last)
-                # allow highlighting if first tile or adjacent tile
-                if not last or tile in neighbours:                
-                    self._highlighted[tile] = len(self._highlighted)
-                    tile.background_color = [0,1,1,1]
-        
-        # if already highlighted
-        elif self._highlighted[tile] == len(self._highlighted) - 2:
-            # unhighlight last tile if going backward
-            last = self._highlighted.popitem(last=True)
-            last[0].background_color = [1,1,1,1]
-        
-        # display current letters selected in sequence selected
-        self.complete_word(tile)
+    def highlight(self, tile, touch):           
+        # only highlight letter if moving over center.
+        border_x = tile.width / 10
+        border_y = tile.height / 10
+        if tile.x + border_x <= touch.x <= tile.right - border_x \
+            and tile.y + border_y <= touch.y <= tile.top - border_y \
+            or not touch.px:
+            # if not highlighted
+            if tile not in self._highlighted:     
+                    last = None
+                    if self._highlighted:
+                    # get the last element added to highlighted
+                        last = next(reversed(self._highlighted))
+                    
+                    # if last exists, get neighbors
+                    if last:
+                        neighbours = self._board.neighbours(last)
+                    # allow highlighting if first tile or adjacent tile
+                    if not last or tile in neighbours:                
+                        self._highlighted[tile] = len(self._highlighted)
+                        tile.background_color = self.tile_color
+            
+            # if already highlighted
+            elif self._highlighted[tile] == len(self._highlighted) - 2:
+                # unhighlight last tile if going backward
+                last = self._highlighted.popitem(last=True)
+                last[0].background_color = [1,1,1,1]
+            
+            
+            # display current letters selected in sequence selected
+            self.complete_word(tile)
         
     def __init__(self, **kwargs):
         
@@ -126,12 +129,12 @@ class Board(BoxLayout):
         _Board = self  
         
         # add all the tiles to the board
-        for i in range(TILE_COLUMNS * TILE_ROWS):
-            if i % TILE_COLUMNS == 0:
+        for i in range(TILE_ROWS * TILE_COLUMNS):
+            if i % TILE_ROWS == 0:
                 column = Column()
                 # swap these conditions if going horizontal
-                if i % (2 * TILE_COLUMNS) == 0:      
-                    column.pos_hint = {'top': .9}   
+                if i % (2 * TILE_ROWS) == 0:      
+                    column.pos_hint = {'top': .915}   
                 else:       
                     column.pos_hint = {'top': .975}       
                           
@@ -158,14 +161,14 @@ class Board(BoxLayout):
         
         for i in range(len(tiles)):           
             
-            left = i % TILE_COLUMNS == 0
-            right = i % TILE_COLUMNS == TILE_COLUMNS - 1 
-            top = i // TILE_COLUMNS == 0
-            bottom = i // TILE_COLUMNS == TILE_ROWS - 1
+            left = i % TILE_ROWS == 0
+            right = i % TILE_ROWS == TILE_ROWS - 1 
+            top = i // TILE_ROWS == 0
+            bottom = i // TILE_ROWS == TILE_COLUMNS - 1
             
             
             # offset == 1 for odd rows, 0 for even
-            offset = (i // TILE_COLUMNS) % 2
+            offset = (i // TILE_ROWS) % 2
             # even == True if offset == 0
             even = offset == 0
                         
@@ -184,25 +187,25 @@ class Board(BoxLayout):
             # not top of the board
             if not top:      
                 if not right:
-                    edges.append((tiles[i], tiles[i-TILE_COLUMNS + 1 - offset]))  
+                    edges.append((tiles[i], tiles[i-TILE_ROWS + 1 - offset]))  
                 elif not even:  # right and odd
-                    edges.append((tiles[i], tiles[i-TILE_COLUMNS]))            
+                    edges.append((tiles[i], tiles[i-TILE_ROWS]))            
                 if not left: 
-                    edges.append((tiles[i], tiles[i-TILE_COLUMNS - offset]))  
+                    edges.append((tiles[i], tiles[i-TILE_ROWS - offset]))  
                 elif even:  # left and even
-                    edges.append((tiles[i], tiles[i-TILE_COLUMNS]))         
+                    edges.append((tiles[i], tiles[i-TILE_ROWS]))         
             
                 
             # not bottom of the board
             if not bottom:
                 if not right:
-                    edges.append((tiles[i], tiles[i+TILE_COLUMNS + 1 - offset]))
+                    edges.append((tiles[i], tiles[i+TILE_ROWS + 1 - offset]))
                 elif not even:  # right and odd
-                    edges.append((tiles[i], tiles[i+TILE_COLUMNS]))                      
+                    edges.append((tiles[i], tiles[i+TILE_ROWS]))                      
                 if not left:
-                    edges.append((tiles[i], tiles[i+TILE_COLUMNS - offset]))   
+                    edges.append((tiles[i], tiles[i+TILE_ROWS - offset]))   
                 elif even:  # left and even
-                    edges.append((tiles[i], tiles[i+TILE_COLUMNS]))    
+                    edges.append((tiles[i], tiles[i+TILE_ROWS]))    
         
         # create graph representing the board
         self._board = Graph(set(tiles), edges)
@@ -215,6 +218,7 @@ class Board(BoxLayout):
             tile.background_color = [1,.5,.5,1]
         Tile.replace_tiles(self._columns)
         
+    
         
 
 
@@ -228,17 +232,31 @@ class LeftHeader(BoxLayout):
 class Header(BoxLayout):
     pass
     
+class Footer(Label):
+    pass
+    
 class PlayArea(BoxLayout):
     pass
 
 class Score(BoxLayout):
-    pass
+    displayed_score = NumericProperty()
+    
+    def __init__(self, **kwargs):        
+        # call parent class init
+        super(Score, self).__init__(**kwargs)
+        
+        Clock.schedule_interval(self.update, .05)
+    
+    def update(self, time_passed):
+        if self.displayed_score < _Board.score:
+            self.displayed_score += 1
 
 class WordComplete(Label):
     pass 
 
 class GameTimer(BoxLayout):
     seconds = NumericProperty()
+    displayed_seconds = NumericProperty()
     game_over = False
     
     def __init__(self, **kwargs):        
@@ -248,6 +266,12 @@ class GameTimer(BoxLayout):
         Clock.schedule_interval(self.update, .05)
 
     def update(self, time_passed):
+        if self.displayed_seconds < int(self.seconds):
+            self.displayed_seconds += 1
+        elif self.displayed_seconds > int(self.seconds):
+            self.displayed_seconds -= 1
+        
+        
         if self.seconds > 0:
             self.seconds = self.seconds - time_passed
         elif not self.game_over:
