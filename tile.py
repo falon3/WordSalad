@@ -132,9 +132,17 @@ class Tile(Button):
                     score = _Board.value
                     _Board.score += score
                     # reset score progress bar every 100 points because reached next level
-                    # maybe display a bubble animation when this happens like (level 1, level 2....)
+                    # add seconds to timer when points scored
                     _Board.progress.value = (_Board.progress.value + score)%_Board.progress.max
                     _Board.game_timer.seconds += score
+
+                    print(_Board.level)
+                    if _Board.score > 30 and _Board.level == 0:
+                        _Board.level = 1
+                    
+                    # level up every 100 points
+                    if _Board.level > 0 and _Board.score > 100*_Board.level:
+                        _Board.level += 1
                                 
                     affected_columns = set()
                     # find columns with tiles to remove
