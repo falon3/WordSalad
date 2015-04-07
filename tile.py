@@ -129,6 +129,20 @@ class Tile(Button):
                 # only check word if on playArea
                 if _Board._dictionary.lookup(word) and \
                     _Board.play_area.collide_point(touch.x, touch.y):
+                        
+                    
+                    # add bubble points indicator
+                    bubble = _Board.footer.bubble
+                    # get the last element added to highlighted
+                    last = next(reversed(_Board._highlighted))
+                    bubble.pos = last.pos
+                    bubble.text = _Board.header.word_complete.bubble.text[:]
+                    score_board = _Board.header.lheader.score
+                    move_bubble = Animation(pos=(score_board.x + 50, score_board.y), \
+                        t='in_expo', d = 1)
+                    move_bubble.on_complete = self.done_bubble
+                    move_bubble.start(bubble)
+                    
                     score = _Board.value
                     _Board.score += score
                     # reset score progress bar every 100 points because reached next level
@@ -142,6 +156,7 @@ class Tile(Button):
                         affected_columns.add(tile.parent)
             
                     Tile.replace_tiles(affected_columns)
+                    
 
                 else:
                     for tile in _Board._highlighted:
@@ -155,6 +170,10 @@ class Tile(Button):
                                     
                 return True
         return False
+        
+    def done_bubble(self, instance):
+        # move bubble back off screen
+        instance.pos = -5000, -5000
     
     def replace_tiles(affected_columns):
         # remove and replace tiles 
@@ -186,7 +205,7 @@ class Tile(Button):
         column = old.parent
         column.add_widget(new, index=len(column.children))
         column.remove_widget(old)
-        _Board.footer.add_widget(old)
+        _Board.footer.add_widget(old, index = 1)
         
         # play animations
         remove.start(old)
