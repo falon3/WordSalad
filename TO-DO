@@ -12,18 +12,15 @@ DONE    added a progress bar below Score, works with the score, may alter the ma
 DONE    make progress bar work (you'd mentioned wanting to do this)
 DONE    Add bubble to word complete to indicate how many points the word will give 
 DONE   Clock of some sort 
-DONE   animations? Possible delay for word slide - STARTED, needs a bit of work << FALON LIKES THE CHANGES AND THINK IT'S FINE
-DONE    ability to shuffle the board, start new game(prompt for this.... but needs to be added later)  
+Craig   animations? Possible delay for word slide - STARTED, needs a bit of work << FALON LIKES THE CHANGES AND THINK IT'S FINE
+Craig   ability to shuffle the board, start new game(prompt for this.... but needs to be added later)  
 Craig   Put in search word (just the longest word possible on the board at the time)
-DONE    Add animation to bubble
-DONE    Add animation to score
-DONE    new game/new level score threshhold for making it to next level - GOES WITH NEXT
-DONE    finish GAMEOVER function also with next
-DONE    something that keeps track of the high score (writes/reads from a separate file)
+Craig   Add animation to bubble
+Craig   Add animation to score
+Falon?  new game/new level score threshhold for making it to next level - GOES WITH NEXT
+????    finish GAMEOVER function also with next
+????    something that keeps track of the high score (writes/reads from a separate file)
 
-could maybe use some love:
-finish GAMEOVER function also with next
-something that keeps track of the high score (writes/reads from a separate file)
 
 Optional:
 ????      changing theme/design colors and whatnot
