@@ -314,7 +314,7 @@ class Level(BoxLayout):
 def GameOver(end_score):
     # save score to file only if higher than rest saved
     # see if got new high score!
-    file = open('score_records.txt', 'r+')
+    file = open('high_scores.txt', 'r+')
     highest = int(file.readline())
     for line in file:
         if int(line) > highest:
