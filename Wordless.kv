@@ -11,16 +11,11 @@
     color: [0, .7, .7, 1]
     tile_color: [1,1,1,1]
     score: 0
-<<<<<<< HEAD
-    value: 0
-    header: header
-    
-    orientation: 'vertical'
-    
-=======
     value: 0 
+    header: header
+    seconds: 0
+    displayed_seconds: 0
     orientation: 'vertical'  
->>>>>>> origin/master
     Header:
         id: header
         pos_hint: {'top': 1}
@@ -89,13 +84,8 @@
         text: str(root.parent.parent.parent.level)
 
 <GameTimer>:
-<<<<<<< HEAD
     seconds: 60
     displayed_seconds: 60
-=======
-    seconds: 0
-    displayed_seconds: 0
->>>>>>> origin/master
     orientation: 'vertical'
     Label:
         text: 'TIME LEFT:'

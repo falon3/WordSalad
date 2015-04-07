@@ -312,10 +312,6 @@ class Level(BoxLayout):
     
     
 def GameOver(end_score):
-<<<<<<< HEAD
-    print(end_score)
-    _Board.manager.current = 'menu'
-=======
     # save score to file only if higher than rest saved
     # see if got new high score!
     file = open('score_records.txt', 'r+')
@@ -332,7 +328,7 @@ def GameOver(end_score):
         file.write("\n")
         file.close()
         
+    _Board.manager.current = 'menu'
     
->>>>>>> origin/master
     #_Board.reset_tiles()
     #exit()
