@@ -11,7 +11,7 @@ class Tile(Button):
     """ Represents a tile in the game board.
     """    
     anims_to_complete = 0
-    animating = False
+    tiles_being_removed = 0
     lscore = ObjectProperty()
     
     def __repr__(self):
@@ -138,25 +138,18 @@ class Tile(Button):
                     bubble.pos = last.pos
                     bubble.text = _Board.header.word_complete.bubble.text[:]
                     score_board = _Board.header.lheader.score
-                    move_bubble = Animation(pos=(score_board.x + 50, score_board.y), \
-                        t='in_expo', d = 1)
+                    timer = _Board.game_timer
+                    move_bubble = Animation(pos=(timer.x + 30, timer.y - 20), \
+                        t='in_expo', d = 0.7)
+                    move_bubble += Animation(pos=(score_board.x + 50, score_board.y), \
+                        t='in_out_elastic', d = 0.3)
+                    move_bubble.on_progress = self.mid_bubble
                     move_bubble.on_complete = self.done_bubble
                     move_bubble.start(bubble)
                     
-                    score = _Board.value
-                    _Board.score += score
-                    # reset score progress bar every 100 points because reached next level
-                    # add seconds to timer when points scored
-                    _Board.progress.value = (_Board.progress.value + score)%_Board.progress.max
-                    _Board.game_timer.seconds += score
-
-                    print(_Board.level)
-                    if _Board.score > 30 and _Board.level == 0:
-                        _Board.level = 1
+                    # mark score bubble as in-progress
+                    bubble.working = 1
                     
-                    # level up every 100 points
-                    if _Board.level > 0 and _Board.score > 100*_Board.level:
-                        _Board.level += 1
                                 
                     affected_columns = set()
                     # find columns with tiles to remove
@@ -167,21 +160,48 @@ class Tile(Button):
                     
 
                 else:
+                    #clear word complete point bubble
+                    _Board.value = 0
+                    # clear highlight
                     for tile in _Board._highlighted:
                         tile.background_color = [1,1,1,1]
                         
                 # clear highlighted list
                 _Board._highlighted.clear()
                 
-                #clear point bubble
-                _Board.value = 0
                                     
                 return True
         return False
         
+    def mid_bubble(self, instance, progression):
+        if progression >= 0.7 and instance.working < 2:
+            instance.working = 2
+            _Board.game_timer.seconds += _Board.value
+        
+    
     def done_bubble(self, instance):
+        # reset score progress bar every 100 points because reached next level
+        # add seconds to timer when points scored
+        _Board.progress.value = (_Board.progress.value + _Board.value)%_Board.progress.max
+        
+        _Board.score += _Board.value
+
+        if _Board.score > 5 and _Board.level == 0:
+            _Board.level = 1
+            _Board.progress.max = 100
+        
+        # level up every 100 points
+        if _Board.level > 0 and _Board.score > 100*_Board.level:
+            _Board.level += 1
+        
         # move bubble back off screen
         instance.pos = -5000, -5000
+        
+        #clear word complete point bubble
+        _Board.value = 0
+        
+        # reset bubble (allow game to end)
+        instance.working = 0
     
     def replace_tiles(affected_columns):
         # remove and replace tiles 
@@ -223,7 +243,6 @@ class Tile(Button):
         instance.fall_complete(instance)
         
     def remove(self):        
-        self.animating = True
         column = self.parent
         window = column.parent.get_parent_window()
         fall_out = Animation(size=self.size,pos=(self.x, -125), \
@@ -233,10 +252,10 @@ class Tile(Button):
         fall_in =  Animation(pos=(self.x, dest_tile.y), \
             t='out_bounce', d = 1)
         Tile.anims_to_complete += 1
+        Tile.tiles_being_removed += 1
         new_tile = Tile()
         new_tile.x = self.x
         new_tile.y = window.height + 100
-        new_tile.animating = True
         
         fall_out.on_complete = self.remove_complete
         fall_in.on_complete = new_tile.add_complete
@@ -247,11 +266,11 @@ class Tile(Button):
         
     def remove_complete(self, instance):
         _Board.footer.remove_widget(instance)
+        Tile.tiles_being_removed -= 1
         
     
     def fall(tiles, i):
         tile = tiles[i]
-        tile.animating = True
         
         prev_tile = tiles[i-tile.parent.missing_tiles]
         Tile.anims_to_complete += 1
@@ -263,7 +282,6 @@ class Tile(Button):
     def fall_complete(self, instance):
         Tile.anims_to_complete -= 1 
         
-        instance.animating = False
         if not Tile.anims_to_complete:
             # rebuild graph
             _Board.update_board()

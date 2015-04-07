@@ -24,7 +24,6 @@ class Wordless(App):
     """
     def build(self):              
         sm = ScreenManager()
-        print("SM:", sm)
         layout = Board(name='game')
         menu = MenuScreen(name='menu')
         sm.add_widget(layout)
