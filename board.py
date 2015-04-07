@@ -218,15 +218,16 @@ class Board(Screen):
         # create graph representing the board
         self._board = Graph(set(tiles), edges)
 
-    def reset_tiles(self):
-        add = []
-        for tile in self.tiles:
-            # add tiles to _highlighted for Tile.replaceTiles
-            self._highlighted[tile] = len(Board._highlighted)
-            tile.background_color = [1,.5,.5,1]
-        Tile.replace_tiles(self._columns)
-        self.complete = '_ _ _'
-        self.value = 0
+    def reset_tiles(self, min_time=-1000):
+        if  _Board.game_timer.seconds >= min_time:
+            add = []
+            for tile in self.tiles:
+                # add tiles to _highlighted for Tile.replaceTiles
+                self._highlighted[tile] = len(Board._highlighted)
+                tile.background_color = [1,.5,.5,1]
+            Tile.replace_tiles(self._columns)
+            self.complete = '_ _ _'
+            self.value = 0
     
     def on_pre_enter(self):
         self.header.lheader.score.displayed_score = 0
@@ -328,9 +329,8 @@ def GameOver(end_score):
     # save score to file only if higher than rest saved
     # see if got new high score!
     highest = 0
-    # wait for all tiles to be removed from last word match
-    while Tile.tiles_being_removed:
-        pass
+    
+    _Board._highlighted.clear()
     
     with open('high_scores.txt', 'r+') as file:
         highest = int(file.readline())

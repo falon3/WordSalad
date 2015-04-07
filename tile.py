@@ -128,12 +128,14 @@ class Tile(Button):
                 touch.ungrab(self)
                 # only check word if on playArea
                 if _Board._dictionary.lookup(word) and \
-                    _Board.play_area.collide_point(touch.x, touch.y):
+                    _Board.play_area.collide_point(touch.x, touch.y) \
+                    and _Board._highlighted:
                         
                     
                     # add bubble points indicator
                     bubble = _Board.footer.bubble
                     # get the last element added to highlighted
+                    
                     last = next(reversed(_Board._highlighted))
                     bubble.pos = last.pos
                     bubble.text = _Board.header.word_complete.bubble.text[:]
@@ -186,12 +188,12 @@ class Tile(Button):
         
         _Board.score += _Board.value
 
-        if _Board.score > 5 and _Board.level == 0:
+        if _Board.score >= 5 and _Board.level == 0:
             _Board.level = 1
             _Board.progress.max = 100
         
         # level up every 100 points
-        if _Board.level > 0 and _Board.score > 100*_Board.level:
+        if _Board.level > 0 and _Board.score >= 100*_Board.level:
             _Board.level += 1
         
         # move bubble back off screen
