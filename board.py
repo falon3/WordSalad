@@ -277,6 +277,11 @@ class Score(BoxLayout):
             self.displayed_score += 1
         if self.displayed_score > _Board.score:
             self.displayed_score -= 1
+                    
+        # reset score progress bar every 100 points because reached next level
+        # add seconds to timer when points scored
+        _Board.progress.value = self.displayed_score % _Board.progress.max
+        
 
 class WordComplete(Label):
     pass 
