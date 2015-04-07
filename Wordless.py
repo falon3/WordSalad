@@ -10,13 +10,11 @@ TODO: add game description here, including specifics of assignment
 '''
 
 import kivy
-kivy.require('1.8.0')
+kivy.require('1.9.0')
 
 from kivy.app import App
-
-import string
-
-from board import Board
+from board import Board, MenuScreen
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 
         
@@ -24,9 +22,13 @@ class Wordless(App):
     """Base kivy application for game.
     
     """
-    def build(self):                    
-        layout = Board()
-        return layout
+    def build(self):              
+        sm = ScreenManager()
+        layout = Board(name='game')
+        menu = MenuScreen(name='menu')
+        sm.add_widget(layout)
+        sm.add_widget(menu)
+        return sm
 
     
 if __name__ == '__main__':

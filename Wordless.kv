@@ -1,47 +1,123 @@
-#:kivy 1.0.7
+#:kivy 1.9.0
+
 <Board>
+    # general properties
     play_area: playArea
-    complete: header.word_complete
+    complete: '_ _ _'
     progress: header.lheader.progress
+    level: 0
+    game_timer: header.game_timer
+    footer: footer
+    color: [0, .7, .7, 1]
+    tile_color: [1,1,1,1]
     score: 0
-    orientation: 'vertical'
+    value: 0 
+    header: header
+    seconds: 0
+    displayed_seconds: 0
+    orientation: 'vertical'  
     Header:
         id: header
+        pos_hint: {'top': 1}
     PlayArea:
         id: playArea
+    Footer:
+        id: footer
+        pos_hint: {'top': 0}
+        size_hint: 1, 0.05
+        
+<Footer>
+    bubble: button
+    Bonus:      
+        pos: -5000, -5000
+        id: button
+        text: ''
+        color: [0, .7, .7, 1]
+        background_color: [2,2,2,1]
+        font_size: 50
 <Header>
     word_complete: wordComplete
+    game_timer: gameTime
     lheader: leftHeader
     orientation: 'horizontal'
-    size_hint: .85, .1
+    size_hint: .9, .2
     pos_hint: {'x': .05}
+    BoxLayout:
+        size_hint: 0.25, 1
     LeftHeader:
         id: leftHeader
+    GameTimer:
+        id: gameTime
     WordComplete:
         id: wordComplete
-    PlayArea:
+    Button:
+        text: 'Reset'
+        background_color: .5,.5,.5,.5
+        size_hint: 0.5, 0.5
+        on_press: root.parent.reset_tiles(3)
+        pos_hint: {'right': 1}
+        
 
 <LeftHeader>
     orientation: 'vertical'
     progress: progressBar
     score: scoreboard
-    Score:
+    level: level_on
+    Score: 
         id: scoreboard
+    Level:
+        id: level_on   
     ProgressBar:
+        pos_hint: {'x': -.05}
         id: progressBar  
-        value: 50
+        value: 0
+        max: 100
+
+<Level>
+    Label:
+        text: 'LEVEL:'
+        font_size: 20
+        color: [1, 0, 1, 1]
+    Label:
+        font_size: 25
+        color: [1, 0, 1, 1]
+        text: str(root.parent.parent.parent.level)
+
+<GameTimer>:
+    seconds: 0
+    displayed_seconds: 0
+    orientation: 'vertical'
+    Label:
+        text: 'TIME LEFT:'
+        font_size: 25
+    Label:
+        text: str(root.displayed_seconds)
+        font_size: 50
+        
 <WordComplete>
-    text: '_ _ _'
+    bubble: button
+    text: root.parent.parent.complete
+    font_size: max(30 - (len(root.text) / 2), 10)
+    color: root.parent.parent.color   
+    Bonus:      
+        value_added: False
+        id: button
+        text: '+' + str(root.parent.parent.value)
+        pos: root.center_x + len(root.text) * 8 - 30, root.center_y - 20
+        color: root.parent.parent.color  
+<Bonus>
     font_size: 30
-    color: [0, .7, .7, 1]
-    
+    background_color: .5,.5,.5,.5
+
 <Score>
+    displayed_score: 0
     Label:
         text: 'SCORE:'
         font_size: 35
     Label:
-        font_size: 35
-        text: str(root.parent.parent.parent.score)
+        font_size: 40
+        text: str(root.displayed_score)
+
 <PlayArea>
     orientation: 'horizontal'
     size_hint: .9, .8
@@ -53,6 +129,7 @@
     
 <Tile>:
     lscore: letter_score
+    font_size: 50
     Label:
         id: letter_score
         text: "4"
@@ -60,3 +137,23 @@
         color: 0,0.5,1,1
         size: 5,5
         pos: root.center_x + root.width/2 - 12, root.y + 8
+        
+
+<MenuScreen>
+    your_score: 0
+    high_score: 0
+    Button:
+        text: 'Game Over'
+        on_press: root.manager.current = 'game'
+        Label:
+            text: 'Your Score:'
+            pos: root.center_x - 50, root.center_y + 100
+        Label:
+            text: str(root.your_score)
+            pos: root.center_x, root.center_y + 100
+        Label:
+            text: 'High Score:'
+            pos: root.center_x - 50, root.center_y + 50
+        Label:
+            text: str(root.high_score)
+            pos: root.center_x, root.center_y + 50
