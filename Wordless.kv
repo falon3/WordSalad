@@ -5,16 +5,22 @@
     play_area: playArea
     complete: '_ _ _'
     progress: header.lheader.progress
+    level: 0
     game_timer: header.game_timer
     footer: footer
     color: [0, .7, .7, 1]
     tile_color: [1,1,1,1]
     score: 0
+<<<<<<< HEAD
     value: 0
     header: header
     
     orientation: 'vertical'
     
+=======
+    value: 0 
+    orientation: 'vertical'  
+>>>>>>> origin/master
     Header:
         id: header
         pos_hint: {'top': 1}
@@ -61,20 +67,38 @@
     orientation: 'vertical'
     progress: progressBar
     score: scoreboard
+    level: level_on
     Score: 
         id: scoreboard
+    Level:
+        id: level_on   
     ProgressBar:
         pos_hint: {'x': -.05}
         id: progressBar  
         value: 0
         max: 100
 
+<Level>
+    Label:
+        text: 'LEVEL:'
+        font_size: 20
+        color: [1, 0, 1, 1]
+    Label:
+        font_size: 25
+        color: [1, 0, 1, 1]
+        text: str(root.parent.parent.parent.level)
+
 <GameTimer>:
+<<<<<<< HEAD
     seconds: 60
     displayed_seconds: 60
+=======
+    seconds: 0
+    displayed_seconds: 0
+>>>>>>> origin/master
     orientation: 'vertical'
     Label:
-        text: 'TIME:'
+        text: 'TIME LEFT:'
         font_size: 25
     Label:
         text: str(root.displayed_seconds)
@@ -93,6 +117,7 @@
 <Bonus>
     font_size: 30
     background_color: .5,.5,.5,.5
+
 <Score>
     displayed_score: 0
     Label:
@@ -101,6 +126,7 @@
     Label:
         font_size: 40
         text: str(root.displayed_score)
+
 <PlayArea>
     orientation: 'horizontal'
     size_hint: .9, .8

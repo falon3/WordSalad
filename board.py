@@ -47,6 +47,8 @@ class Board(Screen):
     tile_color = ListProperty([1,1,1,1])
     progress = ObjectProperty()
     score = NumericProperty()
+    level = NumericProperty(0)
+    
     tiles = []
     
     def check_neighbors(self, tile, word):
@@ -275,20 +277,26 @@ class GameTimer(BoxLayout):
         # call parent class init
         super(GameTimer, self).__init__(**kwargs)
         
+        print(_Board, "board?")
+        
         Clock.schedule_interval(self.update, .05)
 
     def update(self, time_passed):
+        
         if self.displayed_seconds < int(self.seconds):
             self.displayed_seconds += 1
+                
         elif self.displayed_seconds > int(self.seconds):
             self.displayed_seconds -= 1
         
-        
-        if self.seconds > 0:
-            self.seconds = self.seconds - time_passed
-        elif not self.game_over:
-            self.game_over = True
-            GameOver(_Board.score)
+        if _Board.level > 0:
+            if self.seconds > 0:
+                if _Board.level > 1:
+                    time_passed *= (_Board.level*4/9)
+                self.seconds = self.seconds - time_passed
+            elif not self.game_over:
+                self.game_over = True
+                GameOver(_Board.score)
     
 
 class Bonus(BubbleButton):    
@@ -298,9 +306,33 @@ class Bonus(BubbleButton):
         pass
     def on_touch_move(self, touch): 
         pass
+
+class Level(BoxLayout):
+    pass
+    
     
 def GameOver(end_score):
+<<<<<<< HEAD
     print(end_score)
     _Board.manager.current = 'menu'
+=======
+    # save score to file only if higher than rest saved
+    # see if got new high score!
+    file = open('score_records.txt', 'r+')
+    highest = int(file.readline())
+    for line in file:
+        if int(line) > highest:
+            highest = int(line)
+
+    if end_score > highest:
+        #new high score!!!
+        print("NEW HIGH SCORE!!!", end_score)
+        end_score = str(end_score)
+        file.write(end_score)
+        file.write("\n")
+        file.close()
+        
+    
+>>>>>>> origin/master
     #_Board.reset_tiles()
     #exit()
