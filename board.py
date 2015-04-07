@@ -327,22 +327,23 @@ class Level(BoxLayout):
 def GameOver(end_score):
     # save score to file only if higher than rest saved
     # see if got new high score!
-    highest = 0
     # wait for all tiles to be removed from last word match
     while Tile.tiles_being_removed:
         pass
     
     with open('high_scores.txt', 'r+') as file:
-        highest = int(file.readline())
+        try: highest = int(file.readline())
+        except ValueError:
+            highest = 0
+
         for line in file:
-            if line == '':
+            if line == '': # in case next line blank
                 line = 0
             if int(line) > highest:
                 highest = int(line)
 
         if end_score > highest:
-            #new high score!!!
-            print("NEW HIGH SCORE!!!", end_score)
+            # new high score!!!
             file.write(str(end_score))
             file.write("\n")
             
