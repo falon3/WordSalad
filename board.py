@@ -4,20 +4,21 @@ from kivy.uix.bubble import BubbleButton
 from kivy.uix.label import Label
 from kivy.properties import StringProperty, ObjectProperty, NumericProperty, \
     ListProperty
+from kivy.clock import Clock
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 from words import Letters, Dictograph
 from collections import OrderedDict
 from tile import Tile
 from graph_v2 import Graph
 import time
-from kivy.clock import Clock
 
 TILE_ROWS = 7       # number of rows in the game board
 TILE_COLUMNS = 11   # number of columns  in the game board
 
 _Board = None
 
-class Board(BoxLayout):   
+class Board(Screen):   
     """Represents the game board.
     
     Currently this class encompasses both the data for the board and the  
@@ -82,7 +83,7 @@ class Board(BoxLayout):
         # yellow if possible
         elif word_found != None:            
             self.color = [.7, .7, 0, 1]
-            self.tile_color = [1,1,0,1]
+            self.tile_color = [2,2,0,1]
         # red if not possible
         else:
             self.color = [.7, 0, 0, 1]
@@ -219,10 +220,21 @@ class Board(BoxLayout):
             self._highlighted[tile] = len(Board._highlighted)
             tile.background_color = [1,.5,.5,1]
         Tile.replace_tiles(self._columns)
-        
     
         
-
+class MenuScreen(Screen):
+    print("test")   
+    
+    def __init__(self, **kwargs):
+        super(MenuScreen, self).__init__(**kwargs)
+        
+        print("initializing menu screen")
+        
+    
+class GameScreen(Screen):
+    def __init__(self, **kwargs):
+        print("initializing game screen")
+        super(GameScreen, self).__init__(**kwargs)
 
 class Column(BoxLayout):
     missing_tiles = 0
@@ -316,6 +328,7 @@ def GameOver(end_score):
         file.write("\n")
         file.close()
         
+    _Board.manager.current = 'menu'
     
     #_Board.reset_tiles()
     #exit()

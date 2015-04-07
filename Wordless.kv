@@ -1,4 +1,5 @@
-#:kivy 1.0.7
+#:kivy 1.9.0
+
 <Board>
     # general properties
     play_area: playArea
@@ -11,20 +12,29 @@
     tile_color: [1,1,1,1]
     score: 0
     value: 0 
+    header: header
+    seconds: 0
+    displayed_seconds: 0
     orientation: 'vertical'  
     Header:
         id: header
+        pos_hint: {'top': 1}
     PlayArea:
         id: playArea
     Footer:
         id: footer
+        pos_hint: {'top': 0}
         size_hint: 1, 0.05
         
 <Footer>
+    bubble: button
     Bonus:      
         pos: -5000, -5000
         id: button
-        text: '+' + str(root.parent.value)
+        text: ''
+        color: [0, .7, .7, 1]
+        background_color: [2,2,2,1]
+        font_size: 50
 <Header>
     word_complete: wordComplete
     game_timer: gameTime
@@ -74,8 +84,8 @@
         text: str(root.parent.parent.parent.level)
 
 <GameTimer>:
-    seconds: 0
-    displayed_seconds: 0
+    seconds: 60
+    displayed_seconds: 60
     orientation: 'vertical'
     Label:
         text: 'TIME LEFT:'
@@ -85,6 +95,7 @@
         font_size: 50
         
 <WordComplete>
+    bubble: button
     text: root.parent.parent.complete
     font_size: max(30 - (len(root.text) / 2), 10)
     color: root.parent.parent.color   
@@ -125,3 +136,8 @@
         color: 0,0.5,1,1
         size: 5,5
         pos: root.center_x + root.width/2 - 12, root.y + 8
+        
+
+<MenuScreen>
+    Button:
+        text: "MENU!!!"
