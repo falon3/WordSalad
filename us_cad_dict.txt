@@ -3,7 +3,7 @@ with parameters:
   diacritic: strip
   max_size: 70
   max_variant: 0
-  special: hacker roman-numerals
+  special: hacker
   spelling: US CA
 
 Using Git Commit From: Sun Feb 15 15:21:36 2015 -0500 [e0bbcaa]
@@ -479,6 +479,7 @@ abstractionists
 abstractions
 abstractly
 abstractness
+abstractnesses
 abstracts
 abstriction
 abstruse
@@ -1424,6 +1425,7 @@ admirabilities
 admirability
 admirable
 admirableness
+admirablenesses
 admirably
 admiral
 admirals
@@ -2200,6 +2202,7 @@ agreements
 agrees
 agrestic
 agribusiness
+agribusinesses
 agribusinessman
 agric
 agricultural
@@ -2622,6 +2625,7 @@ alignments
 aligns
 alike
 alikeness
+alikenesses
 aliment
 alimentary
 alimentation
@@ -2901,6 +2905,7 @@ alohas
 aloin
 alone
 aloneness
+alonenesses
 along
 alongshore
 alongside
@@ -3083,6 +3088,7 @@ amateurs
 amative
 amatively
 amativeness
+amativenesses
 amatol
 amatory
 amauroses
@@ -3201,6 +3207,7 @@ amen
 amenability
 amenable
 amenableness
+amenablenesses
 amenably
 amend
 amendable
@@ -3238,6 +3245,7 @@ ami
 amiability
 amiable
 amiableness
+amiablenesses
 amiably
 amianthus
 amicability
@@ -3415,6 +3423,7 @@ ampicillin
 ampicillins
 ample
 ampleness
+amplenesses
 ampler
 amplest
 amplexicaul
@@ -3847,6 +3856,7 @@ angrier
 angriest
 angrily
 angriness
+angrinesses
 angry
 angst
 angstrom
@@ -4082,6 +4092,7 @@ anomalistic
 anomalous
 anomalously
 anomalousness
+anomalousnesses
 anomaly
 anomie
 anon
@@ -5482,6 +5493,7 @@ arid
 aridity
 aridly
 aridness
+aridnesses
 ariel
 arietta
 ariettas
@@ -6184,6 +6196,7 @@ assure
 assured
 assuredly
 assuredness
+assurednesses
 assureds
 assurer
 assures
@@ -6962,6 +6975,7 @@ avarice
 avaricious
 avariciously
 avariciousness
+avariciousnesses
 avast
 avatar
 avatars
@@ -7024,6 +7038,7 @@ avidin
 avidity
 avidly
 avidness
+avidnesses
 avifauna
 avifaunas
 avigation
@@ -7983,6 +7998,7 @@ barbarizing
 barbarous
 barbarously
 barbarousness
+barbarousnesses
 barbate
 barbecue
 barbecued
@@ -8138,6 +8154,7 @@ baron
 baronage
 baronages
 baroness
+baronesses
 baronet
 baronetage
 baronetcies
@@ -8536,11 +8553,8 @@ bazillion
 bazillions
 bazooka
 bazookas
-bbl
 bdellium
 bdelliums
-bdl
-bdrm
 beach
 beachcomber
 beachcombers
@@ -8660,6 +8674,7 @@ beaut
 beauteous
 beauteously
 beauteousness
+beauteousnesses
 beautician
 beauticians
 beauties
@@ -10249,11 +10264,10 @@ biz
 bizarre
 bizarrely
 bizarreness
+bizarrenesses
 bizarrerie
 bize
 bkcy
-bkg
-bks
 blab
 blabbed
 blabber
@@ -10490,7 +10504,6 @@ blazoning
 blazonries
 blazonry
 blazons
-bldg
 bleach
 bleached
 bleacher
@@ -10641,7 +10654,6 @@ blivet
 blivets
 blizzard
 blizzards
-blk
 bloat
 bloated
 bloater
@@ -10952,7 +10964,6 @@ blustering
 blusterous
 blusters
 blustery
-blvd
 boa
 boar
 board
@@ -11416,6 +11427,7 @@ boor
 boorish
 boorishly
 boorishness
+boorishnesses
 boors
 boos
 boost
@@ -11830,8 +11842,6 @@ boysenberries
 boysenberry
 bozo
 bozos
-bpm
-bps
 bra
 brabble
 brabbled
@@ -12371,6 +12381,7 @@ brighter
 brightest
 brightly
 brightness
+brightnesses
 brights
 brightwork
 brigs
@@ -12663,7 +12674,6 @@ browser
 browsers
 browses
 browsing
-brr
 brucelloses
 brucellosis
 brucine
@@ -12738,7 +12748,6 @@ bryophyte
 bryophytes
 bryozoan
 bryozoans
-btl
 btry
 bub
 bubal
@@ -12931,6 +12940,7 @@ bulghurs
 bulgier
 bulgiest
 bulginess
+bulginesses
 bulging
 bulgur
 bulgurs
@@ -13359,6 +13369,7 @@ busies
 busiest
 busily
 business
+businesses
 businesslike
 businessman
 businessmen
@@ -13499,6 +13510,7 @@ butyrin
 butyrins
 buxom
 buxomness
+buxomnesses
 buy
 buyback
 buybacks
@@ -13522,7 +13534,6 @@ buzzsaw
 buzzword
 buzzwords
 bwana
-bxs
 bye
 byes
 bygone
@@ -16823,7 +16834,6 @@ chewinks
 chews
 chewy
 chez
-chg
 chge
 chi
 chiack
@@ -17177,7 +17187,6 @@ chlorpromazine
 chlorpromazines
 chlortetracycline
 chlortetracyclines
-chm
 choanocyte
 choanocytes
 choc
@@ -17197,6 +17206,7 @@ chocolaty
 chocs
 choice
 choiceness
+choicenesses
 choicer
 choices
 choicest
@@ -17467,7 +17477,6 @@ chrysoprase
 chrysoprases
 chrysotile
 chrysotiles
-chs
 chthonian
 chthonic
 chub
@@ -18305,7 +18314,6 @@ cliffs
 clifftop
 clifftops
 cliffy
-clii
 climacteric
 climactic
 climactically
@@ -18400,7 +18408,6 @@ clitorides
 clitoris
 clitorises
 clits
-clix
 cloaca
 cloacae
 cloak
@@ -18631,20 +18638,11 @@ clutter
 cluttered
 cluttering
 clutters
-clvi
-clvii
-clxi
-clxii
-clxiv
-clxix
-clxvi
-clxvii
 clypeate
 clypeus
 clypeuses
 clyster
 clysters
-cml
 cnemis
 cnidarian
 cnidarians
@@ -19801,6 +19799,7 @@ commodify
 commodious
 commodiously
 commodiousness
+commodiousnesses
 commodities
 commodity
 commodore
@@ -19819,6 +19818,7 @@ commonly
 commonness
 commonplace
 commonplaceness
+commonplacenesses
 commonplaces
 commons
 commonsense
@@ -19860,6 +19860,7 @@ communications
 communicative
 communicatively
 communicativeness
+communicativenesses
 communicator
 communicators
 communicatory
@@ -19922,6 +19923,7 @@ companies
 companion
 companionable
 companionableness
+companionablenesses
 companionably
 companionate
 companions
@@ -20074,6 +20076,7 @@ complexities
 complexity
 complexly
 complexness
+complexnesses
 compliance
 compliancies
 compliancy
@@ -20783,6 +20786,7 @@ congenial
 congeniality
 congenially
 congenialness
+congenialnesses
 congenital
 congenitally
 conger
@@ -20857,6 +20861,7 @@ congruity
 congruous
 congruously
 congruousness
+congruousnesses
 conic
 conical
 conically
@@ -21012,6 +21017,7 @@ conscionable
 conscious
 consciously
 consciousness
+consciousnesses
 conscript
 conscripted
 conscripting
@@ -21373,6 +21379,7 @@ contemporaneity
 contemporaneous
 contemporaneously
 contemporaneousness
+contemporaneousnesses
 contemporaries
 contemporarily
 contemporary
@@ -21437,6 +21444,7 @@ contiguity
 contiguous
 contiguously
 contiguousness
+contiguousnesses
 continence
 continent
 continental
@@ -21474,6 +21482,7 @@ continuo
 continuous
 continuously
 continuousness
+continuousnesses
 continuum
 conto
 contort
@@ -23065,14 +23074,12 @@ coziest
 cozily
 coziness
 cozy
-cpd
-cpl
-cps
 craal
 crab
 crabbed
 crabbedly
 crabbedness
+crabbednesses
 crabber
 crabbers
 crabbier
@@ -23638,6 +23645,7 @@ criticalities
 criticality
 critically
 criticalness
+criticalnesses
 criticaster
 criticism
 criticisms
@@ -24009,7 +24017,6 @@ cruxes
 cruzado
 cruzeiro
 cruzeiros
-crwth
 cry
 crybabies
 crybaby
@@ -24083,16 +24090,11 @@ crystallographies
 crystallography
 crystalloid
 crystals
-csc
-csch
 ctenidia
 ctenidium
 ctenoid
 ctenophore
 ctenophores
-ctn
-ctr
-cts
 cub
 cubage
 cubature
@@ -24433,6 +24435,7 @@ currency
 current
 currently
 currentness
+currentnesses
 currents
 curricle
 curricula
@@ -24532,6 +24535,7 @@ cuss
 cussed
 cussedly
 cussedness
+cussednesses
 cusses
 cussing
 custard
@@ -24623,9 +24627,6 @@ cutworks
 cutworm
 cutworms
 cuvette
-cwm
-cwms
-cwt
 cyan
 cyanamide
 cyanamides
@@ -25046,6 +25047,7 @@ danger
 dangerous
 dangerously
 dangerousness
+dangerousnesses
 dangers
 danging
 dangle
@@ -25075,6 +25077,7 @@ dapperer
 dapperest
 dapperly
 dapperness
+dappernesses
 dapple
 dappled
 dapples
@@ -25263,13 +25266,12 @@ dazzlers
 dazzles
 dazzling
 dazzlingly
-dbl
 dded
 dding
-dds
 deacon
 deaconate
 deaconess
+deaconesses
 deaconry
 deacons
 deaconship
@@ -25309,6 +25311,7 @@ deadlocking
 deadlocks
 deadly
 deadness
+deadnesses
 deadpan
 deadpanned
 deadpanning
@@ -26963,6 +26966,7 @@ depend
 dependability
 dependable
 dependableness
+dependablenesses
 dependably
 dependant
 dependants
@@ -27432,6 +27436,7 @@ desperateness
 desperation
 despicable
 despicableness
+despicablenesses
 despicably
 despise
 despised
@@ -27572,6 +27577,7 @@ determinants
 determinate
 determinately
 determinateness
+determinatenesses
 determination
 determinations
 determinative
@@ -28362,6 +28368,7 @@ dilatometer
 dilator
 dilatorily
 dilatoriness
+dilatorinesses
 dilators
 dilatory
 dildo
@@ -28429,6 +28436,7 @@ diminutions
 diminutive
 diminutively
 diminutiveness
+diminutivenesses
 diminutives
 dimissory
 dimity
@@ -28945,11 +28953,13 @@ disconsider
 disconsolate
 disconsolately
 disconsolateness
+disconsolatenesses
 disconsolation
 discontent
 discontented
 discontentedly
 discontentedness
+discontentednesses
 discontenting
 discontentment
 discontents
@@ -29285,6 +29295,7 @@ disingenuity
 disingenuous
 disingenuously
 disingenuousness
+disingenuousnesses
 disinherit
 disinheritance
 disinherited
@@ -29433,6 +29444,7 @@ disparagingly
 disparate
 disparately
 disparateness
+disparatenesses
 disparities
 disparity
 dispart
@@ -29440,6 +29452,7 @@ dispassion
 dispassionate
 dispassionately
 dispassionateness
+dispassionatenesses
 dispatch
 dispatched
 dispatcher
@@ -29485,6 +29498,7 @@ dispirit
 dispirited
 dispiritedly
 dispiritedness
+dispiritednesses
 dispiriting
 dispiritingly
 dispirits
@@ -29872,6 +29886,7 @@ distrusted
 distrustful
 distrustfully
 distrustfulness
+distrustfulnesses
 distrusting
 distrusts
 disturb
@@ -30087,8 +30102,6 @@ dizzying
 djebel
 djellaba
 djellabas
-dkl
-dlr
 dlvy
 doable
 dob
@@ -30671,6 +30684,7 @@ dovetailing
 dovetails
 dovish
 dovishness
+dovishnesses
 dow
 dowable
 dowager
@@ -30816,7 +30830,6 @@ doziness
 dozing
 dozy
 dpi
-dpt
 drab
 drabber
 drabbest
@@ -31625,6 +31638,7 @@ dwarfed
 dwarfing
 dwarfish
 dwarfishness
+dwarfishnesses
 dwarfism
 dwarfs
 dweeb
@@ -31640,7 +31654,6 @@ dwindle
 dwindled
 dwindles
 dwindling
-dwt
 dyad
 dyadic
 dyads
@@ -31743,6 +31756,7 @@ dystrophy
 dysuria
 dziggetai
 dziggetais
+eeea
 each
 eager
 eagerer
@@ -32235,6 +32249,7 @@ effectualities
 effectuality
 effectually
 effectualness
+effectualnesses
 effectuate
 effectuated
 effectuates
@@ -32265,6 +32280,7 @@ effeteness
 efficacious
 efficaciously
 efficaciousness
+efficaciousnesses
 efficacy
 efficiencies
 efficiency
@@ -34267,6 +34283,7 @@ ephemeralities
 ephemerality
 ephemerally
 ephemeralness
+ephemeralnesses
 ephemerid
 ephemerids
 ephemeris
@@ -34688,6 +34705,7 @@ erring
 erroneous
 erroneously
 erroneousness
+erroneousnesses
 error
 errorless
 errors
@@ -34883,6 +34901,7 @@ essentiality
 essentialize
 essentially
 essentialness
+essentialnesses
 essentials
 essive
 essonite
@@ -35535,6 +35554,7 @@ excesses
 excessive
 excessively
 excessiveness
+excessivenesses
 exch
 exchange
 exchangeable
@@ -35559,6 +35579,7 @@ excisions
 excitability
 excitable
 excitableness
+excitablenesses
 excitably
 excitant
 excitation
@@ -36374,6 +36395,7 @@ extramural
 extraneous
 extraneously
 extraneousness
+extraneousnesses
 extranuclear
 extraordinaire
 extraordinarily
@@ -36532,6 +36554,7 @@ eyeteeth
 eyetooth
 eyewash
 eyewitness
+eyewitnesses
 eyot
 eyra
 eyras
@@ -36774,6 +36797,7 @@ fallacies
 fallacious
 fallaciously
 fallaciousness
+fallaciousnesses
 fallacy
 fallal
 fallals
@@ -37073,6 +37097,7 @@ fastigium
 fasting
 fastings
 fastness
+fastnesses
 fasts
 fat
 fatal
@@ -37105,6 +37130,7 @@ fatherlands
 fatherless
 fatherlessness
 fatherliness
+fatherlinesses
 fatherly
 fathers
 fathom
@@ -37192,6 +37218,7 @@ favonian
 favor
 favorable
 favorableness
+favorablenesses
 favorably
 favored
 favorer
@@ -37203,6 +37230,7 @@ favors
 favour
 favourable
 favourableness
+favourablenesses
 favourably
 favoured
 favourer
@@ -37253,6 +37281,7 @@ fearsomeness
 feasibility
 feasible
 feasibleness
+feasiblenesses
 feasibly
 feast
 feasted
@@ -37309,6 +37338,7 @@ feck
 feckless
 fecklessly
 fecklessness
+fecklessnesses
 fecula
 feculae
 feculence
@@ -37349,6 +37379,7 @@ fee
 feeble
 feebleminded
 feeblemindedness
+feeblemindednesses
 feebleness
 feebler
 feeblest
@@ -37406,6 +37437,7 @@ felicities
 felicitous
 felicitously
 felicitousness
+felicitousnesses
 felicity
 felid
 felids
@@ -37464,6 +37496,7 @@ femineity
 feminine
 femininely
 feminineness
+femininenesses
 feminines
 femininity
 feminism
@@ -37608,6 +37641,7 @@ fervently
 fervid
 fervidly
 fervidness
+fervidnesses
 fervor
 fervour
 fescue
@@ -37829,6 +37863,7 @@ fidge
 fidget
 fidgeted
 fidgetiness
+fidgetinesses
 fidgeting
 fidgets
 fidgety
@@ -38087,6 +38122,7 @@ fines
 finespun
 finesse
 finessed
+finesses
 finessing
 finest
 finfish
@@ -38136,6 +38172,7 @@ finishing
 finite
 finitely
 finiteness
+finitenesses
 finitude
 finitudes
 fink
@@ -38359,6 +38396,7 @@ fittest
 fitting
 fittingly
 fittingness
+fittingnesses
 fittings
 five
 fivefold
@@ -38379,6 +38417,7 @@ fixatives
 fixed
 fixedly
 fixedness
+fixednesses
 fixer
 fixers
 fixes
@@ -38693,7 +38732,6 @@ flayer
 flayers
 flaying
 flays
-fld
 flea
 fleabag
 fleabags
@@ -38755,6 +38793,7 @@ fleshes
 fleshier
 fleshiest
 fleshiness
+fleshinesses
 fleshing
 fleshings
 fleshless
@@ -38779,6 +38818,7 @@ flexibilities
 flexibility
 flexible
 flexibleness
+flexiblenesses
 flexibly
 flexile
 flexing
@@ -39076,7 +39116,6 @@ flowing
 flowingly
 flown
 flows
-flt
 flu
 flub
 flubbed
@@ -39113,6 +39152,7 @@ fluidize
 fluidized
 fluidly
 fluidness
+fluidnesses
 fluids
 fluke
 flukes
@@ -39883,6 +39923,7 @@ forks
 forlorn
 forlornly
 forlornness
+forlornnesses
 form
 formae
 formal
@@ -40159,7 +40200,6 @@ foxtrotting
 foxy
 foyer
 foyers
-fps
 frabjous
 fracas
 fracases
@@ -40732,7 +40772,6 @@ frowziness
 frowzy
 froze
 frozen
-frt
 fructiferous
 fructification
 fructifications
@@ -40748,6 +40787,7 @@ frugal
 frugality
 frugally
 frugalness
+frugalnesses
 frugivorous
 fruit
 fruitage
@@ -40804,11 +40844,8 @@ fryable
 fryer
 fryers
 frying
-fth
-ftp
 ftpers
 ftping
-ftps
 fubsy
 fuchsia
 fuchsias
@@ -40847,6 +40884,7 @@ fug
 fugacious
 fugaciously
 fugaciousness
+fugaciousnesses
 fugacities
 fugacity
 fugal
@@ -41192,7 +41230,6 @@ fuzzily
 fuzziness
 fuzzing
 fuzzy
-fwd
 fwy
 fyke
 fylfot
@@ -41883,7 +41920,6 @@ gazump
 gazumped
 gazumping
 gazumps
-gds
 gean
 geans
 geanticlinal
@@ -42269,6 +42305,7 @@ germanders
 germane
 germanely
 germaneness
+germanenesses
 germanic
 germanium
 germanous
@@ -42423,6 +42460,7 @@ gibbosity
 gibbous
 gibbously
 gibbousness
+gibbousnesses
 gibbsite
 gibe
 gibed
@@ -42876,6 +42914,7 @@ globs
 globular
 globularly
 globularness
+globularnesses
 globule
 globules
 globuliferous
@@ -42976,7 +43015,6 @@ glowworms
 gloxinia
 gloxinias
 gloze
-glt
 glucagon
 glucagons
 glucinum
@@ -42993,6 +43031,7 @@ gluey
 gluier
 gluiest
 gluiness
+gluinesses
 gluing
 glum
 glume
@@ -43023,6 +43062,7 @@ glutinosity
 glutinous
 glutinously
 glutinousness
+glutinousnesses
 gluts
 glutted
 glutting
@@ -43514,6 +43554,7 @@ governable
 governance
 governed
 governess
+governesses
 governing
 government
 governmental
@@ -44012,6 +44053,7 @@ greensands
 greenshank
 greenshanks
 greensickness
+greensicknesses
 greenstone
 greensward
 greenuk
@@ -44062,6 +44104,7 @@ greyish
 greylag
 greylags
 greyness
+greynesses
 greys
 greywacke
 gribble
@@ -44470,7 +44513,6 @@ grunted
 grunter
 grunting
 grunts
-gtd
 guacamole
 guacharo
 guacharoes
@@ -44678,6 +44720,7 @@ gummed
 gummier
 gummiest
 gumminess
+gumminesses
 gumming
 gummite
 gummites
@@ -44815,6 +44858,7 @@ gutsier
 gutsiest
 gutsily
 gutsiness
+gutsinesses
 gutsy
 gutta
 guttate
@@ -45203,6 +45247,7 @@ halcyon
 hale
 haled
 haleness
+halenesses
 haler
 halers
 hales
@@ -45401,6 +45446,7 @@ handcuffing
 handcuffs
 handed
 handedness
+handednesses
 handfast
 handfasting
 handful
@@ -45699,6 +45745,7 @@ harms
 harness
 harnessed
 harnesser
+harnesses
 harnessing
 harp
 harped
@@ -45987,7 +46034,6 @@ hazing
 hazings
 hazmat
 hazy
-hdqrs
 head
 headache
 headaches
@@ -46330,6 +46376,7 @@ heeded
 heedful
 heedfully
 heedfulness
+heedfulnesses
 heeding
 heedless
 heedlessly
@@ -46855,6 +46902,7 @@ heterogeneity
 heterogeneous
 heterogeneously
 heterogeneousness
+heterogeneousnesses
 heterogeneses
 heterogenesis
 heterogenetic
@@ -46957,9 +47005,7 @@ hexylresorcinol
 hey
 heyday
 heydays
-hgt
 hgwy
-hhd
 hiatal
 hiatus
 hiatuses
@@ -47312,7 +47358,6 @@ hived
 hives
 hiving
 hiya
-hmm
 hoactzin
 hoactzins
 hoagie
@@ -47663,6 +47708,7 @@ homogeneity
 homogeneous
 homogeneously
 homogeneousness
+homogeneousnesses
 homogenesis
 homogenetic
 homogenies
@@ -47947,6 +47993,7 @@ hornets
 hornier
 horniest
 horniness
+horninesses
 hornless
 hornlike
 hornpipe
@@ -47981,6 +48028,7 @@ horribly
 horrid
 horridly
 horridness
+horridnesses
 horrific
 horrifically
 horrification
@@ -48279,7 +48327,6 @@ hoyden
 hoydenish
 hoydens
 hoys
-hrs
 hryvnia
 huarache
 huaraches
@@ -48544,6 +48591,7 @@ hurricanes
 hurried
 hurriedly
 hurriedness
+hurriednesses
 hurries
 hurry
 hurrying
@@ -49136,7 +49184,7 @@ hysterics
 hysterogenic
 hysteroid
 hysterotomy
-iamb
+iiiiiamb
 iambi
 iambic
 iambics
@@ -49274,6 +49322,7 @@ identic
 identical
 identically
 identicalness
+identicalnesses
 identifiable
 identifiably
 identification
@@ -49394,11 +49443,13 @@ ignitron
 ignobility
 ignoble
 ignobleness
+ignoblenesses
 ignobly
 ignominies
 ignominious
 ignominiously
 ignominiousness
+ignominiousnesses
 ignominy
 ignorable
 ignoramus
@@ -49416,7 +49467,6 @@ iguanas
 iguanodon
 iguanodons
 ihram
-iii
 ikebana
 ilea
 ileac
@@ -49468,6 +49518,7 @@ illiterately
 illiterateness
 illiterates
 illness
+illnesses
 illocution
 illocutionary
 illogic
@@ -49548,6 +49599,7 @@ imaginations
 imaginative
 imaginatively
 imaginativeness
+imaginativenesses
 imagine
 imagined
 imagines
@@ -49652,6 +49704,7 @@ immemorially
 immense
 immensely
 immenseness
+immensenesses
 immensities
 immensity
 immensurable
@@ -49703,6 +49756,7 @@ immoderacy
 immoderate
 immoderately
 immoderateness
+immoderatenesses
 immoderation
 immoderations
 immodest
@@ -49886,6 +49940,7 @@ impends
 impenetrability
 impenetrable
 impenetrableness
+impenetrablenesses
 impenetrably
 impenitence
 impenitent
@@ -49895,6 +49950,7 @@ imperatival
 imperative
 imperatively
 imperativeness
+imperativenesses
 imperatives
 imperator
 imperceptibility
@@ -49974,6 +50030,7 @@ imperturbation
 impervious
 imperviously
 imperviousness
+imperviousnesses
 impetigo
 impetrate
 impetuosity
@@ -50058,6 +50115,7 @@ impolicy
 impolite
 impolitely
 impoliteness
+impolitenesses
 impolitic
 impoliticly
 imponderabilia
@@ -50216,6 +50274,7 @@ impromptus
 improper
 improperly
 improperness
+impropernesses
 impropriate
 improprieties
 impropriety
@@ -50275,6 +50334,7 @@ impunity
 impure
 impurely
 impureness
+impurenesses
 impurer
 impurest
 impurities
@@ -50305,12 +50365,14 @@ inactivation
 inactive
 inactively
 inactiveness
+inactivenesses
 inactivity
 inadequacies
 inadequacy
 inadequate
 inadequately
 inadequateness
+inadequatenesses
 inadmissibility
 inadmissible
 inadmissibly
@@ -50388,6 +50450,7 @@ inaugurator
 inauspicious
 inauspiciously
 inauspiciousness
+inauspiciousnesses
 inauthentic
 inbeing
 inboard
@@ -50420,6 +50483,7 @@ incantatory
 incapability
 incapable
 incapableness
+incapablenesses
 incapably
 incapacious
 incapacitant
@@ -50451,6 +50515,7 @@ incarnations
 incautious
 incautiously
 incautiousness
+incautiousnesses
 inced
 incendiaries
 incendiarism
@@ -50477,6 +50542,7 @@ incessancy
 incessant
 incessantly
 incessantness
+incessantnesses
 incest
 incests
 incestuous
@@ -50730,6 +50796,7 @@ increate
 incredibility
 incredible
 incredibleness
+incrediblenesses
 incredibly
 incredulity
 incredulous
@@ -50831,6 +50898,7 @@ indeclinable
 indecorous
 indecorously
 indecorousness
+indecorousnesses
 indecorum
 indecorums
 indeed
@@ -50901,6 +50969,7 @@ indeterminacy
 indeterminate
 indeterminately
 indeterminateness
+indeterminatenesses
 indetermination
 indeterminations
 indeterminism
@@ -50957,6 +51026,7 @@ indigene
 indigenous
 indigenously
 indigenousness
+indigenousnesses
 indigent
 indigently
 indigents
@@ -50990,6 +51060,7 @@ indisciplines
 indiscreet
 indiscreetly
 indiscreetness
+indiscreetnesses
 indiscrete
 indiscretion
 indiscretions
@@ -51000,6 +51071,7 @@ indiscrimination
 indispensability
 indispensable
 indispensableness
+indispensablenesses
 indispensables
 indispensably
 indispose
@@ -51170,6 +51242,7 @@ ineffectualities
 ineffectuality
 ineffectually
 ineffectualness
+ineffectualnesses
 inefficacious
 inefficacy
 inefficiencies
@@ -51380,6 +51453,7 @@ infin
 infinite
 infinitely
 infiniteness
+infinitenesses
 infinitesimal
 infinitesimally
 infinitesimals
@@ -51670,6 +51744,7 @@ inhomogeneity
 inhomogeneous
 inhospitable
 inhospitableness
+inhospitablenesses
 inhospitably
 inhospitality
 inhuman
@@ -51742,6 +51817,7 @@ injuring
 injurious
 injuriously
 injuriousness
+injuriousnesses
 injury
 injustice
 injustices
@@ -51853,6 +51929,7 @@ inoperative
 inopportune
 inopportunely
 inopportuneness
+inopportunenesses
 inopportunity
 inordinate
 inordinately
@@ -51961,6 +52038,7 @@ insensibly
 insensitive
 insensitively
 insensitiveness
+insensitivenesses
 insensitivity
 insentience
 insentient
@@ -51991,6 +52069,7 @@ insidiousness
 insight
 insightful
 insightfulness
+insightfulnesses
 insights
 insignia
 insignificance
@@ -52014,6 +52093,7 @@ insipid
 insipidity
 insipidly
 insipidness
+insipidnesses
 insipience
 insist
 insisted
@@ -52112,6 +52192,7 @@ instantaneity
 instantaneous
 instantaneously
 instantaneousness
+instantaneousnesses
 instanter
 instantiate
 instantiated
@@ -52264,6 +52345,7 @@ insusceptible
 int
 intact
 intactness
+intactnesses
 intaglio
 intaglioed
 intaglios
@@ -52272,6 +52354,7 @@ intakes
 intangibility
 intangible
 intangibleness
+intangiblenesses
 intangibles
 intangibly
 intarsia
@@ -52330,6 +52413,7 @@ intemperance
 intemperate
 intemperately
 intemperateness
+intemperatenesses
 intend
 intendance
 intendancy
@@ -52742,6 +52826,7 @@ interregnums
 interrelate
 interrelated
 interrelatedness
+interrelatednesses
 interrelates
 interrelating
 interrelation
@@ -52918,6 +53003,7 @@ intracranial
 intractability
 intractable
 intractableness
+intractablenesses
 intractably
 intracutaneous
 intradermal
@@ -52941,6 +53027,7 @@ intransigents
 intransitive
 intransitively
 intransitiveness
+intransitivenesses
 intransitives
 intransitivities
 intransitivity
@@ -53004,6 +53091,7 @@ introspection
 introspective
 introspectively
 introspectiveness
+introspectivenesses
 introspects
 introversion
 introversive
@@ -53094,10 +53182,12 @@ invalidly
 invalids
 invaluable
 invaluableness
+invaluablenesses
 invaluably
 invariability
 invariable
 invariableness
+invariablenesses
 invariables
 invariably
 invariance
@@ -53259,6 +53349,7 @@ invulnerably
 inward
 inwardly
 inwardness
+inwardnesses
 inwards
 inweave
 inweaved
@@ -53440,6 +53531,7 @@ irreligions
 irreligious
 irreligiously
 irreligiousness
+irreligiousnesses
 irremeable
 irremediable
 irremediably
@@ -53473,6 +53565,7 @@ irrespirable
 irresponsibility
 irresponsible
 irresponsibleness
+irresponsiblenesses
 irresponsibly
 irresponsive
 irretentive
@@ -53953,7 +54046,6 @@ jazzing
 jazzman
 jazzmen
 jazzy
-jct
 jealous
 jealousies
 jealously
@@ -53979,6 +54071,7 @@ jejunal
 jejune
 jejunely
 jejuneness
+jejunenesses
 jejunum
 jell
 jellaba
@@ -54173,6 +54266,7 @@ jitterbugs
 jitterier
 jitteriest
 jitteriness
+jitterinesses
 jitters
 jittery
 jiva
@@ -54630,6 +54724,7 @@ juxtaposing
 juxtaposition
 juxtapositional
 juxtapositions
+kka
 kab
 kabbalah
 kabbalahs
@@ -55129,6 +55224,7 @@ kindliness
 kindling
 kindly
 kindness
+kindnesses
 kindred
 kinds
 kine
@@ -55416,6 +55512,7 @@ knotted
 knottier
 knottiest
 knottiness
+knottinesses
 knotting
 knotty
 knotweed
@@ -55509,7 +55606,6 @@ kowtowed
 kowtower
 kowtowing
 kowtows
-kph
 kraal
 kraals
 kraft
@@ -56247,6 +56343,7 @@ lasted
 lasting
 lastingly
 lastingness
+lastingnesses
 lastly
 lasts
 lat
@@ -56511,8 +56608,6 @@ lazurite
 lazy
 lazybones
 lazying
-lbs
-lbw
 lea
 leach
 leached
@@ -56592,6 +56687,7 @@ learn
 learned
 learnedly
 learnedness
+learnednesses
 learner
 learners
 learning
@@ -57113,7 +57209,6 @@ lexis
 lexises
 ley
 leys
-lgth
 liabilities
 liability
 liable
@@ -57240,6 +57335,7 @@ lichens
 licit
 licitly
 licitness
+licitnesses
 lick
 licked
 licker
@@ -57358,6 +57454,7 @@ lightfaced
 lightheaded
 lightheadedly
 lightheadedness
+lightheadednesses
 lighthearted
 lightheartedly
 lightheartedness
@@ -57394,7 +57491,6 @@ ligulae
 ligulate
 ligule
 ligure
-lii
 likability
 likable
 likableness
@@ -57413,6 +57509,7 @@ likely
 liken
 likened
 likeness
+likenesses
 likening
 likens
 liker
@@ -57649,6 +57746,7 @@ linty
 liny
 lion
 lioness
+lionesses
 lionfish
 lionhearted
 lionization
@@ -57724,6 +57822,7 @@ liquidizers
 liquidizes
 liquidizing
 liquidness
+liquidnesses
 liquids
 liquor
 liquored
@@ -57746,6 +57845,7 @@ lisps
 lissome
 lissomely
 lissomeness
+lissomenesses
 lissotrichous
 list
 listed
@@ -57925,11 +58025,11 @@ lividities
 lividity
 lividly
 lividness
+lividnesses
 living
 livings
 livraison
 livre
-lix
 lixiviate
 lixivium
 lizard
@@ -58163,6 +58263,7 @@ logical
 logicality
 logically
 logicalness
+logicalnesses
 logician
 logicians
 logicize
@@ -58170,6 +58271,7 @@ logier
 logiest
 login
 loginess
+loginesses
 logins
 logion
 logistic
@@ -58519,6 +58621,7 @@ lovers
 loves
 lovesick
 lovesickness
+lovesicknesses
 lovesome
 lovey
 loveys
@@ -58575,7 +58678,6 @@ loyalty
 lozenge
 lozenges
 lozengy
-ltd
 luau
 luaus
 lubber
@@ -58719,6 +58821,7 @@ luminosity
 luminous
 luminously
 luminousness
+luminousnesses
 lumisterol
 lummox
 lummoxes
@@ -58844,6 +58947,7 @@ lusterwares
 lustful
 lustfully
 lustfulness
+lustfulnesses
 lustier
 lustiest
 lustihood
@@ -58904,16 +59008,8 @@ luxurious
 luxuriously
 luxuriousness
 luxury
-lvi
-lvii
 lwei
 lweis
-lxi
-lxii
-lxiv
-lxix
-lxvi
-lxvii
 lycanthrope
 lycanthropes
 lycanthropic
@@ -59207,6 +59303,7 @@ magnanimity
 magnanimous
 magnanimously
 magnanimousness
+magnanimousnesses
 magnate
 magnates
 magnesia
@@ -59534,6 +59631,7 @@ malodor
 malodorous
 malodorously
 malodorousness
+malodorousnesses
 malodors
 malodour
 malodourousness
@@ -59618,6 +59716,7 @@ manage
 manageability
 manageable
 manageableness
+manageablenesses
 manageably
 managed
 management
@@ -59692,6 +59791,7 @@ maneuvers
 manful
 manfully
 manfulness
+manfulnesses
 manga
 manganate
 manganates
@@ -59986,6 +60086,7 @@ marchesa
 marchese
 marching
 marchioness
+marchionesses
 marchland
 marchlands
 marchpane
@@ -60510,6 +60611,7 @@ mature
 matured
 maturely
 matureness
+maturenesses
 maturer
 matures
 maturest
@@ -60823,6 +60925,7 @@ meditations
 meditative
 meditatively
 meditativeness
+meditativenesses
 meditator
 medium
 mediumism
@@ -61231,6 +61334,7 @@ mercies
 merciful
 mercifully
 mercifulness
+mercifulnesses
 merciless
 mercilessly
 mercilessness
@@ -61698,11 +61802,6 @@ mezzos
 mezzotint
 mezzotinter
 mezzotints
-mfd
-mfg
-mfr
-mfrs
-mgr
 mho
 mhos
 miasma
@@ -63026,8 +63125,6 @@ mizzle
 mizzled
 mizzles
 mizzling
-mks
-mkt
 mneme
 mnemonic
 mnemonically
@@ -64155,6 +64252,7 @@ movabilities
 movability
 movable
 movableness
+movablenesses
 movables
 movably
 move
@@ -64181,12 +64279,10 @@ moxa
 moxie
 mozzarella
 mozzetta
-mpg
-mph
-mtg
 mtge
 much
 muchness
+muchnesses
 mucilage
 mucilaginous
 mucin
@@ -64541,6 +64637,7 @@ murdering
 murderous
 murderously
 murderousness
+murderousnesses
 murders
 mure
 murex
@@ -64677,6 +64774,7 @@ mussier
 mussiest
 mussily
 mussiness
+mussinesses
 mussing
 mussy
 must
@@ -64708,6 +64806,7 @@ mut
 mutability
 mutable
 mutableness
+mutablenesses
 mutably
 mutagen
 mutagenesis
@@ -64987,6 +65086,7 @@ naissant
 naive
 naively
 naiveness
+naivenesses
 naiver
 naivest
 naivete
@@ -65005,6 +65105,7 @@ namedropping
 nameless
 namelessly
 namelessness
+namelessnesses
 namely
 nameplate
 nameplates
@@ -66216,6 +66317,7 @@ noising
 noisome
 noisomely
 noisomeness
+noisomenesses
 noisy
 nolo
 nom
@@ -67079,10 +67181,10 @@ nowt
 noxious
 noxiously
 noxiousness
+noxiousnesses
 noyade
 nozzle
 nozzles
-nth
 nuance
 nuanced
 nuances
@@ -67212,6 +67314,7 @@ numerology
 numerous
 numerously
 numerousness
+numerousnesses
 numina
 numinous
 numis
@@ -67478,6 +67581,7 @@ oblast
 oblate
 oblately
 oblateness
+oblatenesses
 oblation
 oblational
 oblations
@@ -67502,6 +67606,7 @@ obliges
 obliging
 obligingly
 obligingness
+obligingnesses
 obligor
 oblique
 obliqued
@@ -67556,6 +67661,7 @@ obscured
 obscurely
 obscurement
 obscureness
+obscurenesses
 obscurer
 obscures
 obscurest
@@ -67613,6 +67719,7 @@ obsolete
 obsoleted
 obsoletely
 obsoleteness
+obsoletenesses
 obsoletes
 obsoleting
 obsoletism
@@ -68451,6 +68558,7 @@ opponents
 opportune
 opportunely
 opportuneness
+opportunenesses
 opportunism
 opportunist
 opportunistic
@@ -68468,6 +68576,7 @@ opposing
 opposite
 oppositely
 oppositeness
+oppositenesses
 opposites
 opposition
 oppositional
@@ -68981,6 +69090,7 @@ ostentation
 ostentatious
 ostentatiously
 ostentatiousness
+ostentatiousnesses
 osteoarthritic
 osteoarthritis
 osteoblast
@@ -69033,11 +69143,13 @@ otalgia
 otalgias
 other
 otherness
+othernesses
 others
 otherwhere
 otherwise
 otherworld
 otherworldliness
+otherworldlinesses
 otherworldly
 otic
 otiose
@@ -69340,6 +69452,7 @@ outraged
 outrageous
 outrageously
 outrageousness
+outrageousnesses
 outrages
 outraging
 outran
@@ -69572,6 +69685,7 @@ overbear
 overbearing
 overbearingly
 overbearingness
+overbearingnesses
 overbears
 overbid
 overbidding
@@ -71458,6 +71572,7 @@ parses
 parsimonious
 parsimoniously
 parsimoniousness
+parsimoniousnesses
 parsimony
 parsing
 parsings
@@ -71487,6 +71602,7 @@ partial
 partiality
 partially
 partialness
+partialnesses
 partials
 partible
 participant
@@ -71807,6 +71923,7 @@ patisserie
 patisseries
 patly
 patness
+patnesses
 patois
 patresfamilias
 patriarch
@@ -71853,6 +71970,7 @@ patron
 patronage
 patronages
 patroness
+patronesses
 patronization
 patronize
 patronized
@@ -71985,7 +72103,6 @@ payt
 paywall
 paywalls
 payware
-pct
 pea
 peace
 peaceable
@@ -72297,6 +72414,7 @@ pellucidities
 pellucidity
 pellucidly
 pellucidness
+pellucidnesses
 pelmet
 pelmets
 peloria
@@ -73014,6 +73132,7 @@ person
 persona
 personable
 personableness
+personablenesses
 personably
 personae
 personage
@@ -73055,6 +73174,7 @@ perspicuity
 perspicuous
 perspicuously
 perspicuousness
+perspicuousnesses
 perspiration
 perspiratory
 perspire
@@ -73136,6 +73256,7 @@ perverts
 pervious
 perviously
 perviousness
+perviousnesses
 pervs
 pes
 pesade
@@ -73789,7 +73910,6 @@ phototypy
 photovoltaic
 photozincography
 phots
-phr
 phrasal
 phrase
 phrasebook
@@ -74602,8 +74722,6 @@ pizzeria
 pizzerias
 pizzicati
 pizzicato
-pkg
-pkt
 pkwy
 placable
 placard
@@ -74650,6 +74768,7 @@ placid
 placidity
 placidly
 placidness
+placidnesses
 placing
 placings
 placket
@@ -74703,6 +74822,7 @@ plaintiffs
 plaintive
 plaintively
 plaintiveness
+plaintivenesses
 plaints
 plait
 plaited
@@ -74881,6 +75001,7 @@ plaudits
 plausibility
 plausible
 plausibleness
+plausiblenesses
 plausibly
 plausive
 play
@@ -75026,6 +75147,7 @@ plenteously
 plentiful
 plentifully
 plentifulness
+plentifulnesses
 plenty
 plenum
 plenums
@@ -76481,6 +76603,7 @@ powered
 powerful
 powerfully
 powerfulness
+powerfulnesses
 powerhouse
 powerhouses
 powering
@@ -76495,9 +76618,6 @@ powwowing
 powwows
 pox
 poxes
-ppd
-ppm
-ppr
 practicabilities
 practicability
 practicable
@@ -76734,6 +76854,7 @@ precipitate
 precipitated
 precipitately
 precipitateness
+precipitatenesses
 precipitates
 precipitating
 precipitation
@@ -76746,6 +76867,7 @@ precipitins
 precipitous
 precipitously
 precipitousness
+precipitousnesses
 precis
 precise
 precised
@@ -77301,6 +77423,7 @@ presently
 presentment
 presentments
 presentness
+presentnesses
 presents
 preservable
 preservation
@@ -77506,6 +77629,7 @@ previews
 previous
 previously
 previousness
+previousnesses
 prevision
 previsions
 previze
@@ -77554,6 +77678,7 @@ prided
 prideful
 pridefully
 pridefulness
+pridefulnesses
 prides
 priding
 pried
@@ -77735,6 +77860,7 @@ privateersman
 privateersmen
 privately
 privateness
+privatenesses
 privater
 privates
 privatest
@@ -78201,6 +78327,7 @@ promiscuity
 promiscuous
 promiscuously
 promiscuousness
+promiscuousnesses
 promise
 promised
 promisee
@@ -78337,6 +78464,7 @@ properer
 properest
 properly
 properness
+propernesses
 propertied
 properties
 property
@@ -78373,6 +78501,7 @@ propitiatory
 propitious
 propitiously
 propitiousness
+propitiousnesses
 propjet
 propjets
 propman
@@ -78459,6 +78588,7 @@ pros
 prosaic
 prosaically
 prosaicness
+prosaicnesses
 prosaism
 proscenium
 prosceniums
@@ -78502,6 +78632,7 @@ prosiest
 prosimian
 prosimians
 prosiness
+prosinesses
 prosit
 proslavery
 prosodic
@@ -78784,7 +78915,6 @@ proximation
 proximity
 proximo
 proxy
-prs
 prude
 prudence
 prudent
@@ -78858,7 +78988,6 @@ pseudosciences
 pseudoscope
 pseuds
 pseudy
-psf
 pshaw
 pshaws
 psi
@@ -78873,7 +79002,6 @@ psittacine
 psittacosis
 psoas
 psoriasis
-psst
 psych
 psychasthenia
 psyche
@@ -79007,13 +79135,11 @@ pteropod
 pterosaur
 pterosaurs
 pteryla
-ptg
 ptisan
 ptomaine
 ptomaines
 ptoses
 ptosis
-pts
 ptyalin
 ptyalins
 ptyalism
@@ -79409,6 +79535,7 @@ purloins
 purls
 purple
 purpleness
+purplenesses
 purpler
 purples
 purplest
@@ -79541,6 +79668,7 @@ putrid
 putridities
 putridity
 putridness
+putridnesses
 puts
 putsch
 putsches
@@ -79574,12 +79702,9 @@ puzzlers
 puzzles
 puzzling
 puzzlingly
-pvt
-pwn
 pwned
 pwning
 pwns
-pwt
 pya
 pyaemia
 pyas
@@ -79698,6 +79823,7 @@ pyrrhuloxias
 pyrrolidine
 python
 pythoness
+pythonesses
 pythons
 pyuria
 pyx
@@ -80721,6 +80847,7 @@ randomizes
 randomizing
 randomly
 randomness
+randomnesses
 randoms
 randy
 ranee
@@ -80946,6 +81073,7 @@ rationalizes
 rationalizing
 rationally
 rationalness
+rationalnesses
 rationals
 rationed
 rationing
@@ -81029,6 +81157,7 @@ ravening
 ravenous
 ravenously
 ravenousness
+ravenousnesses
 ravens
 raver
 ravers
@@ -81079,8 +81208,6 @@ razzes
 razzia
 razzing
 razzmatazz
-rcd
-rcpt
 reabsorb
 reabsorbed
 reabsorbing
@@ -81668,6 +81795,7 @@ recluses
 reclusion
 reclusive
 reclusiveness
+reclusivenesses
 recode
 recoded
 recodes
@@ -81783,6 +81911,7 @@ recondensation
 recondense
 recondite
 reconditeness
+reconditenesses
 recondition
 reconditioned
 reconditioning
@@ -82525,6 +82654,7 @@ reflexes
 reflexive
 reflexively
 reflexiveness
+reflexivenesses
 reflexives
 reflexivities
 reflexivity
@@ -82598,6 +82728,7 @@ refractions
 refractive
 refractively
 refractiveness
+refractivenesses
 refractivities
 refractivity
 refractometer
@@ -82606,6 +82737,7 @@ refractor
 refractories
 refractorily
 refractoriness
+refractorinesses
 refractors
 refractory
 refracts
@@ -83179,6 +83311,7 @@ reliabilities
 reliability
 reliable
 reliableness
+reliablenesses
 reliably
 reliance
 reliant
@@ -84351,6 +84484,7 @@ responsibilities
 responsibility
 responsible
 responsibleness
+responsiblenesses
 responsibly
 responsion
 responsive
@@ -85284,6 +85418,7 @@ ricked
 ricketier
 ricketiest
 ricketiness
+ricketinesses
 rickets
 rickettsia
 rickettsias
@@ -85627,7 +85762,6 @@ rivulet
 rivulets
 riyal
 riyals
-rms
 roach
 roached
 roaches
@@ -86194,9 +86328,6 @@ royally
 royals
 royalties
 royalty
-rpm
-rps
-rpt
 rte
 rub
 rubato
@@ -86954,6 +87085,7 @@ salty
 salubrious
 salubriously
 salubriousness
+salubriousnesses
 salubrities
 salubrity
 salutarily
@@ -87139,6 +87271,7 @@ sanguinary
 sanguine
 sanguinely
 sanguineness
+sanguinenesses
 sanguineous
 sanguinities
 sanguinity
@@ -87371,6 +87504,7 @@ satisfaction
 satisfactions
 satisfactorily
 satisfactoriness
+satisfactorinesses
 satisfactory
 satisfiable
 satisfied
@@ -87805,7 +87939,6 @@ scepters
 sceptre
 sceptred
 sceptres
-sch
 schadenfreude
 schappe
 schedule
@@ -88191,7 +88324,6 @@ scowling
 scowlingly
 scowls
 scows
-scr
 scrabble
 scrabbled
 scrabbler
@@ -88239,6 +88371,7 @@ scrappier
 scrappiest
 scrappily
 scrappiness
+scrappinesses
 scrapping
 scrapple
 scrappy
@@ -88666,6 +88799,7 @@ season
 seasonability
 seasonable
 seasonableness
+seasonablenesses
 seasonably
 seasonal
 seasonality
@@ -88867,6 +89001,7 @@ sedulity
 sedulous
 sedulously
 sedulousness
+sedulousnesses
 sedum
 sedums
 see
@@ -89309,6 +89444,7 @@ sensualizes
 sensualizing
 sensually
 sensualness
+sensualnesses
 sensuosity
 sensuous
 sensuously
@@ -89600,6 +89736,7 @@ service
 serviceability
 serviceable
 serviceableness
+serviceablenesses
 serviceably
 serviceberries
 serviceberry
@@ -89747,6 +89884,7 @@ sexivalent
 sexless
 sexlessly
 sexlessness
+sexlessnesses
 sexological
 sexologist
 sexologists
@@ -89785,7 +89923,6 @@ sforzandos
 sforzati
 sforzato
 sfumato
-sgd
 sgraffiti
 sgraffito
 shabbier
@@ -89833,6 +89970,7 @@ shadowgraphs
 shadowier
 shadowiest
 shadowiness
+shadowinesses
 shadowing
 shadowland
 shadowlands
@@ -89917,6 +90055,7 @@ shamed
 shamefaced
 shamefacedly
 shamefacedness
+shamefacednesses
 shameful
 shamefully
 shamefulness
@@ -90181,7 +90320,6 @@ shewed
 shewing
 shewn
 shews
-shh
 shiatsu
 shibboleth
 shibboleths
@@ -90632,8 +90770,6 @@ showstoppers
 showstopping
 showtime
 showy
-shpt
-shr
 shrank
 shrapnel
 shred
@@ -90652,6 +90788,7 @@ shrewdness
 shrewish
 shrewishly
 shrewishness
+shrewishnesses
 shrewmice
 shrewmouse
 shrews
@@ -90720,7 +90857,6 @@ shrugging
 shrugs
 shrunk
 shrunken
-shtg
 shtick
 shticks
 shuck
@@ -90840,6 +90976,7 @@ sickliest
 sickliness
 sickly
 sickness
+sicknesses
 sicko
 sickos
 sickout
@@ -90960,6 +91097,7 @@ sightings
 sightless
 sightlessly
 sightlessness
+sightlessnesses
 sightlier
 sightliest
 sightliness
@@ -91231,6 +91369,7 @@ simultaneity
 simultaneous
 simultaneously
 simultaneousness
+simultaneousnesses
 sin
 sinapism
 sinapisms
@@ -91342,6 +91481,7 @@ sinuosity
 sinuous
 sinuously
 sinuousness
+sinuousnesses
 sinus
 sinuses
 sinusitis
@@ -91537,6 +91677,7 @@ skewering
 skewers
 skewing
 skewness
+skewnesses
 skews
 ski
 skiable
@@ -91786,6 +91927,7 @@ slang
 slangier
 slangiest
 slanginess
+slanginesses
 slanging
 slangy
 slant
@@ -91829,6 +91971,7 @@ slats
 slatted
 slattern
 slatternliness
+slatternlinesses
 slatternly
 slatterns
 slaty
@@ -91865,7 +92008,6 @@ slayers
 slaying
 slayings
 slays
-sld
 sleave
 sleaze
 sleazebag
@@ -92297,6 +92439,7 @@ smarmier
 smarmiest
 smarmily
 smarminess
+smarminesses
 smarms
 smarmy
 smart
@@ -92911,6 +93054,7 @@ soccer
 sociability
 sociable
 sociableness
+sociablenesses
 sociables
 sociably
 social
@@ -93019,6 +93163,7 @@ softest
 softhearted
 softheartedly
 softheartedness
+softheartednesses
 softies
 softly
 softness
@@ -93344,6 +93489,7 @@ soothsaying
 sootier
 sootiest
 sootiness
+sootinesses
 sooty
 sop
 sophism
@@ -94572,6 +94718,7 @@ sportingly
 sportive
 sportively
 sportiveness
+sportivenesses
 sports
 sportscast
 sportscaster
@@ -94621,7 +94768,6 @@ spouted
 spouter
 spouting
 spouts
-spp
 spraddle
 sprag
 sprags
@@ -94795,7 +94941,6 @@ spyings
 spymaster
 spymasters
 spyware
-sqq
 squab
 squabble
 squabbled
@@ -94975,7 +95120,6 @@ squishy
 sri
 sriracha
 sruti
-ssh
 stab
 stabbed
 stabber
@@ -95057,6 +95201,7 @@ stagier
 stagiest
 stagily
 staginess
+staginesses
 staging
 stagings
 stagnancy
@@ -95136,6 +95281,7 @@ stalls
 stalwart
 stalwartly
 stalwartness
+stalwartnesses
 stalwarts
 stamen
 stamens
@@ -95196,6 +95342,7 @@ standings
 standoff
 standoffish
 standoffishness
+standoffishnesses
 standoffs
 standout
 standouts
@@ -95418,7 +95565,6 @@ staying
 stays
 staysail
 staysails
-std
 stdio
 stead
 steadfast
@@ -95747,7 +95893,6 @@ stewing
 stewpan
 stewpans
 stews
-stg
 stge
 sthenic
 stibine
@@ -96179,6 +96324,7 @@ stoutest
 stouthearted
 stoutheartedly
 stoutheartedness
+stoutheartednesses
 stoutly
 stoutness
 stouts
@@ -96195,7 +96341,6 @@ stowaways
 stowed
 stowing
 stows
-str
 strabismal
 strabismic
 strabismus
@@ -96648,6 +96793,7 @@ stubbed
 stubbier
 stubbiest
 stubbiness
+stubbinesses
 stubbing
 stubble
 stubbly
@@ -96997,6 +97143,7 @@ subjection
 subjective
 subjectively
 subjectiveness
+subjectivenesses
 subjectivism
 subjectivisms
 subjectivity
@@ -97533,6 +97680,7 @@ sugared
 sugarier
 sugariest
 sugariness
+sugarinesses
 sugaring
 sugarless
 sugarplum
@@ -98423,6 +98571,7 @@ suspicions
 suspicious
 suspiciously
 suspiciousness
+suspiciousnesses
 suspiration
 suspire
 suss
@@ -98556,6 +98705,7 @@ swarthier
 swarthiest
 swarthily
 swarthiness
+swarthinesses
 swarthy
 swash
 swashbuckler
@@ -99546,6 +99696,7 @@ tangibly
 tangier
 tangiest
 tanginess
+tanginesses
 tangle
 tangleberry
 tangled
@@ -99892,6 +100043,7 @@ tawdry
 tawnier
 tawniest
 tawniness
+tawninesses
 tawny
 taws
 tax
@@ -99935,8 +100087,6 @@ taxpaying
 tayra
 tayras
 tazza
-tbs
-tbsp
 tea
 teabag
 teabags
@@ -100362,6 +100512,7 @@ ten
 tenability
 tenable
 tenableness
+tenablenesses
 tenably
 tenace
 tenacious
@@ -101158,6 +101309,7 @@ thickish
 thickleaf
 thickly
 thickness
+thicknesses
 thicko
 thickos
 thickset
@@ -102028,7 +102180,6 @@ tizzies
 tizzy
 tmeses
 tmesis
-tnpk
 toad
 toadeater
 toadfish
@@ -102331,6 +102482,7 @@ toothpicks
 toothsome
 toothsomely
 toothsomeness
+toothsomenesses
 toothwort
 toothworts
 toothy
@@ -102794,6 +102946,7 @@ tract
 tractability
 tractable
 tractableness
+tractablenesses
 tractably
 tractate
 tractile
@@ -102907,6 +103060,7 @@ traitor
 traitorous
 traitorously
 traitorousness
+traitorousnesses
 traitors
 traits
 traject
@@ -103119,6 +103273,7 @@ transitives
 transitivity
 transitorily
 transitoriness
+transitorinesses
 transitory
 transits
 transl
@@ -104124,6 +104279,7 @@ truehearted
 truelove
 trueloves
 trueness
+truenesses
 truer
 trues
 truest
@@ -104191,6 +104347,7 @@ trusties
 trustiest
 trustily
 trustiness
+trustinesses
 trusting
 trustingly
 trustless
@@ -104229,7 +104386,6 @@ tsarevna
 tsarists
 tsetse
 tsetses
-tsp
 tsunami
 tsunamis
 ttys
@@ -104243,6 +104399,7 @@ tubate
 tubbier
 tubbiest
 tubbiness
+tubbinesses
 tubby
 tube
 tubed
@@ -104351,6 +104508,7 @@ tumults
 tumultuous
 tumultuously
 tumultuousness
+tumultuousnesses
 tumulus
 tumuluses
 tun
@@ -104425,6 +104583,7 @@ turbidimeter
 turbidity
 turbidly
 turbidness
+turbidnesses
 turbinal
 turbinals
 turbinate
@@ -104473,6 +104632,7 @@ turgid
 turgidity
 turgidly
 turgidness
+turgidnesses
 turgite
 turgor
 turgors
@@ -104614,6 +104774,7 @@ tweedier
 tweediest
 tweedily
 tweediness
+tweedinesses
 tweeds
 tweedy
 tween
@@ -104740,7 +104901,6 @@ twopenny
 twos
 twosome
 twosomes
-twp
 tychism
 tycoon
 tycoonery
@@ -104858,6 +105018,7 @@ ubiquitarianism
 ubiquitous
 ubiquitously
 ubiquitousness
+ubiquitousnesses
 ubiquity
 udder
 udders
@@ -105042,6 +105203,7 @@ unaesthetic
 unaffected
 unaffectedly
 unaffectedness
+unaffectednesses
 unaffiliated
 unaffordable
 unafraid
@@ -105111,6 +105273,7 @@ unassailable
 unassailed
 unassertive
 unassertiveness
+unassertivenesses
 unassigned
 unassimilated
 unassisted
@@ -105119,6 +105282,7 @@ unassuaged
 unassuming
 unassumingly
 unassumingness
+unassumingnesses
 unathletic
 unattached
 unattainability
@@ -105304,6 +105468,7 @@ unceremoniously
 uncertain
 uncertainly
 uncertainness
+uncertainnesses
 uncertainties
 uncertainty
 uncertified
@@ -105422,6 +105587,7 @@ uncommonly
 uncommonness
 uncommunicative
 uncommunicativeness
+uncommunicativenesses
 uncompensated
 uncompetitive
 uncompetitiveness
@@ -106271,6 +106437,7 @@ ungracefully
 ungracious
 ungraciously
 ungraciousness
+ungraciousnesses
 ungraded
 ungrammatical
 ungrammatically
@@ -106318,6 +106485,7 @@ unharmed
 unharmful
 unharness
 unharnessed
+unharnesses
 unharnessing
 unharvested
 unhatched
@@ -106409,6 +106577,7 @@ uniformity
 uniformize
 uniformly
 uniformness
+uniformnesses
 uniforms
 unify
 unifying
@@ -106578,6 +106747,7 @@ unjustness
 unkempt
 unkemptly
 unkemptness
+unkemptnesses
 unkenned
 unkennel
 unkept
@@ -106746,6 +106916,7 @@ unmentioned
 unmerciful
 unmercifully
 unmercifulness
+unmercifulnesses
 unmerited
 unmeriting
 unmet
@@ -106948,6 +107119,7 @@ unpretending
 unpretentious
 unpretentiously
 unpretentiousness
+unpretentiousnesses
 unpretty
 unpreventable
 unpriced
@@ -107205,9 +107377,11 @@ unsaturated
 unsaved
 unsavorily
 unsavoriness
+unsavorinesses
 unsavory
 unsavourily
 unsavouriness
+unsavourinesses
 unsavoury
 unsay
 unsaying
@@ -107267,6 +107441,7 @@ unselected
 unselfconscious
 unselfconsciously
 unselfconsciousness
+unselfconsciousnesses
 unselfish
 unselfishly
 unselfishness
@@ -107382,6 +107557,7 @@ unspotted
 unsprung
 unstable
 unstableness
+unstablenesses
 unstably
 unstack
 unstacked
@@ -107811,6 +107987,7 @@ upping
 uppish
 uppishly
 uppishness
+uppishnesses
 uppity
 upraise
 upraised
@@ -108042,6 +108219,7 @@ usu
 usual
 usually
 usualness
+usualnesses
 usufruct
 usurer
 usurers
@@ -108107,6 +108285,7 @@ uxoricide
 uxorious
 uxoriously
 uxoriousness
+uxoriousnesses
 vac
 vacancies
 vacancy
@@ -108410,6 +108589,7 @@ varia
 variability
 variable
 variableness
+variablenesses
 variables
 variably
 variance
@@ -108702,6 +108882,7 @@ vengeance
 vengeful
 vengefully
 vengefulness
+vengefulnesses
 venial
 veniality
 venially
@@ -109037,7 +109218,6 @@ vexillologist
 vexillology
 vexillum
 vexing
-vhf
 via
 viability
 viable
@@ -109219,8 +109399,6 @@ vigorously
 vigorousness
 vigour
 vigourless
-vii
-viii
 viking
 vikings
 vil
@@ -109246,10 +109424,12 @@ villain
 villainage
 villainages
 villainess
+villainesses
 villainies
 villainous
 villainously
 villainousness
+villainousnesses
 villains
 villainy
 villanelle
@@ -109445,6 +109625,7 @@ viscounty
 viscous
 viscously
 viscousness
+viscousnesses
 viscus
 vise
 vised
@@ -110593,6 +110774,7 @@ weakling
 weaklings
 weakly
 weakness
+weaknesses
 weal
 weald
 wealds
@@ -111079,7 +111261,6 @@ whetter
 whetting
 whew
 whey
-whf
 which
 whichever
 whichsoever
@@ -111488,6 +111669,7 @@ wildebeest
 wildebeests
 wilder
 wilderness
+wildernesses
 wildest
 wildfire
 wildfires
@@ -111798,6 +111980,7 @@ wishes
 wishful
 wishfully
 wishfulness
+wishfulnesses
 wishing
 wishlist
 wishlists
@@ -111900,7 +112083,6 @@ wizards
 wizen
 wizened
 wkly
-wmk
 woad
 woaded
 woadwaxen
@@ -112300,7 +112482,6 @@ wowed
 wowing
 wows
 wowser
-wpm
 wrack
 wracked
 wracking
@@ -112474,12 +112655,6 @@ xanthochroism
 xanthophyll
 xanthophylls
 xanthous
-xci
-xcii
-xciv
-xcix
-xcvi
-xcvii
 xebec
 xenia
 xenocryst
@@ -112511,39 +112686,13 @@ xerox
 xeroxed
 xeroxes
 xeroxing
-xii
-xiii
 xiphisternum
 xiphoid
 xis
-xiv
-xix
 xor
 xref
 xrefs
 xterm
-xvi
-xvii
-xviii
-xxi
-xxii
-xxiii
-xxiv
-xxix
-xxv
-xxvi
-xxvii
-xxviii
-xxx
-xxxi
-xxxii
-xxxiii
-xxxiv
-xxxix
-xxxv
-xxxvi
-xxxvii
-xxxviii
 xylem
 xylene
 xylenes
