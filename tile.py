@@ -182,9 +182,6 @@ class Tile(Button):
         
     
     def done_bubble(self, instance):
-        # reset score progress bar every 100 points because reached next level
-        # add seconds to timer when points scored
-        _Board.progress.value = (_Board.progress.value + _Board.value)%_Board.progress.max
         
         _Board.score += _Board.value
 
@@ -193,8 +190,13 @@ class Tile(Button):
             _Board.progress.max = 100
         
         # level up every 100 points
-        if _Board.level > 0 and _Board.score >= 100*_Board.level:
+        if _Board.level > 0 and _Board.score > 100*_Board.level:
             _Board.level += 1
+           
+        
+        # reset score progress bar every 100 points because reached next level
+        # add seconds to timer when points scored
+        _Board.progress.value = (_Board.progress.value + _Board.value)%_Board.progress.max
         
         # move bubble back off screen
         instance.pos = -5000, -5000
