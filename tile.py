@@ -13,11 +13,17 @@ class Tile(Button):
     anims_to_complete = 0
     tiles_being_removed = 0
     lscore = ObjectProperty()
+    number = 0
     
     def __repr__(self):
-        return self.text
+        score = ""
+        try:
+            score = self.lscore.text
+        except:
+            pass
+        return self.text + "," + score
     
-    def __init__(self, board=None, **kwargs):
+    def __init__(self, number, board=None, **kwargs):
         """
         
         """
@@ -41,6 +47,7 @@ class Tile(Button):
         letter = Letters.letters[rand]
         self.text = letter
         self.lscore.text = str(Letters.Value[letter])
+        self.number = number
     
     def update_color(self, instance, value):
         if self in _Board._highlighted or value == [1,1,1,1]:
@@ -184,7 +191,7 @@ class Tile(Button):
         
         _Board.score += _Board.value
 
-        if _Board.score >= 5 and _Board.level == 0:
+        if _Board.score >= 30 and _Board.level == 0:
             _Board.level = 1
             _Board.progress.max = 100
         
@@ -252,7 +259,7 @@ class Tile(Button):
             t='out_bounce', d = 1)
         Tile.anims_to_complete += 1
         Tile.tiles_being_removed += 1
-        new_tile = Tile()
+        new_tile = Tile(self.number)
         new_tile.x = self.x
         new_tile.y = window.height + 100
         

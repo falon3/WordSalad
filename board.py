@@ -45,6 +45,7 @@ class Board(Screen):
     _dictionary = Dictograph("us_cad_dict.txt")
     _columns = []
     _game_over = False
+    _searchword = StringProperty('Search word')
     play_area = ObjectProperty()
     complete = StringProperty()
     color = ListProperty()
@@ -69,13 +70,9 @@ class Board(Screen):
         word = ''
         for tile in self._highlighted:
             letter = tile.text
-            score += Letters.Value[letter]
             word += letter
+            score = Letters.calc_add_score(word, score, letter)
             
-        # word length bonus of (addtional letter)*2 times the score
-        # for each letter over 3
-        if len(word) > 2:
-            score += int(score*((len(word)-3)/2))
         
         self.value = score
         self.complete = word 
@@ -148,7 +145,7 @@ class Board(Screen):
                 playArea.add_widget(column)
                 self._columns.append(column)
 
-            tile = Tile(self)
+            tile = Tile(i, self)
             tiles.append(tile)
             column.add_widget(tile)
 
@@ -216,7 +213,9 @@ class Board(Screen):
         
         # create graph representing the board
         self._board = Graph(set(tiles), edges)
-
+        
+        self._searchword = self._dictionary.find_longest_word(self._board)
+        
     def reset_tiles(self, min_time=-float('inf')):
         if  _Board.game_timer.seconds >= min_time:
             add = []
