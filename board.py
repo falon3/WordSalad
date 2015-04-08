@@ -11,7 +11,6 @@ from words import Letters, Dictograph
 from collections import OrderedDict
 from tile import Tile
 from graph_v2 import Graph
-import time
 import math
 
 TILE_ROWS = 7       # number of rows in the game board

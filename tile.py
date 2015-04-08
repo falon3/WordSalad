@@ -118,8 +118,7 @@ class Tile(Button):
         """
 
         if touch.is_touch or touch.button == 'left':
-            if touch.grab_current is self\
-                and not Tile.anims_to_complete: 
+            if touch.grab_current is self and not Tile.anims_to_complete: 
                 word = _Board.complete
                 # clear word complete text
                 _Board.complete = '_ _ _'
