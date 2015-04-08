@@ -1,5 +1,4 @@
-10
-14
-16
-18
-240
+6, winner!
+9, winner!
+10, winner!
+14, winner!

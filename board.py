@@ -329,34 +329,57 @@ class Level(BoxLayout):
     pass
     
     
-def GameOver(end_score):
+def GameOver(end_score, name = None):
     # save score to file only if higher than rest saved
     # see if got new high score!
-    
+    if not name:
+        name = 'winner!'
     _Board._highlighted.clear()
-    
+    score_list = []
+    saved = False
     with open('high_scores.txt', 'r+') as file:
-        try:
-            highest = int(file.readline())
-        except ValueError:
-            highest = 0
-
         for line in file:
-            if line == '':  # in case next line blank
-                line = 0
-            if int(line) > highest:
-                highest = int(line)
-        print(type(end_score))
-        print(type(highest))
-        if end_score > highest:
+            line = line.split(",")
+            try:
+                if line[0] > end_score and not saved:
+                    #insert player score into list if not highest
+                    score_list.append((end_score, name))
+                    file.write(str(end_score))
+                    file.write(", ")
+                    file.write(name)
+                    file.write("\n")
+                    saved = True
+                score_list.append((line[0],line[1])) 
+            except:
+                continue
+            
+        if not saved:
+            score_list.append((end_score, name))
             #new high score!!!
             file.write(str(end_score))
+            file.write(", ")
+            file.write(name)
             file.write("\n")
+        print(score_list)
             
     _Board.manager.transition = RiseInTransition(duration=.5)
     _Board.manager.current = 'menu'
-    _Board.manager.current_screen.high_score = max(end_score, highest)
+    _Board.manager.current_screen.champ_score = int(score_list[-1][0])
     _Board.manager.current_screen.your_score = end_score
+    _Board.manager.current_screen.champion = score_list[-1][1]
+    try:
+        _Board.manager.current_screen.second_score = int(score_list[-2][0])
+        _Board.manager.current_screen.second = score_list[-2][1]
+    except:
+        _Board.manager.current_screen.second_score = 0
+        _Board.manager.current_screen.second = 'Falon'
+    try:
+        _Board.manager.current_screen.third_score = int(score_list[-3][0])
+        _Board.manager.current_screen.third = score_list[-3][1]
+    except:
+        _Board.manager.current_screen.third_score = 0
+        _Board.manager.current_screen.third = 'Falon'
+    
     
     #_Board.reset_tiles()
     #exit()
