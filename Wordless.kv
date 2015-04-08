@@ -144,16 +144,34 @@
     high_score: 0
     Button:
         text: 'Game Over'
-        on_press: root.manager.current = 'game'
+        color: 0,0,0,1
+        on_press: root.manager.current = 'game' 
+        background_color: 0.2,1,2,1
         Label:
             text: 'Your Score:'
-            pos: root.center_x - 50, root.center_y + 100
+            font_size: 60
+            color: 0,1,0.5,1
+            pos: root.center_x - 100, root.center_y + 150
         Label:
             text: str(root.your_score)
-            pos: root.center_x, root.center_y + 100
+            font_size: 65
+            color: 0,1,0.5,1
+            pos: root.center_x + 100, root.center_y + 150
         Label:
             text: 'High Score:'
-            pos: root.center_x - 50, root.center_y + 50
+            font_size: 80
+            color: 1,0,0.2,1
+            pos: root.center_x - 150, root.center_y + 50
         Label:
             text: str(root.high_score)
-            pos: root.center_x, root.center_y + 50
+            font_size: 85
+            color: 1,0,0.2,1
+            pos: root.center_x + 135, root.center_y + 50
+        Label:
+            text: 'Click anywhere to begin new Game'
+            font_size: 40
+            color: 1,1,1,1
+            pos: root.center_x - 50, root.center_y - 200
+
+
+

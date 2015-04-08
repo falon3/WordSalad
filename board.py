@@ -11,7 +11,6 @@ from words import Letters, Dictograph
 from collections import OrderedDict
 from tile import Tile
 from graph_v2 import Graph
-import time
 import math
 
 TILE_ROWS = 7       # number of rows in the game board
@@ -333,21 +332,25 @@ class Level(BoxLayout):
 def GameOver(end_score):
     # save score to file only if higher than rest saved
     # see if got new high score!
-    highest = 0
     
     _Board._highlighted.clear()
     
     with open('high_scores.txt', 'r+') as file:
-        highest = int(file.readline())
+        try:
+            highest = int(file.readline())
+        except ValueError:
+            highest = 0
+
         for line in file:
+            if line == '':  # in case next line blank
+                line = 0
             if int(line) > highest:
                 highest = int(line)
-
+        print(type(end_score))
+        print(type(highest))
         if end_score > highest:
             #new high score!!!
-            print("NEW HIGH SCORE!!!", end_score)
-            end_score = str(end_score)
-            file.write(end_score)
+            file.write(str(end_score))
             file.write("\n")
             
     _Board.manager.transition = RiseInTransition(duration=.5)

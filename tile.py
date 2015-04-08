@@ -118,8 +118,7 @@ class Tile(Button):
         """
 
         if touch.is_touch or touch.button == 'left':
-            if touch.grab_current is self\
-                and not Tile.anims_to_complete: 
+            if touch.grab_current is self and not Tile.anims_to_complete: 
                 word = _Board.complete
                 # clear word complete text
                 _Board.complete = '_ _ _'
@@ -185,7 +184,7 @@ class Tile(Button):
         
         _Board.score += _Board.value
 
-        if _Board.score >= 30 and _Board.level == 0:
+        if _Board.score >= 5 and _Board.level == 0:
             _Board.level = 1
             _Board.progress.max = 100
         
