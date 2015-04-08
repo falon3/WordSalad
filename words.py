@@ -1,4 +1,4 @@
-
+from collections import OrderedDict, deque
 _END = "_END_"
 
 class Dictograph():
@@ -62,6 +62,38 @@ class Dictograph():
             else:
                 return None
         return _END in current_dict
+        
+    def find_long_word_in_graph(self, graph, start_tile):
+        u = start_tile
+        word = u.text
+        letters = OrderedDict()
+        q = deque()
+        
+        while q:
+            u = q.popleft()
+            for v in graph.neighbors(u):
+                if v not in visited self.lookup(word + v.text) != None:
+                    q.append(v)
+                    visited[v] = v.lscore                   
+                    
+        
+    def find_longest_in_graph(self, graph):
+        dist = {start: 0}
+        
+        for v in graph.vertices():
+    
+    def find_words(self, graph, tile):
+        R = dict()
+        S = [(tile, tile)]
+        while S:
+            prev, curr = S.pop()
+            if curr is not in R:
+                R[curr] = prev
+                # add each outgoing edge (curr,succ) from curr to S
+                for n in graph.neighbours(curr):
+                    # if n + curr is a word add (curr, n)
+                    if self.lookup(word) != None:
+                        S.append(curr, n)
     
     
 class Letters():
@@ -77,3 +109,31 @@ class Letters():
     Value = {'A':1,'B':3,'C':3,'D':2,'E':1,'F':4,'G':2,'H':4,'I':1,'J':8,'K':5,\
         'L':1,'M':3,'N':1,'O':1,'P':3,'Q':10,'R':1,'S':1,'T':1,'U':1,'V':4,    \
         'W':4,'X':8,'Y':4,'Z':10}
+
+
+
+
+def to_word(chardict, pos_list):
+    return ''.join(chardict[x] for x in pos_list)
+
+def find_words(graph, chardict, position, prefix, results, words, prefixes):
+    """ Arguments:
+      graph :: mapping (x,y) to set of reachable positions
+      chardict :: mapping (x,y) to character
+      position :: current position (x,y) -- equals prefix[-1]
+      prefix :: list of positions in current string
+      results :: set of words found
+      words :: set of valid words in the dictionary
+      prefixes :: set of valid words or prefixes thereof
+    """
+    word = to_word(chardict, prefix)
+
+    if word not in prefixes:
+        return
+
+    if word in words:
+        results.add(word)
+
+    for child in graph[position]:
+        if child not in prefix:
+            find_words(graph, chardict, child, prefix+[child], results, words, prefixes)

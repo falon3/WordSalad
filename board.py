@@ -218,7 +218,7 @@ class Board(Screen):
         # create graph representing the board
         self._board = Graph(set(tiles), edges)
 
-    def reset_tiles(self, min_time=-1000):
+    def reset_tiles(self, min_time=-float('inf')):
         if  _Board.game_timer.seconds >= min_time:
             add = []
             for tile in self.tiles:
