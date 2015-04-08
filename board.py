@@ -5,6 +5,7 @@ from kivy.uix.label import Label
 from kivy.properties import StringProperty, ObjectProperty, NumericProperty, \
     ListProperty
 from kivy.clock import Clock
+from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen, RiseInTransition
 
 from words import Letters, Dictograph
@@ -17,7 +18,7 @@ TILE_ROWS = 7       # number of rows in the game board
 TILE_COLUMNS = 11   # number of columns  in the game board
 
 LEVEL_POINTS = 100
-LEVEL_1_POINTS = 5
+LEVEL_1_POINTS = 30
 
 _Board = None
 
@@ -328,34 +329,79 @@ class Level(BoxLayout):
     pass
     
     
-def GameOver(end_score):
+def GameOver(end_score, name = None):
     # save score to file only if higher than rest saved
     # see if got new high score!
-    
+    if not name:
+        name = 'winner!'
     _Board._highlighted.clear()
-    
-    with open('high_scores.txt', 'r+') as file:
-        try:
-            highest = int(file.readline())
-        except ValueError:
-            highest = 0
-
+    score_list = []
+    with open('high_scores.txt', 'r') as file:
         for line in file:
-            if line == '':  # in case next line blank
-                line = 0
-            if int(line) > highest:
-                highest = int(line)
-        print(type(end_score))
-        print(type(highest))
-        if end_score > highest:
-            #new high score!!!
-            file.write(str(end_score))
-            file.write("\n")
-            
+            line = line.strip().split(",")
+            print("line:", line)
+            try:
+                score_list.append((line[0],line[1])) 
+            except:
+                # if blank line do nothing
+                continue
+        file.close()
+
+    try:
+        score_list[-1][0]
+    except IndexError:
+        # if list empty append dummy zero record
+        score_list.append((0, 'Falon'))
+  
+    if int(score_list[-1][0]) < end_score:
+        # reopen file for appending this time
+        file_append = open('high_scores.txt', 'a')
+
+        # new high score!!!
+        # PROMPT USER FOR NAME AND SAVE AS name
+        score_list.append((end_score, name))
+        
+        file_append.write(str(end_score))
+        file_append.write(", ")
+        file_append.write(name)
+        file_append.close()
+    print(score_list)
+   
+    Records = _Board.manager.current_screen        
     _Board.manager.transition = RiseInTransition(duration=.5)
     _Board.manager.current = 'menu'
-    _Board.manager.current_screen.high_score = max(end_score, highest)
+    _Board.manager.current_screen.champ_score = int(score_list[-1][0])
     _Board.manager.current_screen.your_score = end_score
+    _Board.manager.current_screen.champion = score_list[-1][1]
+    try:
+        _Board.manager.current_screen.second_score = int(score_list[-2][0])
+        _Board.manager.current_screen.second = score_list[-2][1]
+    except:
+        _Board.manager.current_screen.second_score = 0
+        _Board.manager.current_screen.second = 'Falon'
+
+    try:
+        _Board.manager.current_screen.third_score = int(score_list[-3][0])
+        _Board.manager.current_screen.third = score_list[-3][1]
+    except:
+        _Board.manager.current_screen.third_score = 0
+        _Board.manager.current_screen.third = 'Falon'
+
+    try:
+        _Board.manager.current_screen.fourth_score = int(score_list[-4][0])
+        _Board.manager.current_screen.fourth = score_list[-4][1]
+    except:
+        _Board.manager.current_screen.fourth_score = 0
+        _Board.manager.current_screen.fourth = 'Falon'
+
+    try:
+        _Board.manager.current_screen.fifth_score = int(score_list[-5][0])
+        _Board.manager.current_screen.fifth = score_list[-5][1]
+    except:
+        _Board.manager.current_screen.fifth_score = 0
+        _Board.manager.current_screen.fifth = 'Falon'
+
+    
     
     #_Board.reset_tiles()
     #exit()
