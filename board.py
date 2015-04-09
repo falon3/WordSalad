@@ -364,6 +364,7 @@ def GameOver(end_score, name = None):
         file_append.write(str(end_score))
         file_append.write(", ")
         file_append.write(name)
+        file_append.write("\n")
         file_append.close()
     print(score_list)
    
