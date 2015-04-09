@@ -1,4 +1,4 @@
-
+from collections import OrderedDict
 _END = "_END_"
 
 class Dictograph():
@@ -62,7 +62,64 @@ class Dictograph():
             else:
                 return None
         return _END in current_dict
-    
+        
+    def find_long_word(self, graph, tile):
+        R = dict()
+        S = [(tile, tile)]
+        letters = OrderedDict()
+        word=''
+        best = ''
+        best_value = 0
+        while S:
+            prev, curr = S.pop()
+            if (tuple(letters)) not in R:
+                value = 0
+                if len(letters):
+                    value = letters[next(reversed(letters))]
+                value = Letters.calc_add_score(word, value, curr.text)
+                word += curr.text
+                letters[curr] = value
+                valid = False
+                for n in graph.neighbours(curr):
+                    if n not in letters:
+                        new_word = word + n.text
+                        # if n + curr is a word add (curr, n)
+                        found = self.lookup(new_word) 
+                        if found:
+                            alt = Letters.calc_add_score(word, value, n.text)
+                            if alt > best_value:
+                                best_value = alt
+                                best = new_word
+                        if found != None:
+                            S.append((curr, n))
+                            valid = True
+                # walk back up graph until we find an open branch
+                while S and len(letters) > 1 and not valid:
+                    R[tuple(letters)] = prev  # change to value of this word  
+                    letters.popitem()
+                    word = word[:-1]
+                    curr = next(reversed(letters))
+                    value = letters[curr]
+                    
+                    if S[-1][0] == curr:
+                        valid = True  
+                    
+        return best
+        
+    def find_longest_word(self, graph):
+        longest = ''
+        length = 0
+        longest_tile = None
+        for tile in graph.vertices():
+            word = self.find_long_word(graph, tile)
+            if len(word) > length:
+                length = len(word)
+                longest = word
+                longest_tile = tile
+        
+        #if longest_tile:
+        #    longest_tile.background_color = [1,0,1,1]
+        return longest
     
 class Letters():
     """A quick class for selecting letters to populate the board with.
@@ -77,3 +134,16 @@ class Letters():
     Value = {'A':1,'B':3,'C':3,'D':2,'E':1,'F':4,'G':2,'H':4,'I':1,'J':8,'K':5,\
         'L':1,'M':3,'N':1,'O':1,'P':3,'Q':10,'R':1,'S':1,'T':1,'U':1,'V':4,    \
         'W':4,'X':8,'Y':4,'Z':10}
+        
+    
+    def calc_add_score(word, score, letter):
+        score += Letters.Value[letter]
+        
+        # word length bonus of (addtional letter)*2 times the score
+        # for each letter over 3
+        length = len(word)
+        if length > 2:
+            score += int(score/2)
+            
+        return score
+

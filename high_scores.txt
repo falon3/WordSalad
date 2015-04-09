@@ -1,5 +1,1 @@
-2, noone
-5, winner!
-14, me
-20, lobster
-30, highballer
+35, winner!

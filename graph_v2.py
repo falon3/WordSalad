@@ -20,11 +20,11 @@ class Graph:
         >>> g = Graph({1,2,3}, [(1,2), (2,3)])
         >>> g._alist.keys() == {1,2,3}
         True
-        >>> g._alist[1] == [2]
+        >>> g._alist[1] == {2}
         True
-        >>> g._alist[2] == [3]
+        >>> g._alist[2] == {3}
         True
-        >>> g._alist[3] == []
+        >>> g._alist[3] == set()
         True
         >>> h1 = Graph()
         >>> h2 = Graph()
@@ -58,12 +58,12 @@ class Graph:
         False
         >>> h = Graph({1,2}, [(1,2)])
         >>> h.add_vertex(1)
-        >>> h._alist[1] == [2]
+        >>> h._alist[1] == {2}
         True
         """
         
         if v not in self._alist:
-            self._alist[v] = list()
+            self._alist[v] = set()
 
     def add_edge(self, e):
         """
@@ -82,7 +82,7 @@ class Graph:
         >>> 1 in g._alist[2]
         False
         >>> g.add_edge((1,2))
-        >>> g._alist[1] == [2,2]
+        >>> g._alist[1] == {2}
         True
         """
 
@@ -90,7 +90,7 @@ class Graph:
           or not self.is_vertex(e[1]):
             raise ValueError("an endpoint is not in graph")
 
-        self._alist[e[0]].append(e[1])
+        self._alist[e[0]].add(e[1])
 
     def is_vertex(self, v):
         """
@@ -147,13 +147,13 @@ class Graph:
         >>> Edges = [(1,2),(1,4),(3,1),(3,4),(2,4),(1,2)]
         >>> g = Graph({1,2,3,4}, Edges)
         >>> g.neighbours(1)
-        [2, 4, 2]
+        {2, 4}
         >>> g.neighbours(4)
-        []
+        set()
         >>> g.neighbours(3)
-        [1, 4]
+        {1, 4}
         >>> g.neighbours(2)
-        [4]
+        {4}
         """
 
         if not self.is_vertex(v):
@@ -194,7 +194,7 @@ class Graph:
         >>> set(g.edges()) == {(1,2),(2,3),(1,3),(3,1)}
         True
         >>> h = Graph({1,2},[(1,2),(1,2)])
-        >>> h.edges() == [(1,2),(1,2)]
+        >>> h.edges() == [(1,2)]
         True
         """
 
@@ -362,3 +362,7 @@ def random_graph(n, m):
                  for i in range(m)]
     return Graph(set(range(n)), edges)
 
+if __name__ == '__main__':
+    
+    import doctest
+    doctest.testmod(); 
