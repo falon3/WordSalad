@@ -1,5 +1,6 @@
 
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.bubble import BubbleButton
 from kivy.uix.label import Label
 from kivy.properties import StringProperty, ObjectProperty, NumericProperty, \
@@ -10,7 +11,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, RiseInTransition
 
 from words import Letters, Dictograph
 from collections import OrderedDict
-from tile import Tile
+from tile import Tile, SearchWord
 from graph_v2 import Graph
 import math
 
@@ -46,7 +47,7 @@ class Board(Screen):
     _dictionary = Dictograph("us_cad_dict.txt")
     _columns = []
     _game_over = False
-    _searchword = StringProperty('Search word')
+    _searchword = StringProperty('')
     play_area = ObjectProperty()
     complete = StringProperty()
     color = ListProperty()
@@ -56,14 +57,7 @@ class Board(Screen):
     level = NumericProperty(0)
     
     tiles = []
-    
-    def check_neighbors(self, tile, word):
-        neighbors = self._board.neighbours(tile)
-        for neighbor in neighbors:
-            if self._dictionary.in_trie(word + neighbor.text):
-                return True
-        return False
-    
+        
     def complete_word(self, tile):        
         # display current letters selected in sequence selected        
         
@@ -72,8 +66,7 @@ class Board(Screen):
         for tile in self._highlighted:
             letter = tile.text
             word += letter
-            score = Letters.calc_add_score(word, score, letter)
-            
+            score = Letters.calc_add_score(word, score, letter)            
         
         self.value = score
         self.complete = word 
@@ -107,9 +100,9 @@ class Board(Screen):
                     
                     # if last exists, get neighbors
                     if last:
-                        neighbours = self._board.neighbours(last)
+                        neighbours = self._board.neighbours(last.number)
                     # allow highlighting if first tile or adjacent tile
-                    if not last or tile in neighbours:                
+                    if not last or tile.number in neighbours:                
                         self._highlighted[tile] = len(self._highlighted)
                         tile.background_color = self.tile_color
             
@@ -154,17 +147,23 @@ class Board(Screen):
         self.update_board()
         
 
-    def update_board(self):
+    def update_board(self, tiles = None):
         # rebuild tile list from rows
-        tiles = [tile for column in self._columns for tile in \
-                reversed(column.children)]
-        self.tiles = tiles
+        if tiles == None:
+            tiles = [tile for column in self._columns for tile in \
+                    reversed(column.children)]
+            self.tiles = tiles
+            # get just the numbers
+            tiles = [tile.number for tile in tiles]
+            
+            # create graph representing the board
+            self._board = Graph(set(tiles))
         # fill out edges of graph
         edges = []
         
         # check if at board boundaries
         
-        for i in range(len(tiles)):           
+        for i in tiles:        
             
             left = i % TILE_ROWS == 0
             right = i % TILE_ROWS == TILE_ROWS - 1 
@@ -183,48 +182,44 @@ class Board(Screen):
             
             # not left of the board
             if not left:
-                edges.append((tiles[i], tiles[i-1]))
+                self._board.add_edge((i, i-1))
                 
             # not right of the board
             if not right:
-                edges.append((tiles[i], tiles[i+1]))
+                self._board.add_edge((i, i+1))
             
             # not top of the board
             if not top:      
                 if not right:
-                    edges.append((tiles[i], tiles[i-TILE_ROWS + 1 - offset]))  
+                    self._board.add_edge((i, i-TILE_ROWS + 1 - offset))  
                 elif not even:  # right and odd
-                    edges.append((tiles[i], tiles[i-TILE_ROWS]))            
+                    self._board.add_edge((i, i-TILE_ROWS))            
                 if not left: 
-                    edges.append((tiles[i], tiles[i-TILE_ROWS - offset]))  
+                    self._board.add_edge((i, i-TILE_ROWS - offset))  
                 elif even:  # left and even
-                    edges.append((tiles[i], tiles[i-TILE_ROWS]))         
+                    self._board.add_edge((i, i-TILE_ROWS))         
             
                 
             # not bottom of the board
             if not bottom:
                 if not right:
-                    edges.append((tiles[i], tiles[i+TILE_ROWS + 1 - offset]))
+                    self._board.add_edge((i, i+TILE_ROWS + 1 - offset))
                 elif not even:  # right and odd
-                    edges.append((tiles[i], tiles[i+TILE_ROWS]))                      
+                    self._board.add_edge((i, i+TILE_ROWS))                      
                 if not left:
-                    edges.append((tiles[i], tiles[i+TILE_ROWS - offset]))   
+                    self._board.add_edge((i, i+TILE_ROWS - offset))   
                 elif even:  # left and even
-                    edges.append((tiles[i], tiles[i+TILE_ROWS]))    
+                    self._board.add_edge((i, i+TILE_ROWS))    
         
-        # create graph representing the board
-        self._board = Graph(set(tiles), edges)
         
-        self._searchword = self._dictionary.find_longest_word(self._board)
         
     def reset_tiles(self, min_time=-float('inf')):
-        if  _Board.game_timer.seconds >= min_time:
+        if  _Board.score == 0 or (_Board.game_timer.seconds >= min_time and 
+                            not Tile.anims_to_complete):
             add = []
             for tile in self.tiles:
-                # add tiles to _highlighted for Tile.replaceTiles
-                self._highlighted[tile] = len(Board._highlighted)
                 tile.background_color = [1,.5,.5,1]
-            Tile.replace_tiles(self._columns)
+            Tile.replace_tiles(set(self.tiles), self._columns)
             self.complete = '_ _ _'
             self.value = 0
     
@@ -239,6 +234,7 @@ class Board(Screen):
             self.progress.value = 0
             self.progress.max = LEVEL_1_POINTS
             self._game_over = False
+            self.footer.search.remove()
         
         
 class MenuScreen(Screen):
@@ -272,10 +268,12 @@ class Score(BoxLayout):
         Clock.schedule_interval(self.update, .05)
     
     def update(self, time_passed):
+        increment = max(int(abs( self.displayed_score - _Board.score) / 50), 1)
+        
         if self.displayed_score < _Board.score:
-            self.displayed_score += 1
+            self.displayed_score += increment
         if self.displayed_score > _Board.score:
-            self.displayed_score -= 1
+            self.displayed_score -= increment
                     
         # reset score progress bar every 100 points because reached next level
         # add seconds to timer when points scored
@@ -288,6 +286,8 @@ class WordComplete(Label):
 class GameTimer(BoxLayout):
     seconds = NumericProperty()
     displayed_seconds = NumericProperty()
+    next_tile_to_fall = TILE_ROWS - 1
+    tile_ready = False
     
     def __init__(self, **kwargs):        
         # call parent class init
@@ -297,23 +297,50 @@ class GameTimer(BoxLayout):
 
     def update(self, time_passed):
         sec = math.ceil(self.seconds)
+        increment = max(int(abs(sec - self.displayed_seconds) / 50), 1)
         if self.displayed_seconds < sec:
-            self.displayed_seconds += 1
+            self.displayed_seconds += increment
                 
         elif self.displayed_seconds > sec:
-            self.displayed_seconds -= 1
+            self.displayed_seconds -= increment
         
         if _Board.level > 0:
             if self.seconds > 0:
                 if _Board.level > 1:
                     time_passed *= (_Board.level*4/9)
+                    
                 self.seconds = self.seconds - time_passed
+                if _Board.level > 5:
+                    self.tile_drop(sec)
+                
+                #if Board.level > 
+                                            
             # don't end the game if the score bubble is still animating
             # or if tiles are falling
             elif not _Board._game_over and not _Board.footer.bubble.working\
-                and not Tile.anims_to_complete:
+                and not Tile.anims_to_complete and SearchWord.appeared != 1:
                 _Board._game_over = True
                 GameOver(_Board.score)
+                
+    def tile_drop(self, seconds):
+        # drop the bottom tile out of a row every 10 seconds
+        # according to the counter
+        if seconds % 30 == 0:
+            if self.tile_ready and not Tile.anims_to_complete:
+                tile = _Board.tiles[self.next_tile_to_fall]
+                fall = True
+                for highlighted in _Board._highlighted:
+                    if highlighted.parent == tile.parent:
+                        fall = False
+                if fall:
+                    Tile.replace_tiles([tile], [tile.parent])
+                    self.tile_ready = False
+                    self.next_tile_to_fall += TILE_ROWS 
+                    self.next_tile_to_fall %= TILE_ROWS * TILE_COLUMNS           
+            
+            elif not self.tile_ready:
+                        self.tile_ready = True
+            
     
 
 class Bonus(BubbleButton):    

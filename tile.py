@@ -1,9 +1,10 @@
 
 from random import randint, random
 from kivy.uix.button import Button
+from kivy.uix.label import Label
 from words import Letters
 from kivy.animation import Animation
-from kivy.properties import ObjectProperty
+from kivy.properties import NumericProperty
 
 _Board = None
 
@@ -12,16 +13,13 @@ class Tile(Button):
     """    
     anims_to_complete = 0
     tiles_being_removed = 0
-    lscore = ObjectProperty()
-    number = 0
+    lscore = NumericProperty()
+    number = NumericProperty(0)
+    tiles_to_update = set()
+    intended_pos = None
     
     def __repr__(self):
-        score = ""
-        try:
-            score = self.lscore.text
-        except:
-            pass
-        return self.text + "," + score
+        return self.text + "-" + str(self.number)
     
     def __init__(self, number, board=None, **kwargs):
         """
@@ -46,8 +44,10 @@ class Tile(Button):
     
         letter = Letters.letters[rand]
         self.text = letter
-        self.lscore.text = str(Letters.Value[letter])
+        self.lscore = Letters.Value[letter]
         self.number = number
+        
+        self.intended_pos = self.pos
     
     def update_color(self, instance, value):
         if self in _Board._highlighted or value == [1,1,1,1]:
@@ -72,8 +72,7 @@ class Tile(Button):
         """      
         touch.multitouch_sim = False
         if touch.is_touch or touch.button == 'left':
-            if self.collide_point(touch.x, touch.y) \
-                and not Tile.anims_to_complete:
+            if self.collide_point(touch.x, touch.y):
                 _Board.highlight(self, touch)            
                 
                 # set grab to catch release off of tiles
@@ -100,8 +99,7 @@ class Tile(Button):
 
         """
         if touch.is_touch or touch.button == 'left':
-            if self.collide_point(touch.x, touch.y) \
-                and not Tile.anims_to_complete: 
+            if self.collide_point(touch.x, touch.y): 
                 _Board.highlight(self, touch)
                 return True
         return False
@@ -125,7 +123,7 @@ class Tile(Button):
         """
 
         if touch.is_touch or touch.button == 'left':
-            if touch.grab_current is self and not Tile.anims_to_complete: 
+            if touch.grab_current is self: 
                 word = _Board.complete
                 # clear word complete text
                 _Board.complete = '_ _ _'
@@ -164,7 +162,8 @@ class Tile(Button):
                     for tile in _Board._highlighted:
                         affected_columns.add(tile.parent)
             
-                    Tile.replace_tiles(affected_columns)
+                    Tile.replace_tiles(set(_Board._highlighted), affected_columns)        
+                    _Board._highlighted.clear()
                     
 
                 else:
@@ -209,37 +208,43 @@ class Tile(Button):
         # reset bubble (allow game to end)
         instance.working = 0
     
-    def replace_tiles(affected_columns):
+    def replace_tiles(tiles, affected_columns):
         # remove and replace tiles 
         for column in affected_columns:
             found = False
             i = 0
             remove = []
+            falling = []
             # count tiles removed
             for tile in column.children:
-                if tile in _Board._highlighted:
+                if tile in tiles:
                     found = True
                     remove.append(tile)
                     column.missing_tiles += 1
                 elif found:                                    
                     Tile.fall(column.children, i)
+                    falling.append(tile)
                 i += 1
             add = []
             # build animations
             for tile in remove:        
                 add.append(tile.remove())
+                
             # apply animations
             for new in add:                
                 Tile.add(new[0], new[1], new[2], new[3])
-        
-        _Board._highlighted.clear()
+                
+            # reassign falling tiles
+            for tile in falling:
+                tile.fall_assignment()
     
     def add(remove, old, add, new):
         # change the parent of the removed tiles
         column = old.parent
         column.add_widget(new, index=len(column.children))
         column.remove_widget(old)
-        _Board.footer.add_widget(old, index = 1)
+        _Board.tile_collector.add_widget(old, index = 1)
+        _Board.tiles[new.number] = new
         
         # play animations
         remove.start(old)
@@ -255,13 +260,14 @@ class Tile(Button):
             t='out_bounce', d = 1.5)
         
         dest_tile = column.children[len(column.children)-column.missing_tiles]
-        fall_in =  Animation(pos=(self.x, dest_tile.y), \
-            t='out_bounce', d = 1)
+        destination = (self.x, dest_tile.y)
+        fall_in =  Animation(pos=destination, t='out_bounce', d = 1)
         Tile.anims_to_complete += 1
         Tile.tiles_being_removed += 1
-        new_tile = Tile(self.number)
+        new_tile = Tile(dest_tile.number)
         new_tile.x = self.x
         new_tile.y = window.height + 100
+        new_tile.intended_pos = destination
         
         fall_out.on_complete = self.remove_complete
         fall_in.on_complete = new_tile.add_complete
@@ -277,17 +283,57 @@ class Tile(Button):
     
     def fall(tiles, i):
         tile = tiles[i]
+        column = tile.parent
         
         prev_tile = tiles[i-tile.parent.missing_tiles]
+        tile.next_number = prev_tile.number
         Tile.anims_to_complete += 1
-        animation = Animation(pos=(prev_tile.x, prev_tile.y), \
-                        t='out_bounce', d = 1)
+        destination = (prev_tile.x, prev_tile.y)
+        animation = Animation(pos=destination, t='out_bounce', d = 1)
         animation.on_complete = tile.fall_complete
+        tile.intended_pos = destination
         animation.start(tile)
+    
+    def fall_assignment(self):
+        
+        # clean up falling tile set assignment
+        if self.next_number >= 0:
+            _Board.tiles[self.next_number] = self
+            self.number = self.next_number
+            self.next_number = -1
         
     def fall_complete(self, instance):
-        Tile.anims_to_complete -= 1 
+        Tile.anims_to_complete -= 1         
         
         if not Tile.anims_to_complete:
-            # rebuild graph
-            _Board.update_board()
+            _Board.footer.search.get_next(True)
+            
+class SearchWord(Label):
+    appeared = 0
+    
+    def remove(self):
+        _Board._searchword = ''
+        self.appeared = 0
+        
+    def appear(self):
+        search = _Board.footer.search
+        animation = Animation(pos=(search.x, search.y), t='out_bounce', d = 1.5)
+        animation.on_complete = self.appear_complete
+        search.pos =  search.x, _Board.height + 200
+        
+        animation.start(search)
+        self.appeared = 1
+        
+    def appear_complete(self, instance):
+        self.appeared = 2
+        
+    def get_next(self, trigger_reset=False):        
+        if _Board.score > 0:
+            _Board._searchword = _Board._dictionary.find_longest_word \
+                                (_Board._board, _Board.tiles)
+            if trigger_reset and _Board._searchword == '':
+                _Board.reset_tiles()
+            
+            if self.appeared == 0:
+                self.appear()
+            
