@@ -377,6 +377,7 @@ def GameOver():
     _Board._highlighted.clear()
     Clock.unschedule(_Board.game_timer.tile_drop)
     _Board.game_timer.cover_timer = -1
+    _Board.tile_cover.pos = -5000, -5000
     _Board.manager.transition = RiseInTransition(duration=.5)
     _Board.manager.current = 'menu'
     
@@ -389,6 +390,7 @@ def GameOver():
     popup.content = box
     popup.size_hint = (None, None)
     popup.size=(550, 120)
+    popup.auto_dismiss = False
 
     text_in.on_text_validate = LastScreen
     
