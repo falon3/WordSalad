@@ -6,6 +6,7 @@ from kivy.properties import StringProperty, ObjectProperty, NumericProperty, \
     ListProperty
 from kivy.clock import Clock
 from kivy.uix.textinput import TextInput
+from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen, RiseInTransition
 
 from words import Letters, Dictograph
@@ -313,7 +314,7 @@ class GameTimer(BoxLayout):
             elif not _Board._game_over and not _Board.footer.bubble.working\
                 and not Tile.anims_to_complete:
                 _Board._game_over = True
-                GameOver(_Board.score)
+                GameOver()
     
 
 class Bonus(BubbleButton):    
@@ -327,16 +328,36 @@ class Bonus(BubbleButton):
 
 class Level(BoxLayout):
     pass
-    
-    
-def GameOver(end_score, name = None):
+
+test = None
+score_list = []
+
+def GameOver():
     # save score to file only if higher than rest saved
-    # see if got new high score!
-    if not name:
-        name = 'winner!'
+    # see if got new high score
+
     _Board._highlighted.clear()
-    score_list = []
-    with open('high_scores.txt', 'r') as file:
+    _Board.manager.transition = RiseInTransition(duration=.5)
+    _Board.manager.current = 'menu'
+
+    box = BoxLayout()
+    text_in = TextInput(multiline = False, font_size = 40)
+    box.add_widget(text_in)
+
+    popup = Popup(title='NEW HIGH SCORE! Enter Your Name')
+    popup.content = box
+    popup.size_hint = (None, None)
+    popup.size=(550, 120)
+
+    text_in.on_text_validate = LastScreen
+    global test
+    test = text_in
+    test.popup = popup
+    
+    
+     # high score file must end with newline
+    try:
+        file = open('high_scores.txt', 'r')
         for line in file:
             line = line.strip().split(",")
             print("line:", line)
@@ -346,31 +367,45 @@ def GameOver(end_score, name = None):
                 # if blank line do nothing
                 continue
         file.close()
-
-    try:
-        score_list[-1][0]
-    except IndexError:
-        # if list empty append dummy zero record
+        print("DEBUG")
+    except:
+        # dummy score emtry if file was empty
         score_list.append((0, 'Falon'))
   
+
+    if int(score_list[-1][0]) < _Board.score:
+        popup.open()
+    else:
+        LastScreen()
+  
+    
+def LastScreen():
+    print(test.text)    
+    
+    player = test.text
+       
+    end_score = _Board.score 
+    test.popup.dismiss()
+
+   
     if int(score_list[-1][0]) < end_score:
         # reopen file for appending this time
         file_append = open('high_scores.txt', 'a')
 
         # new high score!!!
         # PROMPT USER FOR NAME AND SAVE AS name
-        score_list.append((end_score, name))
-        
+        score_list.append((end_score, player))
         file_append.write(str(end_score))
         file_append.write(", ")
-        file_append.write(name)
+        file_append.write(player)
         file_append.write("\n")
         file_append.close()
     print(score_list)
+    
    
-    Records = _Board.manager.current_screen        
-    _Board.manager.transition = RiseInTransition(duration=.5)
-    _Board.manager.current = 'menu'
+
+
+
     _Board.manager.current_screen.champ_score = int(score_list[-1][0])
     _Board.manager.current_screen.your_score = end_score
     _Board.manager.current_screen.champion = score_list[-1][1]
