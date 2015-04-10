@@ -287,8 +287,8 @@ class WordComplete(Label):
 class GameTimer(BoxLayout):
     seconds = NumericProperty()
     displayed_seconds = NumericProperty()
+    cover_timer = -1
     next_tile_to_fall = TILE_ROWS - 1
-    tile_ready = False
     
     def __init__(self, **kwargs):        
         # call parent class init
@@ -311,9 +311,6 @@ class GameTimer(BoxLayout):
                     time_passed *= (_Board.level*4/9)
                     
                 self.seconds = self.seconds - time_passed
-                if _Board.level > 5:
-                    self.tile_drop(sec)
-                
                 #if Board.level > 
                                             
             # don't end the game if the score bubble is still animating
@@ -323,25 +320,34 @@ class GameTimer(BoxLayout):
                 _Board._game_over = True
                 GameOver()
                 
-    def tile_drop(self, seconds):
-        # drop the bottom tile out of a row every 10 seconds
-        # according to the counter
-        if seconds % 30 == 0:
-            if self.tile_ready and not Tile.anims_to_complete:
-                tile = _Board.tiles[self.next_tile_to_fall]
+        
+                
+    def tile_drop(self, time_passed):
+            
+        
+        # drop the bottom tile out of a row every 20 seconds - levels
+        # but never faster than once per second
+        self.cover_timer += time_passed
+        tile = _Board.tiles[self.next_tile_to_fall]
+        drop_time = max(1, 20 - _Board.level)
+        if self.cover_timer > drop_time:
+            
+            if not Tile.anims_to_complete:
                 fall = True
                 for highlighted in _Board._highlighted:
                     if highlighted.parent == tile.parent:
                         fall = False
-                if fall:
+                if fall:                 
+                    tile.background_color = [1,0,0,1]   
+                    _Board.tile_cover.size = tile.width, tile.height / 20
+                    self.cover_timer = 0
                     Tile.replace_tiles([tile], [tile.parent])
-                    self.tile_ready = False
                     self.next_tile_to_fall += TILE_ROWS 
-                    self.next_tile_to_fall %= TILE_ROWS * TILE_COLUMNS           
-            
-            elif not self.tile_ready:
-                        self.tile_ready = True
-            
+                    self.next_tile_to_fall %= TILE_ROWS * TILE_COLUMNS  
+        else:        
+            _Board.tile_cover.size = tile.width, tile.height * self.cover_timer / drop_time
+            _Board.tile_cover.background_color = 1,0,0, self.cover_timer / drop_time
+            _Board.tile_cover.pos = tile.pos
     
 
 class Bonus(BubbleButton):    
@@ -357,16 +363,23 @@ class Level(BoxLayout):
     pass
     
 
-input_text = None
-score_list = []
 
 def GameOver():
     # save score to file only if higher than rest saved
     # see if got new high score
-
+    
+    try: # check that data is initialized
+        GameOver.input_text
+    except AttributeError: # initialize data
+        GameOver.input_text = None
+        GameOver.score_list = []
+        
     _Board._highlighted.clear()
+    Clock.unschedule(_Board.game_timer.tile_drop)
+    _Board.game_timer.cover_timer = -1
     _Board.manager.transition = RiseInTransition(duration=.5)
     _Board.manager.current = 'menu'
+    
 
     box = BoxLayout()
     text_in = TextInput(multiline = False, font_size = 40)
@@ -378,9 +391,9 @@ def GameOver():
     popup.size=(550, 120)
 
     text_in.on_text_validate = LastScreen
-    global input_text
-    input_text = text_in
-    input_text.popup = popup
+    
+    GameOver.input_text = text_in
+    GameOver.input_text.popup = popup
     
     
      # high score file must end with newline
@@ -390,7 +403,7 @@ def GameOver():
             line = line.strip().split(",")
             print("line:", line)
             try:
-                score_list.append((line[0],line[1])) 
+                GameOver.score_list.append((line[0],line[1])) 
             except:
                 # if blank line do nothing
                 continue
@@ -398,17 +411,18 @@ def GameOver():
         print("DEBUG")
     except:
         # dummy score emtry if file was empty
-        score_list.append((0, 'Falon'))
+        GameOver.score_list.append((0, 'Falon'))
   
 
-    if int(score_list[-1][0]) < _Board.score:
+    if int(GameOver.score_list[-1][0]) < _Board.score:
         popup.open()
     else:
         LastScreen()
   
     
 def LastScreen():
-    
+    input_text = GameOver.input_text
+    score_list = GameOver.score_list
     player = input_text.text
        
     end_score = _Board.score 

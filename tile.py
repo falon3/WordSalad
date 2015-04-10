@@ -5,6 +5,7 @@ from kivy.uix.label import Label
 from words import Letters
 from kivy.animation import Animation
 from kivy.properties import NumericProperty
+from kivy.clock import Clock
 
 _Board = None
 
@@ -132,7 +133,7 @@ class Tile(Button):
                 touch.ungrab(self)
                 # only check word if on playArea
                 if _Board._dictionary.lookup(word) and \
-                    _Board.play_area.collide_point(touch.x, touch.y) \
+                    _Board.collide_point(touch.x, touch.y) \
                     and _Board._highlighted:
                         
                     
@@ -337,6 +338,15 @@ class SearchWord(Label):
             # if no search word has appeared
             if self.appeared == 0:
                 self.appear()
+            
+            timer = _Board.game_timer
+            if _Board.level > 2 and timer.cover_timer < 0:
+                Clock.schedule_interval(timer.tile_drop, .05)
+                tile = _Board.tiles[0]
+                timer.cover_timer = 0
+                _Board.tile_cover.size = tile.width, tile.height / 20
+                 
+            
             
             
             

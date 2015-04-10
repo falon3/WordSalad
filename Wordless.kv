@@ -16,6 +16,7 @@
     seconds: 0
     displayed_seconds: 0
     tile_collector: tile_collector
+    tile_cover: tile_cover
     orientation: 'vertical'  
     spacing: 50,50
     Header:
@@ -28,6 +29,12 @@
         pos_hint: {'top': 0}
     Label:
         id: tile_collector
+        Button:
+            id: tile_cover
+            text: ""
+            background_color: 1,0,0,1 
+            pos: -5000, -5000
+            #disabled: True
         
 <Footer>
     bubble: button
