@@ -364,15 +364,21 @@ class Level(BoxLayout):
 
 
 def GameOver():
-    # save score to file only if higher than rest saved
-    # see if got new high score
-    
+    '''
+    This function is called when the clock ran out and the game ends.
+    The user is Propmted for their name, and it's entered in the high score file
+    and list if it is among the top 5 scores. The top five scores are displayed.
+    Highscores are written to a file named high_scores.txt, if there doesn't
+    exist one one is created.
+    '''
+
     try: # check that data is initialized
         GameOver.input_text
     except AttributeError: # initialize data
         GameOver.input_text = None
         GameOver.score_list = []
-        
+    
+    # update board status and animations
     _Board._highlighted.clear()
     Clock.unschedule(_Board.game_timer.tile_drop)
     _Board.game_timer.cover_timer = -1
@@ -380,47 +386,53 @@ def GameOver():
     _Board.manager.transition = RiseInTransition(duration=.5)
     _Board.manager.current = 'menu'
     
-
+    # create the popup prompt for user name
     box = BoxLayout()
     text_in = TextInput(multiline = False, font_size = 40)
     box.add_widget(text_in)
 
-    popup = Popup(title='NEW HIGH SCORE! Enter Your Name')
+    popup = Popup(title='Enter Your Name')
     popup.content = box
     popup.auto_dismiss = False
     popup.size_hint = (None, None)
     popup.size=(550, 120)
 
+    # go to last screen when user presses 'enter'
     text_in.on_text_validate = LastScreen
     
     GameOver.input_text = text_in
     GameOver.input_text.popup = popup
     
     
-     # high score file must end with newline
+    # Read in highscore file of 5 highest scores must end with newline
     try:
         file = open('high_scores.txt', 'r')
         for line in file:
             line = line.strip().split(",")
-            print("line:", line)
+            line[1] = ' '.join(line[1].split())
             try:
                 GameOver.score_list.append((line[0],line[1])) 
             except:
                 # if blank line do nothing
                 continue
         file.close()
-        print("DEBUG")
     except:
-        # dummy score emtry if file was empty
-        GameOver.score_list.append((0, 'Falon'))
-  
+        # Do nothing if no file or empty line
+        pass
 
-    if int(GameOver.score_list[-1][0]) < _Board.score:
-        popup.open()
-    else:
-        LastScreen()
-  
+    # THIS SHOULDN'T HAPPEN, but if the highscore file ended up
+    # with more than 5 things in it, we will rewrite the new one to have 5
+    # by removing lowest scores
+    while(len(GameOver.score_list)>5):
+        GameOver.score_list.pop(0)
+
+    # IF LIST LESS THAN 5 RECORDS LONG THEN FILL IT WITH EMPTIES
+    while(len(GameOver.score_list)<5):
+        GameOver.score_list = [(0, 'No Record Yet')] + GameOver.score_list
     
+    popup.open()
+   
+   
 def LastScreen():
     input_text = GameOver.input_text
     score_list = GameOver.score_list
@@ -429,31 +441,44 @@ def LastScreen():
     end_score = _Board.score 
     input_text.popup.dismiss()
 
+    # see where to insert players score in the list of 5 highest
+    for i in range(1, len(score_list)+1):
+        if end_score > int(score_list[-i][0]):
+            bumped = score_list[-i]
+            score_list[-i] = ((end_score, player))
+            i += 1
+            while i <= len(score_list):
+                temp = score_list[-i]
+                score_list[-i] = bumped
+                bumped = temp
+                i += 1
+            break
+        i += 1
    
-    if int(score_list[-1][0]) < end_score:
-        # reopen file for appending this time
-        file_append = open('high_scores.txt', 'a')
-
-        # new high score!!!
-        # PROMPT USER FOR NAME AND SAVE AS name
-        score_list.append((end_score, player))
-        file_append.write(str(end_score))
-        file_append.write(", ")
-        file_append.write(player)
-        file_append.write("\n")
-        file_append.close()
-   
-
+    if (end_score, player) in score_list:
+        # rewrite the highscore file with scorelist we built/edited
+        file_edit = open('high_scores.txt', 'w')
+        
+        for record in score_list:
+            file_edit.write(str(record[0]))
+            file_edit.write(", ")
+            file_edit.write(record[1])
+            # extra spaces to overwrite old possibly longer name
+            file_edit.write("                                 \n")
+            
+        file_edit.close()
+    
+    # update the display graphics/text
     Records = _Board.manager.current_screen  
-
-
     Records.champ_score = int(score_list[-1][0])
     Records.your_score = end_score
     Records.champion = score_list[-1][1]
-    for i in range(1, len(score_list)):
+
+    for i in range(0, len(score_list)):
         try:
-            Records.scores[i-1] = int(score_list[-i][0])
-            Records.player[i-1] = score_list[-i][1]
+            Records.scores[i] = int(score_list[-(i+1)][0])
+            Records.player[i] = score_list[-(i+1)][1]
         except:
-            Records.scores[i-1] = 0
-            Records.player[i-1] = 'Falon'
+            Records.scores[i] = 0
+            Records.player[i] = ''
+           
