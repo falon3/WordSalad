@@ -191,7 +191,7 @@ class Tile(Button):
         
         _Board.score += _Board.value
 
-        if _Board.score >= 30 and _Board.level == 0:
+        if _Board.score >= 4 and _Board.level == 0:
             _Board.level = 1
             _Board.progress.max = 100
         
