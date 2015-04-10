@@ -142,8 +142,10 @@ class Letters():
         # word length bonus of (addtional letter)/2 times the score
         # for each letter over 3
         length = len(word)
-        if length > 2:
+        if 2 < length < 9:
             score += int(score/2)
+        elif length >= 9:
+            score += int(score/length-7)
             
         return score
 

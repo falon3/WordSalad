@@ -334,6 +334,9 @@ class SearchWord(Label):
             if trigger_reset and _Board._searchword == '':
                 _Board.reset_tiles()
             
+            # if no search word has appeared
             if self.appeared == 0:
                 self.appear()
+            
+            
             
