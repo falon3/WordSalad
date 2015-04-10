@@ -1,2 +1,0 @@
-# Wordless
-README
