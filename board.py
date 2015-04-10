@@ -8,6 +8,7 @@ from kivy.properties import StringProperty, ObjectProperty, NumericProperty, \
 from kivy.clock import Clock
 from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen, RiseInTransition
+from kivy.uix.popup import Popup 
 
 from words import Letters, Dictograph
 from collections import OrderedDict
@@ -320,7 +321,7 @@ class GameTimer(BoxLayout):
             elif not _Board._game_over and not _Board.footer.bubble.working\
                 and not Tile.anims_to_complete and SearchWord.appeared != 1:
                 _Board._game_over = True
-                GameOver(_Board.score)
+                GameOver()
                 
     def tile_drop(self, seconds):
         # drop the bottom tile out of a row every 10 seconds
@@ -355,15 +356,36 @@ class Bonus(BubbleButton):
 class Level(BoxLayout):
     pass
     
-    
-def GameOver(end_score, name = None):
+
+input_text = None
+score_list = []
+
+def GameOver():
     # save score to file only if higher than rest saved
-    # see if got new high score!
-    if not name:
-        name = 'winner!'
+    # see if got new high score
+
     _Board._highlighted.clear()
-    score_list = []
-    with open('high_scores.txt', 'r') as file:
+    _Board.manager.transition = RiseInTransition(duration=.5)
+    _Board.manager.current = 'menu'
+
+    box = BoxLayout()
+    text_in = TextInput(multiline = False, font_size = 40)
+    box.add_widget(text_in)
+
+    popup = Popup(title='NEW HIGH SCORE! Enter Your Name')
+    popup.content = box
+    popup.size_hint = (None, None)
+    popup.size=(550, 120)
+
+    text_in.on_text_validate = LastScreen
+    global input_text
+    input_text = text_in
+    input_text.popup = popup
+    
+    
+     # high score file must end with newline
+    try:
+        file = open('high_scores.txt', 'r')
         for line in file:
             line = line.strip().split(",")
             print("line:", line)
@@ -373,62 +395,50 @@ def GameOver(end_score, name = None):
                 # if blank line do nothing
                 continue
         file.close()
-
-    try:
-        score_list[-1][0]
-    except IndexError:
-        # if list empty append dummy zero record
+        print("DEBUG")
+    except:
+        # dummy score emtry if file was empty
         score_list.append((0, 'Falon'))
   
+
+    if int(score_list[-1][0]) < _Board.score:
+        popup.open()
+    else:
+        LastScreen()
+  
+    
+def LastScreen():
+    
+    player = input_text.text
+       
+    end_score = _Board.score 
+    input_text.popup.dismiss()
+
+   
     if int(score_list[-1][0]) < end_score:
         # reopen file for appending this time
         file_append = open('high_scores.txt', 'a')
 
         # new high score!!!
         # PROMPT USER FOR NAME AND SAVE AS name
-        score_list.append((end_score, name))
-        
+        score_list.append((end_score, player))
         file_append.write(str(end_score))
         file_append.write(", ")
-        file_append.write(name)
+        file_append.write(player)
+        file_append.write("\n")
         file_append.close()
-    print(score_list)
    
-    Records = _Board.manager.current_screen        
-    _Board.manager.transition = RiseInTransition(duration=.5)
-    _Board.manager.current = 'menu'
-    _Board.manager.current_screen.champ_score = int(score_list[-1][0])
-    _Board.manager.current_screen.your_score = end_score
-    _Board.manager.current_screen.champion = score_list[-1][1]
-    try:
-        _Board.manager.current_screen.second_score = int(score_list[-2][0])
-        _Board.manager.current_screen.second = score_list[-2][1]
-    except:
-        _Board.manager.current_screen.second_score = 0
-        _Board.manager.current_screen.second = 'Falon'
 
-    try:
-        _Board.manager.current_screen.third_score = int(score_list[-3][0])
-        _Board.manager.current_screen.third = score_list[-3][1]
-    except:
-        _Board.manager.current_screen.third_score = 0
-        _Board.manager.current_screen.third = 'Falon'
+    Records = _Board.manager.current_screen  
 
-    try:
-        _Board.manager.current_screen.fourth_score = int(score_list[-4][0])
-        _Board.manager.current_screen.fourth = score_list[-4][1]
-    except:
-        _Board.manager.current_screen.fourth_score = 0
-        _Board.manager.current_screen.fourth = 'Falon'
 
-    try:
-        _Board.manager.current_screen.fifth_score = int(score_list[-5][0])
-        _Board.manager.current_screen.fifth = score_list[-5][1]
-    except:
-        _Board.manager.current_screen.fifth_score = 0
-        _Board.manager.current_screen.fifth = 'Falon'
-
-    
-    
-    #_Board.reset_tiles()
-    #exit()
+    Records.champ_score = int(score_list[-1][0])
+    Records.your_score = end_score
+    Records.champion = score_list[-1][1]
+    for i in range(1, len(score_list)):
+        try:
+            Records.scores[i-1] = int(score_list[-i][0])
+            Records.player[i-1] = score_list[-i][1]
+        except:
+            Records.scores[i-1] = 0
+            Records.player[i-1] = 'Falon'
