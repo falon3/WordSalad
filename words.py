@@ -1,11 +1,14 @@
+# cmgraff, scheers cmput275 LBL B2, LBL EB1
+
 from collections import OrderedDict
-_END = "_END_"
+_END = "_END_" # end of word in trie
 
 class Dictograph():
     """A word list used for checking words and populating the board.
     
-    
-    NOTE: work in progress
+    Currently uses a trie structure to store all words and word prefixes
+    into a set of nested dictionaries for constant time lookup of all 
+    partial words and complete words.
     
     """
     def __init__(self, filename):
@@ -32,12 +35,19 @@ class Dictograph():
                     # check for end of credits
                     if word[0:3] == "---":
                         reading = True
+                        
+        # TODO: use a Directed Acyclic Word Graph to save significant space
         #self.dawg = DAWG(words)
         #self.cdawg = CompletionDAWG(wordS)
+        
+        # build up the trie - essentially a nested dictionary for every part
+        # of every word in the word list
         self.build_trie(words)
     
     def lookup(self, word):
         # returns None if not in lookup, True if complete, False if incomplete
+        
+        # TODO: switch to DAWG
         #if word in self.dawg:
         #    return True
         #elif word in self.cdawg:
@@ -46,6 +56,10 @@ class Dictograph():
         return self.in_trie(word)
         
     def build_trie(self, words):
+        # build up the trie with a set of nested dictionaryies for each
+        # letter of each word - takes up about 50 MB of memory
+        # TODO: consider switching to D.A.W.G (as little as 1/200th the
+        # space and similar lookup time)
         root = dict()
         for word in words:
             current_dict = root
@@ -55,6 +69,9 @@ class Dictograph():
         self.trie = root
     
     def in_trie(self, word):
+        # sequentially checks subdictionaries for each letter in "word"
+        # returns None if not in dictionary, True if marked as a complete
+        # word, and returns False if in dictionary but only a partial word
         current_dict = self.trie
         for letter in word:
             if letter in current_dict:
@@ -70,29 +87,41 @@ class Dictograph():
         word=''
         best = ''
         best_value = 0
+        # depth first search builds up a stack of tiles to check
         while S:
+            # evaluate next tile in stack
             prev, curr = S.pop()
+            
+            # ignore previously evaluated tile combinations
             if (tuple(letters)) not in R:
                 value = 0
+                # get the word score value, stored in last tile of dict 
                 if len(letters):
                     value = letters[next(reversed(letters))]
                 value = Letters.calc_add_score(word, value, tiles[curr].text)
                 word += tiles[curr].text
                 letters[curr] = value
                 valid = False
+                
+                # go through all neighbors 
                 for n in graph.neighbours(curr):
+                    # ignore letters already in current word fragment
                     if n not in letters:
                         new_word = word + tiles[n].text
                         # if n + curr is a word add (curr, n)
                         found = self.lookup(new_word) 
                         if found:
+                            # track if a valid word, and more valuable than current
+                            # most valuable word
                             alt = Letters.calc_add_score(word, value, tiles[n].text)
                             if alt > best_value:
                                 best_value = alt
                                 best = new_word
+                        # if partial word or complete word, add to evaluation stack
                         if found != None:
                             S.append((curr, n))
                             valid = True
+                            
                 # walk back up graph until we find an open branch
                 while S and len(letters) > 1 and not valid:
                     R[tuple(letters)] = prev   
@@ -101,12 +130,16 @@ class Dictograph():
                     curr = next(reversed(letters))
                     value = letters[curr]
                     
+                    # branch matches if current tile == previous tile from
+                    # next tile on stack
                     if S[-1][0] == curr:
                         valid = True  
                     
         return best
         
     def find_longest_word(self, graph, tiles):
+        # find the most valuable word starting from each tile 
+        # and return the greatest value
         longest = ''
         length = 0
         longest_tile = None
@@ -117,6 +150,7 @@ class Dictograph():
                 longest = word
                 longest_tile = tile
         
+        # DEBUG 
         #if longest_tile:
         #    longest_tile.background_color = [1,0,1,1]
         return longest
@@ -131,12 +165,16 @@ class Letters():
             + 'QZ'
     
     # TODO: these were taken directly from scrabble - replace with own values
+    # base word score values for each letter
     Value = {'A':1,'B':3,'C':3,'D':2,'E':1,'F':4,'G':2,'H':4,'I':1,'J':8,'K':5,\
         'L':1,'M':3,'N':1,'O':1,'P':3,'Q':10,'R':1,'S':1,'T':1,'U':1,'V':4,    \
         'W':4,'X':8,'Y':4,'Z':10}
         
     
     def calc_add_score(word, score, letter):
+        # calculate the additional word score for the next letter
+        # Note: doing it this way allows cheaper calculation while searching
+        # graph for the highest value word
         score += Letters.Value[letter]
         
         # word length bonus of (addtional letter)/2 times the score
@@ -144,6 +182,9 @@ class Letters():
         length = len(word)
         if 2 < length < 9:
             score += int(score/2)
+            
+        # reduce the modifier for long words
+        # TODO: revisit this
         elif length >= 9:
             score += int(score/length-7)
             

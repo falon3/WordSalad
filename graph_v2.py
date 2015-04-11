@@ -1,3 +1,8 @@
+# cmgraff, scheers cmput275 LBL B2, LBL EB1
+
+# NOTE: modified class to use set instead of list for neighbors
+#       doc tests reflect this, but documentation has not been updated
+
 import random
 
 class Graph:
