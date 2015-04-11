@@ -1,3 +1,13 @@
+# cmgraff, scheers cmput275 LBL B2, LBL EB1
+
+"""
+This file currently contains the majority of the classes related to the
+logic and display of the game. 
+
+TODO: move component classes to subfolder and individual files
+
+"""
+
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.bubble import BubbleButton
@@ -18,10 +28,11 @@ import math
 TILE_ROWS = 7       # number of rows in the game board
 TILE_COLUMNS = 11   # number of columns  in the game board
 
-LEVEL_POINTS = 100
-LEVEL_1_POINTS = 30
+# TODO: not currently used universally, move to config.py
+LEVEL_POINTS = 100   # number of points per level 
+LEVEL_1_POINTS = 30  # number of points to leave tutorial level 
 
-_Board = None
+_Board = None  # reference to the board class instance
 
 class Board(Screen):   
     """Represents the game board.
@@ -36,12 +47,17 @@ class Board(Screen):
       _highlighted (OrderedDict): An ordered collection of highlighted tiles.
       _dictionary (Dictograph): A word list used for checking words 
         and populating the board.
+      _searchword (StringProperty): the most valuable word on the board
       play_area (ObjectProperty): the box layout of the play area
-      progress (ObjectProperty): the progress bar object
-      score (NumericProperty): the score
       complete (StringProperty): the word completion text
-    
-    
+      color (ListProperty): the text color for the word complete
+      tile_color (ListProperty): the color of the highlighted tiles
+      progress (ObjectProperty): the progress bar object
+      score (NumericProperty): the actual score of the game
+      level (NumericProperty): the current level of the game 
+      # TODO: make display version of level property
+        
+      tiles (list of tiles): list of all board tiles
     """    
     _highlighted = OrderedDict()
     _dictionary = Dictograph("us_cad_dict.txt")
@@ -148,7 +164,10 @@ class Board(Screen):
         
 
     def update_board(self, tiles = None):
-        # rebuild tile list from rows
+        # build tile list from rows
+        # TODO: finish implementation of partial board updates
+        # to allow for a changing board type (islands of missing tiles, etc.)
+        
         if tiles == None:
             tiles = [tile for column in self._columns for tile in \
                     reversed(column.children)]
@@ -161,8 +180,7 @@ class Board(Screen):
         # fill out edges of graph
         edges = []
         
-        # check if at board boundaries
-        
+        # check if at board boundaries        
         for i in tiles:        
             
             left = i % TILE_ROWS == 0
@@ -198,7 +216,6 @@ class Board(Screen):
                     self._board.add_edge((i, i-TILE_ROWS - offset))  
                 elif even:  # left and even
                     self._board.add_edge((i, i-TILE_ROWS))         
-            
                 
             # not bottom of the board
             if not bottom:
@@ -214,6 +231,7 @@ class Board(Screen):
         
         
     def reset_tiles(self, min_time=-float('inf')):
+        # reset all tiles on the board
         if  _Board.score == 0 or (_Board.game_timer.seconds >= min_time and 
                             not Tile.anims_to_complete):
             add = []
@@ -224,9 +242,12 @@ class Board(Screen):
             self.value = 0
     
     def on_pre_enter(self):
+        # before the game screen reloads (from menu screen)
+        # clear score displayed
         self.header.lheader.score.displayed_score = 0
         
     def on_enter(self):
+        # after game screen reloads, reset game
         if self.score > 0:     
             self.score = 0
             self.reset_tiles()   
@@ -237,11 +258,8 @@ class Board(Screen):
             self.footer.search.remove()
         
         
-class MenuScreen(Screen):
-    def __init__(self, **kwargs):
-        super(MenuScreen, self).__init__(**kwargs)
         
-        
+# this group of classes exist for the Wordless.kv file to use
 
 class Column(BoxLayout):
     missing_tiles = 0
@@ -258,8 +276,30 @@ class Footer(Label):
 class PlayArea(BoxLayout):
     pass
 
+class WordComplete(Label):
+    pass 
+    
+class MenuScreen(Screen):
+    def __init__(self, **kwargs):
+        super(MenuScreen, self).__init__(**kwargs)        
+class Level(BoxLayout):
+    pass
+    
+class Bonus(BubbleButton):    
+    #disable touch events
+    def on_touch_down(self, touch): 
+        pass
+    def on_touch_up(self, touch): 
+        pass
+    def on_touch_move(self, touch): 
+        pass
+        
 class Score(BoxLayout):
-    displayed_score = NumericProperty()
+    """
+    Score board functionality.
+    TODO: move the component classes to subfolder and individual files
+    """
+    displayed_score = NumericProperty() # score displayed in game
     
     def __init__(self, **kwargs):        
         # call parent class init
@@ -280,10 +320,12 @@ class Score(BoxLayout):
         _Board.progress.value = self.displayed_score % _Board.progress.max
         
 
-class WordComplete(Label):
-    pass 
-
 class GameTimer(BoxLayout):
+    """
+    Timer functionality and some game logic.
+    TODO: consolidate game logic
+    TODO: move the component classes to subfolder and individual files
+    """
     seconds = NumericProperty()
     displayed_seconds = NumericProperty()
     cover_timer = -1
@@ -296,6 +338,8 @@ class GameTimer(BoxLayout):
         Clock.schedule_interval(self.update, .05)
 
     def update(self, time_passed):
+        # update the game timer and fire timing related logic
+        # TODO: consider consolidating all game logic
         sec = math.ceil(self.seconds)
         increment = max(int(abs(sec - self.displayed_seconds) / 50), 1)
         if self.displayed_seconds < sec:
@@ -313,17 +357,14 @@ class GameTimer(BoxLayout):
                 #if Board.level > 
                                             
             # don't end the game if the score bubble is still animating
-            # or if tiles are falling
+            # or if tiles are falling, or the search word is appearing
             elif not _Board._game_over and not _Board.footer.bubble.working\
                 and not Tile.anims_to_complete and SearchWord.appeared != 1:
                 _Board._game_over = True
-                GameOver()
-                
+                GameOver()          
         
                 
-    def tile_drop(self, time_passed):
-            
-        
+    def tile_drop(self, time_passed):        
         # drop the bottom tile out of a row every 20 seconds - levels
         # but never faster than once per second
         self.cover_timer += time_passed
@@ -349,18 +390,6 @@ class GameTimer(BoxLayout):
             _Board.tile_cover.pos = tile.pos
     
 
-class Bonus(BubbleButton):    
-    #disable touch events
-    def on_touch_down(self, touch): 
-        pass
-    def on_touch_up(self, touch): 
-        pass
-    def on_touch_move(self, touch): 
-        pass
-
-class Level(BoxLayout):
-    pass
-    
 
 
 def GameOver():
@@ -434,6 +463,8 @@ def GameOver():
    
    
 def LastScreen():
+    # handle high score storage and display
+    
     input_text = GameOver.input_text
     score_list = GameOver.score_list
     player = input_text.text

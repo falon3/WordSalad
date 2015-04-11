@@ -1,3 +1,5 @@
+# cmgraff, scheers cmput275 LBL B2, LBL EB1
+
 from random import randint, random
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -6,19 +8,21 @@ from kivy.animation import Animation
 from kivy.properties import NumericProperty
 from kivy.clock import Clock
 
-_Board = None
+_Board = None  # reference to the board class instance
 
 class Tile(Button):
     """ Represents a tile in the game board.
     """    
-    anims_to_complete = 0
-    tiles_being_removed = 0
-    lscore = NumericProperty()
-    number = NumericProperty(0)
-    tiles_to_update = set()
-    intended_pos = None
+    anims_to_complete = 0  # track ongoing animations
+    tiles_being_removed = 0 # track tiles to be removed
+    lscore = NumericProperty() # word score base value of tile
+    number = NumericProperty(0) # position of tile within tile set
+    intended_pos = None 
+    # TODO: complete implementation of intended_pos to prevent
+    # corruption of active animations on screen-resize
     
     def __repr__(self):
+        # print the letter and score of the tile
         return self.text + "-" + str(self.number)
     
     def __init__(self, number, board=None, **kwargs):
@@ -100,14 +104,14 @@ class Tile(Button):
         """Base kivy method inherited from Button.
         
         This method is called on all buttons at once, so we need to 
-        return True for only the currently touched button.
+        return True for only the *originally* touched button.
         Note:
           We are not currently passing this up to super(), but 
           we could consider doing so.
         Args:
           touch: A kivy motion event
         Returns:
-          True if for currently touched button, False otherwise.
+          True if for *originally* touched button, False otherwise.
         """
 
         if touch.is_touch or touch.button == 'left':
@@ -121,8 +125,7 @@ class Tile(Button):
                 # only check word if on playArea
                 if _Board._dictionary.lookup(word) and \
                     _Board.collide_point(touch.x, touch.y) \
-                    and _Board._highlighted:
-                        
+                    and _Board._highlighted:                        
                     
                     # add bubble points indicator
                     bubble = _Board.footer.bubble
@@ -131,6 +134,7 @@ class Tile(Button):
                     last = next(reversed(_Board._highlighted))
                     bubble.pos = last.pos
                     bubble.text = _Board.header.word_complete.bubble.text[:]
+                    bubble.score = int(_Board.value)
                     score_board = _Board.header.lheader.score
                     timer = _Board.game_timer
                     move_bubble = Animation(pos=(timer.x + 30, timer.y - 20), \
@@ -169,14 +173,17 @@ class Tile(Button):
         return False
         
     def mid_bubble(self, instance, progression):
+        # fires while score bubble is animating to timer and score board
         if progression >= 0.7 and instance.working < 2:
             instance.working = 2
-            _Board.game_timer.seconds += _Board.value
+            _Board.game_timer.seconds += instance.score
         
     
     def done_bubble(self, instance):
+        # fires after points are awarded (animation of score completes)
+        # TODO: consolidate game logic
         
-        _Board.score += _Board.value
+        _Board.score += instance.score
 
         if _Board.score >= 30 and _Board.level == 0:
             _Board.level = 1
@@ -239,9 +246,11 @@ class Tile(Button):
         add.start(new)
     
     def add_complete(self, instance):     
+        # pass on to fall_complete to clean up animation counter
         instance.fall_complete(instance)
         
-    def remove(self):        
+    def remove(self):    
+        # remove current tile and bring in a new one    
         column = self.parent
         window = column.parent.get_parent_window()
         fall_out = Animation(size=self.size,pos=(self.x, -125), \
@@ -250,6 +259,9 @@ class Tile(Button):
         dest_tile = column.children[len(column.children)-column.missing_tiles]
         destination = (self.x, dest_tile.y)
         fall_in =  Animation(pos=destination, t='out_bounce', d = 1)
+        # track animations completing for new and old tiles
+        # Note: old tiles are being tracked, but don't currently 
+        # figure into cleanup rules
         Tile.anims_to_complete += 1
         Tile.tiles_being_removed += 1
         new_tile = Tile(dest_tile.number)
@@ -257,33 +269,41 @@ class Tile(Button):
         new_tile.y = window.height + 100
         new_tile.intended_pos = destination
         
+        # assign followup events to animations
         fall_out.on_complete = self.remove_complete
         fall_in.on_complete = new_tile.add_complete
         
+        # count down number of tiles to assign destinations for
         column.missing_tiles -= 1 
         
         return fall_out, self, fall_in, new_tile
         
     def remove_complete(self, instance):
+        # clean up fallen tiles
         _Board.footer.remove_widget(instance)
         Tile.tiles_being_removed -= 1
         
     
     def fall(tiles, i):
+        # handle tiles falling after tiles below have been removed
         tile = tiles[i]
         column = tile.parent
         
+        # assign destination for falling tiles
         prev_tile = tiles[i-tile.parent.missing_tiles]
         tile.next_number = prev_tile.number
         Tile.anims_to_complete += 1
         destination = (prev_tile.x, prev_tile.y)
         animation = Animation(pos=destination, t='out_bounce', d = 1)
+        
+        # assign function to handle animation completion
         animation.on_complete = tile.fall_complete
         tile.intended_pos = destination
+        
+        # start the animation
         animation.start(tile)
     
-    def fall_assignment(self):
-        
+    def fall_assignment(self):        
         # clean up falling tile set assignment
         if self.next_number >= 0:
             _Board.tiles[self.next_number] = self
@@ -291,18 +311,26 @@ class Tile(Button):
             self.next_number = -1
         
     def fall_complete(self, instance):
+        # clean up animation counter and trigger next search word
         Tile.anims_to_complete -= 1         
         
         if not Tile.anims_to_complete:
             _Board.footer.search.get_next(True)
             
 class SearchWord(Label):
+    """
+    Wrapper class for handling appearance and usage of the search word,
+    the display of the most valuable word currently on the board.
+    """
+    
     appeared = 0
     
+    # make search word disappear
     def remove(self):
         _Board._searchword = ''
         self.appeared = 0
         
+    # put the searchword above the board and make it fall down
     def appear(self):
         search = _Board.footer.search
         animation = Animation(pos=(search.x, search.y), t='out_bounce', d = 1.5)
@@ -311,10 +339,12 @@ class SearchWord(Label):
         
         animation.start(search)
         self.appeared = 1
-        
+    
+    # fires once the search word has completed its entrance animation
     def appear_complete(self, instance):
         self.appeared = 2
         
+    # find the next search word
     def get_next(self, trigger_reset=False):        
         if _Board.score > 0:
             _Board._searchword = _Board._dictionary.find_longest_word \
@@ -327,6 +357,8 @@ class SearchWord(Label):
                 self.appear()
             
             timer = _Board.game_timer
+            # start counter for tile dropping
+            # TODO: consolidate game logic
             if _Board.level > 2 and timer.cover_timer < 0:
                 Clock.schedule_interval(timer.tile_drop, .05)
                 tile = _Board.tiles[0]
